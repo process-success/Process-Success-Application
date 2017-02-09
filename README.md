@@ -35,7 +35,7 @@ PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS PULLING AN APP FROM GIT 
 
 ###### Upstream / Origin
 The bench CLI tool pulls from the Process Success Application repo and sets the HEAD as upstream/master. For now, track all you changes in your own feature branch within the 'origin' remote. Whomever is managing git will merge all feature branches with the '
-develop' branch. Once a set of features in the develop branch are deemed stable, these features will be merged into origin/master and tagged with a specific release.
+develop' branch. This may be done by pushing directly to origin master or managed as pull requests on github. Once a set of features in the develop branch are deemed stable, these features will be merged into origin/master and tagged with a specific release. 
 
 When running the command `bench update --pull`, bench references upstream master. This will most likely only be important for updating the production environment conveinently using the bench CLI with a new production version.
 
