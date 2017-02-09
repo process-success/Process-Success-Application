@@ -17,10 +17,10 @@ $ sudo pip install -e bench-repo
 
 ### Development Notes
 
-Frappe framework utlizes the bench CLI as a development, deployment, and devops tool. You may have multiple benches to for development and/or production testing. Our production server will likely have a product bench with versioning configuration files.
+Frappe framework utlizes the bench CLI as a development, deployment, and devops tool. You may have multiple benches for development and/or production testing. Our production server will likely have a production bench setup with versioned configuration files.
 
 #### Fresh Installation
-When instantiating a new bench and you want a fresh installation of a the application, perform the following commands::
+When instantiating a new bench and you want a fresh installation of the application, perform the following commands::
 
 ```
 $ bench init name-of-your-bench ; cd name-of-your-bench
@@ -31,30 +31,34 @@ $ cd apps/process-success
 $ git remote add origin https://github.com/process-success/Process-Success-Application.git
 $ git fetch origin
 
-# This sets branch master set up to track remote branch master from origin.
+# This sets branch master set up to track remote branch master from origin and allow us to avoid that pesky upstream remote setup by bench.
 $ git branch -u origin/master
-$ git checkout develop
+$ git checkout develop_or_feature_branch
 ```
-PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS PULLING AN APP FROM GIT USING BENCH WILL PLACE YOU IN UPSTREAM/MASTER!!
+PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS TO NOT ACCIDENTALLY MAKE CHANGES IN MASTER!!
 
-###### Upstream / Origin
-The bench CLI tool pulls from the Process Success Application repo and sets the HEAD as upstream/master. For now, track all you changes in your own feature branch within the 'origin' remote. Whomever is managing git will merge all feature branches with the '
-develop' branch of remote. This may be done by pushing directly to origin master or managed as pull requests on github. Once a set of features in the develop branch are deemed stable, these features will be merged into origin/master and tagged with a specific release. Upstream master will then be synced wirth origin master.  
-
-When running the command `bench update --pull`, bench references the remote upstream master. This will most likely only be important for updating the production environment conveinently using the bench CLI with a new production version.
+###### bench update --pull
+When running the command `bench update --pull`, bench references whatever current branch you are on and will pull down the latest changes from the remote branch. This will most likely only be important for updating the production environment conveinently using the bench CLI with a new production version.
 
 #### Normal Development
-Once the app has been successfully pulled down (including adding the 'origin' remote), you can use bench normally with our new app. You may create sites, install the app, etc,. To manage changes, make sure you are in your appropriate feature branch. You can run normal git commands as usual:
+Once the app has been successfully pulled down (including adding the 'origin' remote), you can use bench normally with our new app. You may create sites, install the app, etc,. To manage changes, make sure you are in your appropriate feature branch. You can run normal git commands from the application's directory as usual:
 
 Example:
 ```
-$ bench cd apps/process-success
+$ cd apps/process-success
 $ git status
 $ git add . ; git commit
 $ git push origin <branch name>
 ```
 
-###### Updating Local Bench
+##### Git branches
+There are two major branches of concern:
+
+    - develop: This is the development branch where all new features are to be integrated and tested
+
+    - master: Production state branch. Master should only be updated with major feature pushes via a --squash commit and/or incremental commits (README.md updates etc)
+
+##### Updating your local bench with app changes
 To see changes in your application reflected in your running bench, stop your server and run the following command from the root directory of your branch:
 
 ```
