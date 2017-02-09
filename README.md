@@ -1,4 +1,4 @@
-## Process Success
+# Process Success
 
 Core application to be used in the Frappe framework.
 
@@ -6,7 +6,7 @@ Core application to be used in the Frappe framework.
 
 © 2017 PROCESS SUCCESS ALL RIGHTS RESERVED
 
-#### Bench Installation
+### Bench Installation
 Please ensure you have the Frappe 'bench' cli tool installed:
 
 ```
@@ -14,12 +14,12 @@ $ git clone https://github.com/frappe/bench bench-repo
 $ sudo pip install -e bench-repo
 ```
 
-#### Development Notes
+### Development Notes
 
 Frappe framework utlizes the bench CLI as a development, deployment, and devops tool. You may have multiple benches to for development and/or production testing. Our production server will likely have a product bench with versioning configuration files.
 
-##### Fresh Installation
-If instantiating a fresh installation of a bench, perform the following commands::
+#### Fresh Installation
+When instantiating a new bench and you want a fresh installation of a the application, perform the following commands::
 
 ```
 $ bench init name-of-your-bench ; cd name-of-your-bench
@@ -28,15 +28,19 @@ $ cd apps/process-success
 
 # This adds the remote 'origin' to your local git configuration:
 $ git remote add origin https://github.com/process-success/Process-Success-Application.git
+$ git fetch origin
 $ git checkout develop
 ```
 PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS PULLING AN APP FROM GIT USING BENCH WILL PLACE YOU IN UPSTREAM/MASTER!!
 
 ###### Upstream / Origin
-The bench CLI tool pulls from the Prcess Success Application repo and sets the HEAD as upstream/master. For now, track all you changes in your own feature branch with the 'origin' remote. We need to work together to get a good system of merging completed feature into origin/master usch that the changes are refelcted in upstream/master.
+The bench CLI tool pulls from the Process Success Application repo and sets the HEAD as upstream/master. For now, track all you changes in your own feature branch within the 'origin' remote. Whomever is managing git will merge all feature branches with the '
+develop' branch. Once a set of features in the develop branch are deemed stable, these features will be merged into origin/master and tagged with a specific release.
 
-##### Normal Development
-Once installed, you can use bench normally with our new app. You may create sites, install the app, etc,. To manage changes, make sure you are in your appropriate feature branch, and simply enter the working directory of your feature branch and run git commands as you normally would.
+When running the command `bench update --pull`, bench references upstream master. This will most likely only be important for updating the production environment conveinently using the bench CLI with a new production version.
+
+#### Normal Development
+Once the app has been successfully pulled down (including adding the 'origin' remote), you can use bench normally with our new app. You may create sites, install the app, etc,. To manage changes, make sure you are in your appropriate feature branch. You can run normal git commands as usual:
 
 Example:
 ```
@@ -45,9 +49,6 @@ $ git status
 $ git add . ; git commit
 $ git push origin <branch name>
 ```
-
-
-
 
 ###### Updating Local Bench
 To see changes in your application reflected in your running bench, stop your server and run the following command from the root directory of your branch:
