@@ -30,6 +30,9 @@ $ cd apps/process-success
 # This adds the remote 'origin' to your local git configuration:
 $ git remote add origin https://github.com/process-success/Process-Success-Application.git
 $ git fetch origin
+
+# This sets branch master set up to track remote branch master from origin.
+$ git branch -u origin/master
 $ git checkout develop
 ```
 PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS PULLING AN APP FROM GIT USING BENCH WILL PLACE YOU IN UPSTREAM/MASTER!!
