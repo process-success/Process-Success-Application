@@ -57,3 +57,8 @@ To see changes in your application reflected in your running bench, stop your se
 ```
 $ bench update --patch
 ```
+
+#### Backup Sites and MariaDb
+
+The bench CLI is capable of backing up your sites and dumping your MariaDb data. This can be useful for sharing and testing local site configurations and testing production data locally, if need be.
+
