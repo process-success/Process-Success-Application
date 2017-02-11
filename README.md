@@ -38,7 +38,7 @@ $ git checkout develop_or_feature_branch
 PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS TO NOT ACCIDENTALLY MAKE CHANGES IN MASTER!!
 
 ###### bench update --pull
-When running the command `bench update --pull`, bench references whatever current branch you are on and will pull down the latest changes from the remote branch. This will most likely only be important for updating the production environment conveinently using the bench CLI with a new production version.
+When running the command `bench update --pull`, bench references whatever current branch you are on and will pull down the latest changes from the remote branch. 
 
 #### Normal Development
 Once the app has been successfully pulled down (including adding the 'origin' remote), you can use bench normally with our new app. You may create sites, install the app, etc,. To manage changes, make sure you are in your appropriate feature branch. You can run normal git commands from the application's directory as usual:
@@ -59,11 +59,16 @@ There are two major branches of concern:
     - master: Production state branch. Master should only be updated with major feature pushes via a --squash commit and/or incremental commits (README.md updates etc)
 
 ##### Updating your local bench with app changes
-To see changes in your application reflected in your running bench, stop your server and run the following command from the root directory of your branch:
+To see changes in your application reflected in your currently used site, stop your server and run the following command from the root directory of your branch:
 
 ```
-$ bench update --patch
+# Make sure you are using your desired site
+$ bench use site_name
+$ bench migrate
 ```
+
+###### Note
+Frappe and bench do not support reverse migrations. For example, say you have developed a set of DocTypes and migrate these changes into your site. You then decide to switch back into a branch that does not have these DocTypes and attempt to migrate this branch app into you site. These migrations will not remove (or reverse migrate) the DocTypes that have been migrated into the site's database. It is advisable to run feature branches of the app in a new site and maintain a separate set of sites that reflect the develop branch and master branch.
 
 #### Backup/Restore Sites and MariaDb
 
