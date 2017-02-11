@@ -38,6 +38,7 @@ $ git checkout develop_or_feature_branch
 PLEASE MAKE SURE TO SWITCH TO DEVELOP/FEATURE BRANCH AS TO NOT ACCIDENTALLY MAKE CHANGES IN MASTER!!
 
 ###### bench update --pull
+
 When running the command `bench update --pull`, bench references whatever current branch you are on and will pull down the latest changes from the remote branch. 
 
 #### Normal Development
@@ -60,6 +61,7 @@ There are two major branches of concern:
 
 ##### Updating your local bench with app changes
 To see changes in your application reflected in your currently used site, stop your server and run the following command from the root directory of your branch:
+
 
 ```
 # Make sure you are using your desired site
