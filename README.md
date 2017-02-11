@@ -65,7 +65,33 @@ To see changes in your application reflected in your running bench, stop your se
 $ bench update --patch
 ```
 
-#### Backup Sites and MariaDb
+#### Backup/Restore Sites and MariaDb
 
 The bench CLI is capable of backing up your sites and dumping your MariaDb data. This can be useful for sharing and testing local site configurations and testing production data locally, if need be.
+
+##### Backups
+
+To run a backup of the current site in use, use the following bench command:
+
+```
+$ bench backup --with-files
+```
+
+bench backup will create a .sql.gz file in the sites/site_name/private/backups diretory. This file can be used to restore the database definitions for a particular site. Please note that if you have an existing site, you cannot restore that site while it exists. You must re-create the site locally otherwise you will get a name conflict with your site's db name and the db name of the backup.
+
+The '--with-files' option will backup in a .tar file which will store all user uploaded files as a backup.
+
+##### Restores
+
+To run a restore of a site's MariaDb database definitions use the command:
+
+```
+$ bench restore SQL.GZ_FILE_PATH
+```
+
+To include public and/or private files use the additional options:
+
+```
+$ bench restore SQL.GZ_FILE_PATH --with-public-files TAR_FILE_PATH --with-private-files TAR_FILE_PATH
+```
 
