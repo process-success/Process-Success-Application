@@ -53,6 +53,7 @@ $ git push origin <branch name>
 ##### Git branches
 There are two major branches of concern:
 
+
     - develop: This is the development branch where all new features are to be integrated and tested. 
                Do not merge into develop without having tested your feature branch extensively and the changes you're making are agreed upon. 
                Ideally, use a pull request so we can all disucc the changes to be made.
@@ -71,7 +72,9 @@ $ bench migrate
 ```
 
 ###### Note
+
 bench migrate is permanent! Please ensure you want to add the new set of DocTypes to your site. Frappe and bench do not support reverse migrations! For example, say you have developed a set of DocTypes and migrate these changes into your site. You then decide to switch back into a branch that does not have these DocTypes and attempt to migrate this branch app into you site. These migrations will not remove (or reverse migrate) the DocTypes that have been migrated into the site's database. It is advisable to run feature branches of the app in a new site and maintain a separate set of sites that reflect the develop branch and master branch.
+
 
 #### Backup/Restore Sites and MariaDb
 
@@ -82,6 +85,7 @@ The bench CLI is capable of backing up your sites and dumping your MariaDb data.
 To run a backup of the current site in use, use the following bench command:
 
 ```
+
 $ bench use {site_you_want_to_back_up}
 $ bench backup --with-files
 ```
