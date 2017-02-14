@@ -16,9 +16,7 @@ $ sudo pip install -e bench-repo
 ```
 
 ### Development Notes
-
 Frappe framework utlizes the bench CLI as a development, deployment, and devops tool. You may have multiple benches for development and/or production testing. Our production server will likely have a production bench setup with versioned configuration files.
-
 #### Fresh Installation
 When instantiating a new bench and you want a fresh installation of the application, perform the following commands::
 
@@ -55,9 +53,13 @@ $ git push origin <branch name>
 ##### Git branches
 There are two major branches of concern:
 
-    - develop: This is the development branch where all new features are to be integrated and tested. Do not merge into develop without having tested your feature branch extensively and the changes you're making are agreed upon. Ideally, use a pull request so we can all disucc the changes to be made.
 
-    - master: Production state branch. Master should only be updated with major feature pushes via a --squash commit and/or incremental commits (README.md updates etc). This branch is reserved for major releases.
+    - develop: This is the development branch where all new features are to be integrated and tested. 
+               Do not merge into develop without having tested your feature branch extensively and the changes you're making are agreed upon. 
+               Ideally, use a pull request so we can all disucc the changes to be made.
+
+    - master: Production state branch. 
+              Master should only be updated with major feature pushes via a --squash commit and/or incremental commits (README.md updates etc). This branch is reserved for major releases.
 
 ##### Updating your local bench with app changes
 To see changes in your application reflected in your currently used site, stop your server and run the following command from the root directory of your branch:
@@ -70,7 +72,9 @@ $ bench migrate
 ```
 
 ###### Note
-bench migrate is permanent! Pleasure ensure you want to add the new set of DocTypes to your site. Frappe and bench do not support reverse migrations! For example, say you have developed a set of DocTypes and migrate these changes into your site. You then decide to switch back into a branch that does not have these DocTypes and attempt to migrate this branch app into you site. These migrations will not remove (or reverse migrate) the DocTypes that have been migrated into the site's database. It is advisable to run feature branches of the app in a new site and maintain a separate set of sites that reflect the develop branch and master branch.
+
+bench migrate is permanent! Please ensure you want to add the new set of DocTypes to your site. Frappe and bench do not support reverse migrations! For example, say you have developed a set of DocTypes and migrate these changes into your site. You then decide to switch back into a branch that does not have these DocTypes and attempt to migrate this branch app into you site. These migrations will not remove (or reverse migrate) the DocTypes that have been migrated into the site's database. It is advisable to run feature branches of the app in a new site and maintain a separate set of sites that reflect the develop branch and master branch.
+
 
 #### Backup/Restore Sites and MariaDb
 
@@ -81,12 +85,16 @@ The bench CLI is capable of backing up your sites and dumping your MariaDb data.
 To run a backup of the current site in use, use the following bench command:
 
 ```
+
+$ bench use {site_you_want_to_back_up}
 $ bench backup --with-files
 ```
 
 bench backup will create a .sql.gz file in the sites/site_name/private/backups diretory. This file can be used to restore the database definitions for a particular site. Please note that if you have an existing site, you cannot restore that site while it exists. You must re-create the site locally otherwise you will get a name conflict with your site's db name and the db name of the backup.
 
-The '--with-files' option will backup in a .tar file which will store all user uploaded files as a backup.
+The '--with-files' option will backup in a .tar file which will store all user uploaded files as a backup. 
+
+Don't forget to `bench use` with the site you want to go back to working on...
 
 ##### Restores
 
