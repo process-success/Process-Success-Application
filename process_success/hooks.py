@@ -10,6 +10,11 @@ app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "cmuell89@gmail.com"
 app_license = "Process Success"
+home_page = "index"
+
+website_context = {
+	"disable_website_theme": True
+}
 
 # Includes in <head>
 # ------------------
