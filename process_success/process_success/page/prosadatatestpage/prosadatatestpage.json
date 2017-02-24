@@ -1,0 +1,25 @@
+{
+ "content": null, 
+ "creation": "2017-02-23 12:30:31.672917", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "idx": 0, 
+ "modified": "2017-02-23 12:32:15.156222", 
+ "modified_by": "Administrator", 
+ "module": "Process Success", 
+ "name": "prosadatatestpage", 
+ "owner": "Administrator", 
+ "page_name": "prosadataTestPage", 
+ "roles": [
+  {
+   "role": "Guest"
+  }, 
+  {
+   "role": "Administrator"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "title": "Prosadata Test Page"
+}
