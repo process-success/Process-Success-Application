@@ -63,7 +63,7 @@ role_home_page = {
 # ------------
 
 # before_install = "process_success.install.before_install"
-# after_install = "process_success.install.after_install"
+after_install = "process_success.utils.install.after_install"
 
 # Desk Notifications
 # ------------------
