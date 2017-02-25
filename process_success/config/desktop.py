@@ -9,7 +9,8 @@ def get_data():
 			"color": "grey",
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
-			"label": ("Process Success")
+
+			"label": _("Process Success")
 		},
 		{
 			"module_name": "ps_core",
@@ -23,7 +24,6 @@ def get_data():
 			"color": "grey",
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
-			"label": ("web options")
-
+			"label": _("web options")
 		}
 	]

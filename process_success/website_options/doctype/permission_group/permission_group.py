@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class ps_user(Document):
+class permission_group(Document):
 	pass

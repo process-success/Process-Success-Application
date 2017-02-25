@@ -36,8 +36,13 @@
    "read_only": 0, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
+<<<<<<< HEAD
    "reqd": 0, 
    "search_index": 1, 
+=======
+   "reqd": 1, 
+   "search_index": 0, 
+>>>>>>> develop
    "set_only_once": 0, 
    "unique": 0
   }, 
@@ -82,7 +87,11 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
+<<<<<<< HEAD
  "modified": "2017-02-23 11:13:11.874443", 
+=======
+ "modified": "2017-02-23 13:33:57.180131", 
+>>>>>>> develop
  "modified_by": "Administrator", 
  "module": "website_options", 
  "name": "role_container", 
@@ -113,9 +122,18 @@
  "quick_entry": 1, 
  "read_only": 0, 
  "read_only_onload": 0, 
+<<<<<<< HEAD
  "show_name_in_global_search": 0, 
  "sort_field": "modified", 
  "sort_order": "DESC", 
  "track_changes": 0, 
+=======
+ "search_fields": "role_name", 
+ "show_name_in_global_search": 0, 
+ "sort_field": "modified", 
+ "sort_order": "DESC", 
+ "title_field": "role_name", 
+ "track_changes": 1, 
+>>>>>>> develop
  "track_seen": 0
 }
