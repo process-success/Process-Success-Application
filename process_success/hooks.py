@@ -10,6 +10,11 @@ app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "cmuell89@gmail.com"
 app_license = "Process Success"
+home_page = "index"
+
+website_context = {
+	"disable_website_theme": True
+}
 
 # Includes in <head>
 # ------------------
@@ -37,9 +42,13 @@ app_license = "Process Success"
 # home_page = "login"
 
 # website user home page (by Role)
-# role_home_page = {
-#	"Role": "home_page"
-# }
+role_home_page = {
+	"administrator": "admin_index",
+	"customer": "customer_index",
+	"employee": "employee_index",
+	"crew_lead": "crew_index",
+	"ps_manager": "ps_manager_index"
+}
 
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
