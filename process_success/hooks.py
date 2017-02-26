@@ -50,6 +50,7 @@ role_home_page = {
 	"ps_manager": "ps_manager_index"
 }
 
+fixtures = ["Custom Field"]
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
 
@@ -87,13 +88,13 @@ role_home_page = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"User": {
+		"on_update": "method",
+		"on_cancel": "method",
+		"on_trash": "method"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
