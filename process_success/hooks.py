@@ -42,14 +42,15 @@ website_context = {
 # home_page = "login"
 
 # website user home page (by Role)
-role_home_page = {
-	"administrator": "admin_index",
-	"customer": "customer_index",
-	"employee": "employee_index",
-	"crew_lead": "crew_index",
-	"ps_manager": "ps_manager_index"
-}
+# role_home_page = {
+# 	"administrator": "admin_index",
+# 	"customer": "customer_index",
+# 	"employee": "employee_index",
+# 	"crew_lead": "crew_index",
+# 	"ps_manager": "ps_manager_index"
+# }
 
+fixtures = ["Custom Field"]
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
 
@@ -88,11 +89,11 @@ after_install = "process_success.utils.install.after_install"
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
+# 	"User": {
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
-#	}
+# 	}
 # }
 
 # Scheduled Tasks
