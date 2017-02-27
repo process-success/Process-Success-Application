@@ -1,0 +1,60 @@
+	@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .altura { 
+
+      top:20px;
+      padding-bottom:20px;
+
+    }
+
+    .tamano {
+display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+  } 
+  .img-tamano{
+
+      width:150px;
+      padding:10px;
+
+    }
+
+    .altura {
+
+    	top:150px;
+
+
+    }
+.tamano {
+
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.view {
+
+background-color: #583086;
+color: #fff;
+}
+
+
+	@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .altura { 
+
+      top:20px;
+      padding-bottom:20px;
+
+    }
+
+    .tamano {
+}
+display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
