@@ -7,4 +7,12 @@ import frappe
 from frappe.model.document import Document
 
 class Crew(Document):
-	pass
+
+    def on_update(self):
+
+        for employee_link in self.get('team_members'):
+            employee = frappe.get_doc('Employee', employee_link.employee)
+            employee.crew = self.name
+            employee.save()
+
+
