@@ -15,7 +15,7 @@ $ git clone https://github.com/frappe/bench bench-repo
 $ sudo pip install -e bench-repo
 ```
 
-### Development Notes
+### Development Notes.
 Frappe framework utlizes the bench CLI as a development, deployment, and devops tool. You may have multiple benches for development and/or production testing. Our production server will likely have a production bench setup with versioned configuration files.
 #### Fresh Installation
 When instantiating a new bench and you want a fresh installation of the application, perform the following commands::
