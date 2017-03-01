@@ -1,0 +1,24 @@
+{
+  "name": "process_success",
+  "version": "1.0.0",
+  "description": "Core application to be used in the Frappe framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/process-success/Process-Success-Application.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/process-success/Process-Success-Application/issues"
+  },
+  "homepage": "https://github.com/process-success/Process-Success-Application#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-shell": "^0.6.1"
+  }
+}

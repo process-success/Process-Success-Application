@@ -1,0 +1,10 @@
+{% extends "templates/web.html" %}
+
+{% block content %}
+
+<h1>Name: {{doc.first_name}} {{doc.last_name}}</h1>
+
+<ul><li>test = {{ doc or nope }} </li></ul>
+
+ 
+{% endblock %}  
