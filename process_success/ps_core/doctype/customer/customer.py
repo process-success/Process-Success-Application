@@ -39,8 +39,11 @@ class Customer(WebsiteGenerator):
 		pass
 		
 
-	def get_context(self, context):
-		context.parents = [{"name": "customers", "title": "Customers"}]
+	def get_context(self, context): 
+		print("-------------Context-----------------")
+		context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
+		context.user_object = frappe.get_doc("User", self.user)
+		print(context.user_object.first_name)
 
 
 #@frappe.whitelist()
