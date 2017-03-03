@@ -1,0 +1,35 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+  {% include "templates/includes/login/login.css" %}    
+  {% include "www/css/bootstrap.css" %}
+  {% include "www/css/email_templates.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	  <h1>Email templates</h1>
+	  <br><br>
+    <div>
+    <div>
+	  <label for="types">Templates:</label>
+    <select id="types">
+      {% for cont in rowContent %}
+        <option value="{{cont['body']}}">{{cont['title']}}</option>
+      {% endfor %}
+    </select>
+    <button onclick="generate()">Generate</button>
+    <br><br>
+    </div>
+    <div id="template">
+      Here will the template appear.
+    </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/email_templates.js" %}
+	</script>
+{% endblock %}

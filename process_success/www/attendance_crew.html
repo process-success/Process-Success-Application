@@ -1,0 +1,69 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+/* prosadata style code includes begin */	
+	{% include "templates/includes/login/login.css" %}
+	{% include "templates/css/bootstrap.css" %}
+	{% include "www/css/crew_manager_menu.css" %}
+/* prosadata style code includes end */
+/* prosadata style code generation begin */
+/* prosadata.com style code generation end */
+</style>
+{% endblock %}
+{% block page_content %}
+<div class="login_header">Crew Attendance</div>
+<div class="row">
+	<h2>Crew Leader: {{leader_name}}</h2>
+</div>
+<table id="crew_members">
+    <thead>
+    <tr>
+      <th>{{crew_name}}</th>
+	  <th>Date</th>
+	  <th>Start</th>
+	  <th>End</th>
+	  <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="body1">
+      {% for employee_row in employees: %}
+        <tr>
+          <td><!--{{employee}}-->{{employee_row[0]}} &emsp;</td>
+		  <td>{{employee_row[1]}} &emsp;</td>
+		  <td>{{employee_row[2]}} &emsp;</td>
+		  <td>{{employee_row[3]}} &emsp;</td>
+		  <td>{{employee_row[4]}}</td>
+        </tr>
+      {% endfor %}  
+     </tbody>
+  </table>
+<div class="row col-sm-2 col-xs-4">
+	<label for="date_">Date</label>
+	<input class="form-control" type=text name=date_ id="date_" value="{{date_}}">
+  </div>
+  <div class="row col-sm-2 col-xs-4">
+	<input type=hidden id="crew_name" name="crew_name" value="{{crew_name}}">
+	<label for="start_">Start</label>
+	<input class="form-control" type=text name=start_ id="start_" value="{{start_}}">
+	
+	</div>
+<div class="row col-sm-2 col-xs-4">
+	<label for="end_">End</label>
+	<input class="form-control" type=text name=end_ id="end_" value="{{end_}}">
+  </div>
+  <div class="row col-sm-2 col-xs-4">
+	<br>
+	<button id="btnCheckIn" class=" btn btn-lg btn-default btn-block btn-login">Check in</button>
+  </div>
+  <div class="row col-sm-2 col-xs-4">
+	<br>
+	<button id="btnCheckOut" class="btn btn-lg btn-default btn-block btn-login">Check out</button>
+  </div>
+{% endblock %}
+{% block script %}
+<!-- prosadata script code generation begin -->
+<script>
+	{% include "www/js/attendance_crew.js" %}
+</script>
+<!-- prosadata.com script code generation end -->
+{% endblock %}

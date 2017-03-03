@@ -1,0 +1,79 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}	  
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/workOrder_form.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<form class="form-signin form-test" role="form">
+    
+	<div class="col-md-offset-3 col-md-9">
+		<div class="row">
+			<h2>Create a New Work Order</h2>
+		</div>
+		<div class="row">
+			<label for="subject">Subject</label>
+			<input name=subject id="subject">
+		</div>
+		<div class="row">
+			<label for="project">Project</label>
+			<select name=project id="project">
+				{% for cont2 in projects: %}
+					<option value="{{cont2['name']}}">{{cont2['project_name']}}</option>
+      			{% endfor %}
+			</select>
+		</div>
+		<div class="row">
+			<label for="start_date">Expected Start Date</label>
+			<input type="date" name="start_date" id="start_date">
+		</div>
+		<div class="row">
+			<label for="end_date">Expected End Date</label>
+			<input type="date" name="end_date" id="end_date">
+		</div>
+		<div class="row">
+			<label for="expected_time">Expected Time (in hours)</label>
+			<input type="time" name="expected_time" id="expected_time">
+		</div>
+			<div class="row">
+			<label for="progress">% Progress</label>
+			<input name="progress" id="progress">
+		</div>
+		<div class="row">
+			<label for="status">Status</label>
+			 <select name="status" id="status">
+				<option value="open">Open</option>
+				<option value="working">Working</option>
+				<option value="pending_review">Pending Review</option>
+				<option value="overdue">Overdue</option>
+			 	<option value="closed">Closed</option>
+				<option value="cancelled">Cancelled</option>
+			</select> 
+		</div>
+		<div class="row">
+			<label for="priority">Priority</label>
+			 <select name="priority" id="priority">
+				<option value="low">Low</option>
+				<option value="medium">Medium</option>
+				<option value="high">High</option>
+				<option value="urgent">Urgent</option>
+			</select> 
+		</div>
+		<div class="row">
+			<button type="button" class="btn clockout btn-lg" id="submitBut">Submit</button>
+		</div>	
+	</div>
+</form>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+	{% include "www/js/workOrder_form.js" %}
+</script>
+{% endblock %}

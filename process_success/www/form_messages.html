@@ -1,0 +1,31 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Send a message</h1>
+	<form id="myForm" method="POST">
+		<label for="type">Type:</label>
+		<select id="type">
+			<option value="Comment">Comment</option>
+			<option value="Request">Request</option>
+		</select>
+		<br><br>
+		<label for="message">Message:</label>
+		<br>
+		<textarea id="message" style="width:50%"></textarea>
+		<br><br>
+		<input type="button" onclick="send()" value="Send">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/form_messages.js" %}
+	</script>
+{% endblock %}

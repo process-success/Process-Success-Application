@@ -1,0 +1,38 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Document lost and found assets</h1>
+	<form id="myForm" method="POST">
+		
+		<label for="code">Asset:</label>
+		<select id="code">
+			{% for cont in rowContent: %}
+				<option value={{cont['asset_name']}}>{{cont['asset_name']}}</option>
+			{% endfor %} 
+		</select>
+		<br><br>
+		<label for="date">Date:</label>
+		<input type="date" id="date" name="date">
+		<br><br>
+		<label for="trans">Transaction:</label>
+		<select id="trans">
+			<option>Lost</option>
+			<option>Found</option>
+		</select>
+		<br><br>
+		<input type="button" value="Add" onclick="send()">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/document_assets.js" %}
+	</script>
+{% endblock %}

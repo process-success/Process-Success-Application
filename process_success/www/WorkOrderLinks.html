@@ -1,0 +1,39 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "templates/css/bootstrap.css" %}
+	{% include "www/css/WorkOrderLinks.css" %}
+	/* prosadata code generation begin */
+	/* prosadata.com code generation end */
+</style>
+{% endblock %}
+
+{% block page_content %}
+<!-- prosadata code generation begin -->
+<div class="container-fluid">
+	<div class="row">
+		<img src="{{"/assets/process_success/images/work_orders.jpg" }}" id="imgtop">
+		<p style="font-family: DosisBold; font-size: 18px; text-align: center; font-weight: bold;"> Work Orders </p>	
+	</div>	
+	<p style="font-family: DosisBold; font-size: 18px; text-align: center;">
+		<a href="work_order_list">Provides list of Active Work Orders</a>
+	</p>
+	<p style="font-family: DosisBold; font-size: 18px; text-align: center;">
+		<a href="crew_location">Client Name, Vineyard, Location, Job Decription</a>
+	</p>
+	<p style="font-family: DosisBold; font-size: 18px; text-align: center;">
+		<a href="crew_names_assigned">Crew Name Assigned to Each Work Order</a>
+	</p>
+		<p style="font-family: DosisBold; font-size: 18px; text-align: center;">
+			<a href="to_do">To Do List entry and Crew Member output</a>
+	</p>
+</div>
+<!-- prosadata.com code generation end -->
+{% endblock %}
+{% block script %}
+<script>
+<!-- prosadata code generation begin -->
+<!-- prosadata.com code generation end -->
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Enables drawing on pas</h1>
+
+	<label for="person">Client:</label>
+		<select id="person">
+			{% for cont in rowContent: %}
+				<option value={{cont['name']}}>{{cont['customer_name']}}</option>
+			{% endfor %} 
+		</select>
+
+	<button id="capture" onclick="captureImg()">Take screenshot</button>
+	<label for="drawColour">Colour:</label>
+	<select id="drawColour">
+		<option>Green</option>
+		<option>Yellow</option>
+		<option>Red</option>
+	</select>
+
+	<button id="drawpoly" onclick="draw()">Draw on map</button>
+
+	<div id="map" style="width:1000px;height:500px;background:yellow">
+	</div>
+
+
+	<img id="screenshot" style="display:none" ></img>
+
+
+
+{% endblock %}
+{% block script %}
+	
+
+	<script>
+		{% include "www/js/map_drawing.js" %}
+	</script>
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrstMxtS9ddgvbfY5oiDB8seRKDskMbA8&callback=myMap"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+{% endblock %}

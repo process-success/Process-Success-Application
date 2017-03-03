@@ -1,0 +1,32 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Crew members on map</h1>
+
+	<div id="map" style="width:1000px;height:500px;background:yellow">
+	</div>
+
+
+	<img id="screenshot" style="display:none" ></img>
+
+
+
+{% endblock %}
+{% block script %}
+	
+
+	<script>
+		{% include "www/js/map_with_people.js" %}
+	</script>
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrstMxtS9ddgvbfY5oiDB8seRKDskMbA8&callback=myMap"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+{% endblock %}

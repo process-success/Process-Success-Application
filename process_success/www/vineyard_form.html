@@ -1,0 +1,39 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/vineyard_form.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<form class="form-signin form-test" role="form">
+    
+	<div class="col-md-offset-3 col-md-9">
+		<div class="row">
+			<h2>Create a New Vineyard</h2>
+		</div>
+		<div class="row">
+			<label for="vineyard_name">vineyard Name</label>
+			<input name="vineyard_name" id="vineyard_name">
+		</div>
+		<div class="row">
+			<label for="address">Address</label>
+			<input name="address" id="address">
+		</div>
+		<div class="row">
+			<button type="button" class="btn clockout btn-lg" id="submitBut">Submit</button>
+		</div>	
+	</div>
+</form>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+	{% include "www/js/vineyard_form.js" %}
+</script>
+{% endblock %}
