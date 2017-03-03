@@ -1,0 +1,70 @@
+.img-tamano{
+
+      width:150px;
+      padding:10px;
+
+    }
+
+    .altura {
+
+    	top:150px;
+
+
+    }
+.tamano {
+
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clockon {
+
+background-color: #229a2a;
+color: #fff;
+
+}
+.clockout {
+
+background-color: #ad2525;
+color: #fff;
+}
+.break {
+
+background-color: #bfbf14;
+color: #fff;
+}
+.jobcode {
+
+background-color: #17468a;
+color: #fff;
+}
+.view {
+
+background-color: #583086;
+color: #fff;
+}
+
+#ClockOn, #ClockOut{
+	width:200px;
+	/*margin-left: 50px;*/		
+}	
+
+	@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .altura { 
+
+      top:20px;
+      padding-bottom:20px;
+
+    }
+
+    .tamano {
+}
+display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+  
