@@ -1,10 +1,42 @@
 {% extends "templates/web.html" %}
-
-{% block content %}
-
-<h1>Name: {{doc.first_name}} {{doc.last_name}}</h1>
-
-<ul><li>test = {{ doc or nope }} </li></ul>
-
  
-{% endblock %}  
+{% block breadcrumbs %}
+	{% include "templates/includes/breadcrumbs.html" %}
+{% endblock %}
+
+{% block header %}
+<h1>{{doc.first_name}} {{doc.last_name}}</h1>
+{% endblock %}
+
+{% block page_content %}
+
+<span class="user-image-account"></span>
+
+{#%= frappe.avatar() %#}
+<h2>Info</h2>
+<ul>
+	<li>Employer: {{employer}}</li>
+	<li>Email: {{user}}</li>
+</ul>
+<h2>Vineyards</h2>
+<ul>
+	{% for vineyard in vineyards %}
+		<li>{{vineyard.vineyard_name}}</li>
+	{% endfor %}
+</ul> 
+
+
+{% endblock %}
+
+{%- block script %}
+<script>
+	console.log();
+	
+	$('.user-image-account').html(frappe.avatar(null, 'avatar-large'));
+</script>
+{%- endblock %}
+
+
+
+
+

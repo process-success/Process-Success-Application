@@ -25,5 +25,19 @@ def get_data():
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
 			"label": _("web options")
+		},
+		{
+			"module_name": "vineyards",
+			"color": "grey",
+			"icon": "octicon octicon-file-directory",
+			"type": "module",
+			"label": _("Vineyards")
+		},
+		{
+			"module_name": "Vineyards",
+			"color": "grey",
+			"icon": "octicon octicon-file-directory",
+			"type": "module",
+			"label": _("Vineyards")
 		}
 	]
