@@ -6,7 +6,7 @@
 <ul>
 	{% for customer in customers %}
 
-	<a href="/customers/{{customer.name}}"><li> {{ customer.first_name }} {{ customer.last_name}} </li></a>
+	<a href="{{customer.route}}"><li> {{ customer.first_name }} {{ customer.last_name}} </li></a>
 	{% endfor %}
 
 </ul>
