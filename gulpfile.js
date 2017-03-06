@@ -28,7 +28,7 @@ gulp.task('clearCache2', () => {
 
 gulp.task('watch', function() {
 	livereload.listen();
-    gulp.watch(['process_success/templates/**','process_success/www/**' ], ['clearCache2']);
+    gulp.watch(['process_success/templates/**','process_success/www/**','process_success/**' ], ['clearCache2']);
 
 });
 // Default Task

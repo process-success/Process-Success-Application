@@ -12,8 +12,11 @@ app_email = "cmuell89@gmail.com"
 app_license = "Process Success"
 home_page = "index"
 
+update_website_context = "process_success.website_options.util.update_website_context"
+
 website_context = {
-	"disable_website_theme": True
+	"disable_website_theme": True,
+	"test":"hello"
 }
 
 # Includes in <head>

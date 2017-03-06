@@ -76,18 +76,26 @@ login.route = function() {
 }
 
 login.login = function() {
-	$("form").toggle(false);
-	$(".form-login").toggle(true);
+	$(".login-content").toggle(false);
+	$(".ps_login_form").toggle(true);
 }
 
 login.forgot = function() {
-	$("form").toggle(false);
-	$(".form-forgot").toggle(true);
+	$(".login-content").toggle(false);
+	$(".ps_forgot_password_form").toggle(true);
 }
 
 login.signup = function() {
-	$("form").toggle(false);
-	$(".form-signup").toggle(true);
+	$(".login-content").toggle(false);
+	$(".ps_select_user_form").toggle(true);
+}
+login.employee = function() {
+	$(".login-content").toggle(false);
+	$(".ps_employee_form").toggle(true);
+}
+login.customer = function() {
+	$(".login-content").toggle(false);
+	$(".ps_customer_form").toggle(true);
 }
 
 
@@ -165,6 +173,6 @@ frappe.ready(function() {
 		$(window).trigger("hashchange");
 	}
 
-	$(".form-signup, .form-forgot").removeClass("hide");
+	$(".login-content").removeClass("hide");
 	$(document).trigger('login_rendered');
 });

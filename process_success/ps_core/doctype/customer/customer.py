@@ -19,6 +19,7 @@ class Customer(WebsiteGenerator):
 
 	def validate(self):
 		print("-------------validate-----------------")
+		print(self.workflow_state)
 		
 		formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
 		if not self.page_name: 
@@ -33,6 +34,14 @@ class Customer(WebsiteGenerator):
 		self.name = make_autoname( formatted_full_name + "_" + '.####')
 		#if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
 
+	def on_aprove(self):
+		print("-------------on_aprove-----------------")
+	def on_aproved(self):
+		print("-------------on_aproved-----------------")
+	def aproved(self):
+		print("-------------aproved-----------------")
+	def aprove(self):
+		print("-------------aprove-----------------")
 
 	def on_update(self):
 		print("-------------update-----------------")

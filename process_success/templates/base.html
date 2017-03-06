@@ -51,7 +51,7 @@
             {%- block banner -%}
             {% include "templates/includes/banner_extension.html" ignore missing %}
                 {% if banner_html -%}
-                <header class="container">{{ banner_html or "" }}</header>
+                <header class="container">{{ banner_html or "" }} </header>
                 {%- endif %}
             {%- endblock -%}
 
@@ -60,6 +60,7 @@
             {%- endblock -%}
             <div class="hero-and-content">
                 <div data-html-block="hero">
+
                 {%- block hero -%}{%- endblock -%}
                 </div>
                 <div class="container" data-html-block="content">
