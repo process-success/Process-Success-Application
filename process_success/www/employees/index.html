@@ -2,11 +2,11 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h1>Customer List</h1>
+<h1>Employee List</h1>
 <ul>
-	{% for customer in customers %}
+	{% for employee in employees %}
 
-	<a href="{{customer.route}}"><li> {{ customer.first_name }} {{ customer.last_name}} </li></a>
+	<a href="{{employee.route}}"><li> {{ employee.first_name }} {{ employee.last_name}} </li></a>
 	{% endfor %}
 
 </ul>

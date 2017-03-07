@@ -11,9 +11,8 @@ from frappe.website.website_generator import WebsiteGenerator
 class Employee(WebsiteGenerator):
 	website = frappe._dict(
 		#condition_field = "on_site",
-		template = "templates/generators/customer/employee_profile.html",
-		page_title_field = "full_name",
-		condition_field = "published"
+		template = "templates/generators/employee/employee_profile.html",
+		page_title_field = "full_name"
 
 	)
 	def on_trash(self):
@@ -37,7 +36,7 @@ class Employee(WebsiteGenerator):
 		print("-------------validate-----------------")
 		print(self.workflow_state)
 
-		if self.status=="aproved":
+		if self.status=="approved":
 			self.published= 1
 
 		formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
@@ -73,8 +72,8 @@ class Employee(WebsiteGenerator):
 	def get_context(self, context): 
 		print("-------------Context-----------------")
 		context.parents = [{"name": "employees", "title": "Employees","route": "/employees"}]
-		context.user_object = frappe.get_doc("User", self.user)
-		print(context.user_object.first_name)
+		#context.user_object = frappe.get_doc("User", self.user)
+		#print(context.user_object.first_name)
 
 
 @frappe.whitelist(allow_guest=True)
@@ -88,9 +87,23 @@ def customer_sign_up(email, full_name, redirect_to):
 			http_status_code=429)
 
 	user = create_user(email, full_name)
+	employee = frappe.db.get("Employee", {"email": email})
 
-	if user==0:
+
+	if user==0 or employee:
 		return 0, _("Already Registered")
+
+	else:
+		from frappe.utils import random_string
+		employee = frappe.get_doc({
+			"doctype":"Employee",
+			"email": email,
+			"first_name": first_name,
+			"last_name": last_name,
+			"user": user.name 
+		})
+		employee.flags.ignore_permissions = True
+		employee.insert()
 
 	if redirect_to:
 		frappe.cache().hset('redirect_after_login', user.name, redirect_to)
@@ -103,6 +116,7 @@ def customer_sign_up(email, full_name, redirect_to):
 def create_user(email, first_name, last_name):
 	print("-----------------CREATE USER ---------------------")
 	user = frappe.db.get("User", {"email": email})
+
 	if user:
 		if user.disabled:
 			return 0

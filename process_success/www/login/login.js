@@ -25,7 +25,32 @@ login.bind_events = function() {
 		return false;
 	});
 
+	$(".employee_signup").on("submit", function(event) {
+		console.log("employee signup");
+		event.preventDefault();
+		var args = {};
+		args.cmd = "process_success.ps_core.doctype.employee.employee.sign_up";
+		args.email = ($("#signup_email").val() || "").trim();
+		args.redirect_to = get_url_arg("redirect-to") || '';
+		args.first_name=($("#signup_firstname").val() || "").trim();
+		args.last_name=($("#signup_lastname").val() || "").trim();
+;
+		//args.full_name = ($("#signup_fullname").val() || "").trim();
+		console.log(!args.email || !valid_email(args.email) || !args.first_name || !args.last_name);
+		console.log(!args.email);
+		console.log(args.email);
+		console.log(!args.email || !valid_email(args.email));
+		console.log(!args.email || !valid_email(args.email) || !args.first_name);
+		console.log(!args.email || !valid_email(args.email) || !args.first_name || !args.last_name);
+		if(!args.email || !valid_email(args.email) || !args.first_name || !args.last_name) {
+			frappe.msgprint(__("Valid email and name required"));
+			return false;
+		}
+		login.call(args);
+		return false;
+	});
 	$(".form-signup").on("submit", function(event) {
+		console.log("other");
 		event.preventDefault();
 		var args = {};
 		args.cmd = "frappe.core.doctype.user.user.sign_up";

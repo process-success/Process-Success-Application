@@ -15,23 +15,13 @@
 {#% frappe.avatar( doc.user_object.name) %#}
 <h2>Info</h2>
 <ul>
-	<li>Employer: {{employer}}</li>
 	<li>Email: {{user}}</li>
 </ul>
-<h2>Vineyards</h2>
-<ul>
-	{% for vineyard in vineyards %}
-		<li>{{vineyard.vineyard_name}}</li>
-	{% endfor %}
-</ul> 
-
-
 {% endblock %}
 
 {%- block script %}
 
 <script>
-{#% include "public/js/frappe/misc/user.js" %#}
 	//$(frappe.avatar(frappe.user.name, 'avatar-large')).appendTo($('.user-image-account'))
 
 	frappe.ready(function() {
