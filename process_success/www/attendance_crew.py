@@ -13,7 +13,7 @@ def get_context(context):
 	role_error = 1
 	user_roles = frappe.get_roles()
 	for user_role in user_roles:
-		if (user_role == "Crew Leader"):
+		if (user_role == "Crew Leader" or user_role == "Administrator" ):
 			role_error = 0
 			break
 	if (role_error):

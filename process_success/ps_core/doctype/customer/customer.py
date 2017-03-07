@@ -18,6 +18,11 @@ class Customer(WebsiteGenerator):
 	)
 	#def make_route(self):
 	#	return 'customers/' + self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
+	def on_trash(self):
+		self.user
+		frappe.delete_doc("User", self.user)
+		print("----------USER DELETED-----------")
+
 	def before_insert(self):
 		#--- create a new user ----
 		print("-------------before insert-----------------")
