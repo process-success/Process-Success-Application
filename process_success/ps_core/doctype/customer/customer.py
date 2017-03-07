@@ -40,9 +40,6 @@ class Customer(WebsiteGenerator):
 		print(self.workflow_state)
 		if self.status=="aproved":
 			self.published= 1
-		if not self.base_user_link:
-			self.base_user_link= "<a href='#Form/User/" + self.user +"'>>Edit Base User</a>"
-
 
 
 		formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
