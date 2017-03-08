@@ -58,6 +58,21 @@ class Customer(WebsiteGenerator):
 			user.save()
 			self.set_path()
 
+		for vineyard_container in self.vineyards:
+			if frappe.db.exists("Vineyard", vineyard_container.vineyard):
+				vineyard = frappe.get_doc("Vineyard", vineyard_container.vineyard)
+				if len(vineyard.customers) == 0:
+					self.add_self_to_vineyard_customers(vineyard)
+				for cust_container in vineyard.customers:
+					if(cust_container.customer != self.name):
+						self.add_self_to_vineyard_customers(vineyard)
+
+	def add_self_to_vineyard_customers(self, vineyard):
+		customer_container = frappe.get_doc({"doctype":"customer_container"})
+		customer_container.customer = self.name
+		customer_container.customer_full_name = self.full_name
+		vineyard.append('customers', customer_container)
+		vineyard.save()	
 
 	def autoname(self):
 		print("-------------AUTO NAME-----------------")
@@ -70,7 +85,6 @@ class Customer(WebsiteGenerator):
 		self.route = self.parent_page + "/" + self.page_name
 		#if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
 
-		
 
 	def get_context(self, context): 
 		print("-------------Context-----------------")

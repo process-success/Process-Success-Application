@@ -10,3 +10,14 @@ frappe.ui.form.on('Customer', {
 		//});
 	}
 });
+
+frappe.ui.form.on('vineyard_container', {
+	vineyards_remove(frm) {
+		// frm
+		console.log("removed");
+	},
+	vineyards_add(frm) {
+		console.log(frm.doc)
+		console.log("added")
+	}
+})
