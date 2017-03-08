@@ -16,7 +16,12 @@
 	<li>Address: {{doc.address_1}}</li>
 	<li>City: {{doc.city}}</li>
 </ul>
-
+<h2>Customers</h2>
+<ul>
+	{% for customer in customers %}
+		<li>{{customer}}</li>
+	{% endfor %}
+</ul> 
 
 
 {% endblock %}

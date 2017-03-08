@@ -6,7 +6,6 @@ from frappe import msgprint
 
 def update_website_context(context):
 	print("____________update_website_context Fired___________")
-	context["shopping_cart_enabled"] = "true"
 
 #def update_website_context(context):
 #	print("____________update_website_context Fired___________")

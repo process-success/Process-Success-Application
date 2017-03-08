@@ -6,16 +6,23 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
 
 class Vineyard(WebsiteGenerator):
 
     website = frappe._dict(
         template = "templates/generators/vineyard/vineyard_profile.html",
-        condition_field = "published",
         page_title_field = "vineyard_name"
     )
 
     def get_context(self, context):
         context.parents = [{"name": "vineyards", "title": "Vineyards","route": "/vineyards"}]
-        context.user_object = frappe.get_doc("User", self.user)
+
+    def set_path(self):
+        sluggified_vineyard_name=self.scrub(self.vineyard_name)
+        self.page_name = make_autoname(sluggified_vineyard_name + "_" + '.####')
+        self.route = self.parent_page + "/" + self.page_name
+
+    def validate(self):
+        self.set_path()
