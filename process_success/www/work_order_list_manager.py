@@ -9,23 +9,21 @@ from frappe.utils import getdate, nowdate, get_time, now
 no_cache = 1
 no_sitemap = 1
 
+def test():
+	work_orders = frappe.db.sql("SELECT w.title, w.date, w.start, w.end, w.status, c.full_name, v.vineyard_name, w.name FROM tabVineyard v JOIN tabwork_order w JOIN tabCustomer c ON (v.name = w.location AND w.customer = c.name) ORDER BY w.date ASC")
+	return { "work_orders" : work_orders}
+
 def get_context(context):
 	role_error = 1
 	user_roles = frappe.get_roles()
-	for user_role in user_roles:
-		if (user_role == "Crew Leader"):
-			role_error = 0
-			break
-	if (role_error):
-		frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
+	#for user_role in user_roles:
+	#	if (user_role == "PS Manager"):
+	#		role_error = 0
+	#		break
+	#if (role_error):
+	#	frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
 
-	user = frappe.session.user
-
-	employees = frappe.db.get_values("Employee", {"user":user}, "*")
-	employee = employees[0]
-
-	employee_name = employee['full_name']
-	work_orders = frappe.db.sql("SELECT w.title, w.date, w.start, w.end, w.status, c.full_name, v.vineyard_name, w.name FROM tabVineyard v JOIN tabwork_order w JOIN tabCustomer c ON (v.name = w.location AND w.customer = c.name) WHERE w.crewlead = %s ORDER BY w.date ASC", (employee_name))
+	work_orders = frappe.db.sql("SELECT w.title, w.date, w.start, w.end, w.status, c.full_name, v.vineyard_name, w.name FROM tabVineyard v JOIN tabwork_order w JOIN tabCustomer c ON (v.name = w.location AND w.customer = c.name) ORDER BY w.date ASC")
 	#create a new list to store all the previous information and the employees names
 	work_orders_return = list()
 	#create a new list to store information for each work order
@@ -47,6 +45,5 @@ def get_context(context):
 		work_return = [work[0], work[1], work[2], work[3], work[4], work[5], work[6], work[7], users_names]
 		#add information to the list to return
 		work_orders_return.append(work_return)
-	
-	return { "work_orders" : work_orders_return,
-			"employee_name" : employee_name}
+
+	return { "work_orders" : work_orders_return}

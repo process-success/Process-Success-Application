@@ -11,7 +11,7 @@
 </style>
 {% endblock %}
 {% block page_content %}
-	<h1>List of active work orders for {{employee_name}}</h1>
+	<h1>List of work orders</h1>
 	<!--<br><br>
 	<input type="text" id="find">
 	<button onclick="find()">Find</button>
@@ -47,7 +47,7 @@
 				{% endfor %}
 			  </td>
 			  <td>
-				<a href="work_order_tasks" onclick="showTasks('{{cont[7]}}', '{{cont[0]}}')"> Show tasks </a>
+				<a href="work_order_tasks" onclick="showTasks('{{cont[7]}}', '{{cont[0]}}');"> Show tasks </a>
 			  </td>
 			</tr>   
 			

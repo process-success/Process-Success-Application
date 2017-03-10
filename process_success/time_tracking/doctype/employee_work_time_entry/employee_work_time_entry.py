@@ -112,3 +112,11 @@ def save_check_out(employee_, date_, end_):
 @frappe.whitelist(allow_guest=True)
 def save_attendance2():
 	return "save_attendance2"
+
+@frappe.whitelist(allow_guest=True)
+def save_attendance3(x):
+	return x
+	
+@frappe.whitelist(allow_guest=True)
+def save_attendance4():	
+	return "<html><body><h1>hello world!</h1></body></html>"

@@ -52,9 +52,9 @@ login.login_handlers = (function() {
 		200: function(data) {
 			if(data.message=="check_out_saved") {
 				frappe.msgprint("Check out created");
-			} else if(data.message=="No App") {
+			} else if(data.message=="No_Check_In") {
 				//alert("weird");
-				frappe.msgprint(data.message);
+				frappe.msgprint("No work hours entries to check out");
 			}
 		},
 		401: get_error_handler(__("Invalid Login")),

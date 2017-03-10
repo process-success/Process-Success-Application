@@ -1,0 +1,36 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+/* prosadata style code includes begin */	
+	{% include "templates/includes/login/login.css" %}
+	{% include "templates/css/bootstrap.css" %}
+	{% include "www/css/work_order_list.css" %}
+/* prosadata style code includes end */
+/* prosadata style code generation begin */
+/* prosadata.com style code generation end */
+</style>
+{% endblock %}
+{% block page_content %}
+	<h1 id="title"></h1>
+	<table id="tablepaging">
+    <thead>
+    <tr>
+      <th>Task</th>
+	  <th>Status</th>
+	  <th>Created on</th>
+    </tr>
+    </thead>
+    <tbody id="body1"> 
+    </tbody>
+  </table>
+  <div id="pageNavPosition" style="padding-top: 20px" align="center"></div>
+
+
+{% endblock %}
+{% block script %}
+<!-- prosadata script code generation begin -->
+<script>
+	{% include "www/js/work_order_tasks.js" %}
+</script>
+<!-- prosadata.com script code generation end -->
+{% endblock %}

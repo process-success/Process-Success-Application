@@ -1,3 +1,8 @@
+var showTasks = function(name, title){
+		localStorage.setItem('title', title);
+		localStorage.setItem('name', name);
+	};
+/*
 var rows_per_page = {{pages}}
   var pager = new Pager('tablepaging', rows_per_page);
   pager.init();
@@ -181,3 +186,4 @@ element.innerHTML = pagerHtml;
 }
 
 }
+*/
