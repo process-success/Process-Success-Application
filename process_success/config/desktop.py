@@ -27,11 +27,11 @@ def get_data():
 			"label": _("web options")
 		},
 		{
-			"module_name": "vineyards",
+			"module_name": "Time Tracking",
 			"color": "grey",
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
-			"label": _("Vineyards")
+			"label": _("Time")
 		},
 		{
 			"module_name": "Vineyards",

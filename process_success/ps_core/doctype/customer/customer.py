@@ -7,6 +7,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
+from process_success.ps_core.api import create_user
 
 class Customer(WebsiteGenerator):
 	website = frappe._dict(
@@ -16,8 +17,7 @@ class Customer(WebsiteGenerator):
 		condition_field = "published"
 
 	)
-	#def make_route(self):
-	#	return 'customers/' + self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
+
 	def on_trash(self):
 		self.user
 		frappe.delete_doc("User", self.user)
@@ -40,7 +40,6 @@ class Customer(WebsiteGenerator):
 		print(self.workflow_state)
 		if self.status=="aproved":
 			self.published= 1
-
 
 		formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
 		user=frappe.get_doc("User", self.user)
@@ -91,59 +90,6 @@ class Customer(WebsiteGenerator):
 		context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
 		context.user_object = frappe.get_doc("User", self.user)
 		print(context.user_object.first_name)
-
-
-@frappe.whitelist(allow_guest=True)
-def customer_sign_up(email, full_name, redirect_to):
-
-	if frappe.db.sql("""select count(*) from tabUser where
-		HOUR(TIMEDIFF(CURRENT_TIMESTAMP, TIMESTAMP(modified)))=1""")[0][0] > 300:
-
-		frappe.respond_as_web_page(_('Temperorily Disabled'),
-			_('Too many users signed up recently, so the registration is disabled. Please try back in an hour'),
-			http_status_code=429)
-
-	user = create_user(email, full_name)
-
-	if user==0:
-		return 0, _("Already Registered")
-
-	if redirect_to:
-		frappe.cache().hset('redirect_after_login', user.name, redirect_to)
-
-	if user.flags.email_sent:
-		return 1, _("Please check your email for verification")
-	else:
-		return 2, _("Please ask your administrator to verify your sign-up")
-
-def create_user(email, first_name, last_name):
-	print("-----------------CREATE USER ---------------------")
-	user = frappe.db.get("User", {"email": email})
-	if user:
-		if user.disabled:
-			return 0
-		else:
-			return 0
-	else:
-		from frappe.utils import random_string
-		user = frappe.get_doc({
-			"doctype":"User",
-			"email": email,
-			"first_name": first_name,
-			"last_name": last_name,
-			"enabled": 1,
-			"new_password": random_string(10),
-			"user_type": "Website User"
-		})
-		user.flags.ignore_permissions = True
-		user.insert()
-		return user
-
-#def get_full_name(attendee):
-#	user = frappe.get_doc("User", attendee)
-
-	# concatenates by space if it has value
-#	return " ".join(filter(None, [user.first_name, user.middle_name, user.last_name]))
 
 
 
