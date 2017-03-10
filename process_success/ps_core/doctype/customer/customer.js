@@ -13,11 +13,11 @@ frappe.ui.form.on('Customer', {
 
 frappe.ui.form.on('vineyard_container', {
 	vineyards_remove(frm) {
-		// frm
-		console.log("removed");
+		console.log(frm)
 	},
-	vineyards_add(frm) {
-		console.log(frm.doc)
-		console.log("added")
+	vineyards_add(doc, cdt, cdn) {
+		console.log(doc);
+		console.log(cdt);
+		console.log(cdn);
 	}
 })

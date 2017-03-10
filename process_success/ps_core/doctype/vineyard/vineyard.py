@@ -7,4 +7,6 @@ import frappe
 from frappe.model.document import Document
 
 class Vineyard(Document):
-	pass
+	
+	def delete_customer_from_customers(self, customer_name):
+		self.remove(customer_name)
