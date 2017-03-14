@@ -1,0 +1,32 @@
+
+{% raw %}
+<li class="list-group-item" id="{{ employee }}">
+<form  class="form-inline row day_time_form_row">
+	<label class="control-label col-md-2 col-sm-12 text-center day_time_form_row_element"><strong>{{ employee_name }}</strong></label>
+
+	<div class="col-md-3 col-sm-6 day_time_form_row_element">
+		<div class="input-group">
+			<div class="input-group-addon">Start</div>
+			<input type="text" class="form-control timepicker" id="exampleInputAmount" placeholder="time">
+		</div>
+	</div>
+	
+	<div class="col-md-3 col-sm-6 day_time_form_row_element">
+		<div class="input-group">
+			<div class="input-group-addon">End</div>
+			<input type="text" class="form-control timepicker" id="exampleInputAmount" placeholder="time">
+		</div>
+	</div>
+
+	<div class="col-md-2 col-sm-6 col-xs-6 text-right day_time_form_row_element">
+		<button type="button" class="btn btn-success">Update</button>
+	</div>
+
+	<div class="col-md-2 col-sm-6 col-xs-6 text-left day_time_form_row_element">
+		<button class="delete btn btn-danger">Delete</button>
+	</div>
+
+</form>
+</li>
+
+{% endraw %}

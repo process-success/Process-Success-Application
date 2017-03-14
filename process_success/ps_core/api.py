@@ -126,6 +126,82 @@ def create_user(email, first_name, last_name, password=0):
 		user.insert()
 		return user
 
+def get_crews_employees(crew_name):
+	crew=frappe.get_doc("Crew", crew_name)
+	all_members=[]
+
+	if crew.crew_lead:
+		#print(crew.crew_lead)
+		all_members.append(crew.crew_lead)
+	for team_member in crew.team_members:
+		all_members.append(team_member.employee)
+	return all_members
+
+
+
+def get_employees_crew(employee_name):
+	#Returns an array of crews.  Could be in more than one
+	#print("--------get_employees_crew---------")
+	user=frappe.db.get("Employee",{"name":employee_name})
+	crews=frappe.get_all("Crew",fields =["crew_lead","name"])
+	crews_return=[]
+
+	for crew in crews:
+		#print(crew.name)
+		all_members=get_crews_employees(crew.name)
+		crew.all_members=all_members
+		for member in all_members:
+			if member==employee_name:
+				crews_return.append(crew)
+
+	if len(crews_return)==1:
+		return crews_return[0]
+	#  there should be a better way to handel errors!!
+	elif len(crews_return)>1:
+		frappe.throw( "You are in more than one crew! This shouldent happen.")
+		return 1
+	else:
+		return 0
+		
+@frappe.whitelist(allow_guest=True)
+def get_all_employees():
+	employees=frappe.get_all("Employee",fields =["name","full_name"])
+	return employees
+
+
+
+
+
+
+
+	# print(crew)
+	# crew=frappe.get_doc("Employee", employee_name)
+	# #crew=crew.team_mambers
+	# #crew_table=frappe.get_all("Customer", fields =["first_name", "last_name" ,"name","route"])
+	# print(crew.full_name)
+
+
+# {
+# 'crew_name': u'Crew 2',
+# '_assign': None,
+# 'modified_by': u'Administrator',
+# 'name': u'Crew 2', 
+# 'parent': None,
+# 'crew_lead': u'Carle@gmail.com',
+# '_user_tags': None,
+# 'creation': datetime.datetime(2017, 3, 9, 14, 34, 41, 426349),
+# 'modified': datetime.datetime(2017, 3, 9, 14, 34, 45, 527526),
+# 'display_name': None,
+# 'idx': 0L, 
+# 'parenttype': None, 
+# '_liked_by': None, 
+# 'crew_lead_full_name': u'Carl Muller', 
+# 'owner': u'Administrator', 
+# 'docstatus': 0L, 
+# '_comments': None, 
+# 'parentfield': None
+# }
+
 # cmd
 # :
 # "process_success.ps_core.api.sign_up"
