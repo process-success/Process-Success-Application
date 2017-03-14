@@ -7,9 +7,13 @@ import frappe
 import json
 from frappe.model.document import Document
 from frappe.utils import getdate, nowdate, get_time, now
+from frappe import throw, msgprint, _
 
 class employee_work_time_entry(Document):
-	pass
+	def before_insert(self):
+		duplicate=frappe.db.get("employee_work_time_entry", {"date":self.date, "employee":self.employee})
+		if duplicate:
+			frappe.throw(_("There is a duplicate time entry for {0} on {1}").format(self.employee, self.date))
 	
 """
 Started

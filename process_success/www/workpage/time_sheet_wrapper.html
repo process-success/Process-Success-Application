@@ -1,0 +1,25 @@
+{% raw %}
+<div class="panel panel-default row">
+	<div class="panel-heading">
+		<h3 class="text-center"> Time Sheet {{ date }} for {{ crew }} </h3>
+	</div>
+
+	<ul class="list-group" >
+		<div id='{{name}}_forms'></div>
+	</ul>
+  
+	<div class="panel-footer col-md-12 text-left list-group-item">
+		<form class="form-inline row ">
+			<div class="text-right col-md-9 col-sm-8 col-xs-4 ">
+				<button type="button" class="btn btn-default">+ Add</button>
+			</div>
+			<div class="form-group text-left col-md-3 col-sm-4 col-xs-8 "><div class="input-group">
+				<input type="text" id="{{name}}_add" class="new_employees form-control awesomplete" list="employees" placeholder="employee">
+			</div></div>
+		</form>
+		
+	</div>
+</div>
+
+
+{% endraw %}
