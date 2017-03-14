@@ -19,6 +19,24 @@ class Customer(WebsiteGenerator):
 
     )
 
+    def autoname(self):
+        print("-------------AUTO NAME-----------------")
+        self.name = self.user
+        self.set_path()
+
+    def set_path(self):
+        formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
+        self.page_name = make_autoname( formatted_full_name + "_" + '.####')
+        self.route = self.parent_page + "/" + self.page_name
+        #if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
+
+
+    def get_context(self, context): 
+        print("-------------Context-----------------")
+        context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
+        context.user_object = frappe.get_doc("User", self.user)
+        print(context.user_object.first_name)
+
     def on_trash(self):
         self.user
         frappe.delete_doc("User", self.user)
@@ -116,23 +134,7 @@ class Customer(WebsiteGenerator):
         vineyard.append('customers', customer_container)
         vineyard.save() 
 
-    def autoname(self):
-        print("-------------AUTO NAME-----------------")
-        self.name = self.user
-        self.set_path()
-
-    def set_path(self):
-        formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
-        self.page_name = make_autoname( formatted_full_name + "_" + '.####')
-        self.route = self.parent_page + "/" + self.page_name
-        #if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
-
-
-    def get_context(self, context): 
-        print("-------------Context-----------------")
-        context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
-        context.user_object = frappe.get_doc("User", self.user)
-        print(context.user_object.first_name)
+    
 
 
 
