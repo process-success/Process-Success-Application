@@ -169,55 +169,35 @@ def get_all_employees():
 	return employees
 
 
+# to be called in validate or insertion
+def check_field_changed(self):
+	pass
+	##  Can make this into a util function check_table_changed(newItem, tableName)
+	## return (changed, added[], removed[])
+	## could handel non tables
+	## return (changed, newval, oldval)
+	# changed=0
+	# added_employees=[]
+	# #check if exists first
+	# if not frappe.db.get("Time Sheet",self.name):
+	# 	if self.employees:
+	# 		changed=1
+	# 		for container in self.employees:
+	# 			added_employees.append(container.employee)
+	# else:
+	# 	original_time_sheet = frappe.get_doc("Time Sheet", self.name)
+	# 	original_employees= [container.employee for container in original_time_sheet.employees]
+	# 	for container in self.employees:
+	# 		if not container.employee in original_employees:
+	# 			added_employees.append(container.employee)
+	# 			changed=1
+
+	# return (changed, added_employees)
 
 
 
 
 
-	# print(crew)
-	# crew=frappe.get_doc("Employee", employee_name)
-	# #crew=crew.team_mambers
-	# #crew_table=frappe.get_all("Customer", fields =["first_name", "last_name" ,"name","route"])
-	# print(crew.full_name)
 
 
-# {
-# 'crew_name': u'Crew 2',
-# '_assign': None,
-# 'modified_by': u'Administrator',
-# 'name': u'Crew 2', 
-# 'parent': None,
-# 'crew_lead': u'Carle@gmail.com',
-# '_user_tags': None,
-# 'creation': datetime.datetime(2017, 3, 9, 14, 34, 41, 426349),
-# 'modified': datetime.datetime(2017, 3, 9, 14, 34, 45, 527526),
-# 'display_name': None,
-# 'idx': 0L, 
-# 'parenttype': None, 
-# '_liked_by': None, 
-# 'crew_lead_full_name': u'Carl Muller', 
-# 'owner': u'Administrator', 
-# 'docstatus': 0L, 
-# '_comments': None, 
-# 'parentfield': None
-# }
-
-# cmd
-# :
-# "process_success.ps_core.api.sign_up"
-# email
-# :
-# "asdfasdfasdf@gmail.com"
-# first_name
-# :
-# "asdfsdfa"
-# last_name
-# :
-# "asdf"
-# redirect_to
-# :
-# ""
-# user_type
-# :
-# "employee"
 		

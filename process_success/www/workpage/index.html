@@ -1,41 +1,58 @@
 {% extends "templates/web.html" %}
 
 {% block style %}
+<style>
 
+
+</style>
 {% endblock %}
 
 {% block page_content %}
-<h2>Welcome {{current_user.full_name}}. It is {{today}}.</h2>
+<h2 class="text-center">Welcome {{current_user.full_name}}. It is {{today}}.</h2>
+
+<form class="form-checkin" role="form">
+
+	<input class="btn btn-lg btn-success btn-block" type="submit" value="Clock in">
+</form>
+
 <div>
     <h3>Basic info</h3>
     <li>{{today}}</li>
     <li>Crew Lead: {{crew.crew_lead}}</li>
     <li>crew: {{crew.name}}</li>
 </div>
+
+<br><br>
 <div class="time">
 </div>
 <div class="workorders"><h3>Workorders</h3></div>
-<datalist id="mylist">
-	<option>Ada</option>
-	<option>Java</option>
-	<option>JavaScript</option>
-	<option>Brainfuck</option>
-	<option>LOLCODE</option>
-	<option>Node.js</option>
-	<option>Ruby on Rails</option>
-</datalist>
+
+
+<div class="work-orders">
+</div>
+
 
 {% endblock %}
 
 {% block script %}
+	
 
 	<script>{% include "/www/workpage/workpage.js" %}</script>
-<script id="time_sheet_template" type="text/template">
-	{% include "/www/workpage/time_sheet.html" %}
-</script>
-<script id="time_sheet_wrapper" type="text/template">
-	{% include "/www/workpage/time_sheet_wrapper.html" %}
-</script>
+	<script>{% include "/www/workpage/workorders.js" %}</script>
+
+	<!-- TEMPLATES!!!! -->
+		<script id="time_sheet_template" type="text/template">
+			{% include "/www/workpage/time_sheet.html" %}
+		</script>
+		<script id="time_sheet_wrapper" type="text/template">
+			{% include "/www/workpage/time_sheet_wrapper.html" %}
+		</script>
+		<script id="workorder" type="text/template">
+			{% include "/www/workpage/workorder.html.template" %}
+		</script>
+	<!-- End Templates -->
+
+
     <script>
     </script> 
 {% endblock %}
