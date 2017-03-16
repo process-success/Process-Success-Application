@@ -7,18 +7,20 @@ import frappe
 from frappe.model.document import Document
 
 class Crew(Document):
-	def validate(self):
-		#if adding an employee
-		self_copy = frappe.get_doc("Customer", self.name)
+    def validate(self):
+        pass
+        #if adding an employee
+        # self_copy = frappe.get_doc("Customer", self.name)
 
-	def check_duplicate_workers(self):
-		#was somthing changed?
-		changes=0
-		original_crew = frappe.get_doc("Customer", self.name)
-		if not self.crew_lead==original_crew.cree_lead:
-			changed=1
+    def check_duplicate_workers(self):
+        pass
+        #was somthing changed?
+        # changes=0
+        # original_crew = frappe.get_doc("Customer", self.name)
+        # if not self.crew_lead==original_crew.cree_lead:
+        #   changed=1
 
-		
+        
 
 
 

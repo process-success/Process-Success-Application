@@ -27,8 +27,8 @@
 			});
 			employee_lables=lables;
 		});
-	}
-	employees={}
+	};
+	employees={};
 
 	ps.timesheet.get_timesheet=function(crew,date){
 		console.log("Get Time Sheet");
@@ -44,7 +44,7 @@
 			console.log(data.message);
 			ps.timesheet.output_timesheet_to(time_sheet,".time");
 		});
-	}
+	};
 	//ALL TIME SHEETS
 	ps.timesheet.get_timesheets=function(date){
 		console.log("Get Time Sheets");
@@ -59,7 +59,7 @@
 				ps.timesheet.output_timesheet_to(time_sheet,".time");
 			}
 		});
-	}
+	};
 	ps.timesheet.remove_employee_from_sheet=function(time_sheet,employee){
 		args={};
 		args.cmd=remove_employee_from_sheet;
@@ -69,11 +69,11 @@
 		ps.call(args,function(data){
 			$("#"+ ps.escapeAttr(employee)).remove()
 		});
-	}
+	};
 	ps.timesheet.add_employee_to_sheet=function(time_sheet,employee){
 
 
-	}
+	};
 
 
 	ps.timesheet.output_timesheet_to=function(timesheet,selector){
@@ -99,7 +99,7 @@
 		ps.init_ui();
 
 
-	}
+	};
 
 	function init_awesomplete(input){
 		var aw = new Awesomplete(input,{
@@ -130,14 +130,14 @@
 	  	console.log(time_sheet+" "+employee)
 	  	event.preventDefault();
 	    ps.timesheet.remove_employee_from_sheet(time_sheet,employee);
-	  }
+	  };
 	}
 	function add_employee_callback(time_sheet,employee){
 	  return function(event){
 	  	console.log(time_sheet+" "+employee)
 	  	event.preventDefault();
 	    ps.timesheet.remove_employee_from_sheet(time_sheet,employee);
-	  }
+	  };
 	}
 
 

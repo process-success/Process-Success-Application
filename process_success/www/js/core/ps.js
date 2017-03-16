@@ -13,7 +13,7 @@
 		    dropdown: false,
 		    scrollbar: false
 		});
-	}
+	}; 
 	ps.set_handlers = function(success) {
 		var get_error_handler = function(default_message,success) {
 			return function(xhr, data) {
@@ -35,7 +35,7 @@
 
 				frappe.msgprint(message);
 			};
-		}
+		};
 
 		var call_handelers = {
 			200: function(data) {
@@ -45,7 +45,7 @@
 			417: get_error_handler(__("error"))
 		};
 		return call_handelers;
-	}
+	};
 
 	ps.call = function(args,success) {
 		return frappe.call({
@@ -54,7 +54,7 @@
 			freeze: true,
 			statusCode: ps.set_handlers(success)
 		});
-	}
+	};
 
 	frappe.ready(function() {
 		ps.init_ui();
@@ -62,7 +62,7 @@
 	});
 	ps.escapeAttr=function ( str ) {
 	    return str.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" );
-	}
+	};
 
 
 

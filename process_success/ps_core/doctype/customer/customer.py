@@ -85,7 +85,6 @@ class Customer(WebsiteGenerator):
     def duplicate_vineyard_test(self):
         self_copy = frappe.get_doc("Customer", self.name)
         current_vineyards_containers = self_copy.vineyards
-        post_save_vineyard_containers = self.vineyards
         if len(current_vineyards_containers) < len(self.vineyards):
             pre_save_name_list = [container.vineyard for container in current_vineyards_containers]
             post_save_name_list = [container.vineyard for container in self.vineyards]
@@ -122,7 +121,7 @@ class Customer(WebsiteGenerator):
                     customers = vineyard.get("customers")
                     new_customer_list = []
                     for customer_container in customers:
-                        if frappe.get_doc("customer_container", customer_container.name).customer != self.name:
+                        if customer_container.customer != self.name:
                             new_customer_list.append(customer_container)
                     vineyard.customers = new_customer_list
                     vineyard.save()

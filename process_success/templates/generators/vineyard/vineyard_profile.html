@@ -10,34 +10,40 @@
 
 {% block page_content %}
 
+<h3>{{doc}}</h3>
  
-<h2>Info</h2>
+<h2>Address</h2>
 <ul>
-	<li>Address: {{doc.address_1}}</li>
-	<li>City: {{doc.city}}</li>
+<p>{{doc.address_1}}</p>
+<p>{{doc.city}}, {{doc.state}}</p>
 </ul>
-<h2>Customers</h2>
-<ul>
-	{% for customer in customers %}
-		<li>{{customer}}</li>
-	{% endfor %}
-</ul> 
+{% if doc.customers|length > 0 %}
+	<h2>Customers</h2>
+	<ul>
+		{% for customer in doc.customers %}
+			{% if variable is defined %}
+			  <li>Name: {{customer.customer_full_name}}</li>
+			  <li>Email: {{customer.customer}}</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% include "templates/includes/mapping/map.html" %}
 
 
 {% endblock %}
 
-{%- block script %}
 
-<!-- <script>
-{#% include "public/js/frappe/misc/user.js" %#}
-	//$(frappe.avatar(frappe.user.name, 'avatar-large')).appendTo($('.user-image-account'))
 
-	frappe.ready(function() {
-		$(frappe.avatar(frappe.user, 'avatar-large')).appendTo($('.user-image-account'))
-		//$('.user-image-account').html(frappe.avatar( frappe.user , 'avatar-large'));
-	});
-</script> -->
-{%- endblock %}
+{% block script %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_k9KqK-kXGq5t7-35Hnem541bOK7HiLA"></script>
+<!-- <script> {% include "/templates/generators/vineyard/vineyard_profile.js" %} </script> -->
+<!-- <link rel="stylesheet" href="/templates/includes/mapping/map.css"> -->
+<script> {% include "/templates/includes/mapping/map.js" %} </script>
+{% endblock %}
+
+
 
 
 

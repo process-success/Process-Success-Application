@@ -18,6 +18,10 @@ class Vineyard(WebsiteGenerator):
 
     def get_context(self, context):
         context.parents = [{"name": "vineyards", "title": "Vineyards","route": "/vineyards"}]
+        if(len(self.customers) > 0):
+            context.customers = [frappe.get_doc("Customer", container.customer) for container in self.customers]
+
+        context.locations = [location.geojson for location in self.locations]
 
     def set_path(self):
         sluggified_vineyard_name=self.scrub(self.vineyard_name)
@@ -26,3 +30,7 @@ class Vineyard(WebsiteGenerator):
 
     def validate(self):
         self.set_path()
+
+
+   
+
