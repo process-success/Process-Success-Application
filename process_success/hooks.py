@@ -60,7 +60,7 @@ role_home_page = {
 # ----------
 
 # automatically create page for each record of this doctype
-website_generators = ["Customer","Employee", "Vineyard"]
+website_generators = ["Customer", "Employee", "Vineyard", "work_order"]
 
 
 # Installation

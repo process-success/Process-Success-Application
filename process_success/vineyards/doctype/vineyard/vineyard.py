@@ -5,19 +5,18 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
-from frappe.model.document import Document
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
 
 class Vineyard(WebsiteGenerator):
 
     website = frappe._dict(
-        template = "templates/generators/vineyard/vineyard_profile.html",
-        page_title_field = "vineyard_name"
+        template="templates/generators/vineyard/vineyard_profile.html",
+        page_title_field="vineyard_name"
     )
 
     def get_context(self, context):
-        context.parents = [{"name": "vineyards", "title": "Vineyards","route": "/vineyards"}]
+        context.parents = [{"name": "vineyards", "title": "Vineyards", "route": "/vineyards"}]
         if(len(self.customers) > 0):
             context.customers = [frappe.get_doc("Customer", container.customer) for container in self.customers]
 
