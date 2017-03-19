@@ -83,6 +83,8 @@ class Customer(WebsiteGenerator):
         self.delete_customer_from_vineyards()
         
     def duplicate_vineyard_test(self):
+        if not frappe.db.exists("Customer", self.name):
+            return True
         self_copy = frappe.get_doc("Customer", self.name)
         current_vineyards_containers = self_copy.vineyards
         if len(current_vineyards_containers) < len(self.vineyards):
@@ -110,21 +112,22 @@ class Customer(WebsiteGenerator):
 
     def delete_customer_from_vineyards(self):
         # NOTE: annot be called in on_update as save() method updates child tables with the deletion event in the UI (for desk UI forms)
-        self_copy = frappe.get_doc("Customer", self.name)
-        current_vineyards_containers = self_copy.vineyards
-        if len(current_vineyards_containers) > len(self.vineyards):
-            pre_save_name_list = [frappe.get_doc("vineyard_container", container.name).vineyard for container in current_vineyards_containers]
-            post_save_name_set = set(frappe.get_doc("vineyard_container", container.name).vineyard for container in self.vineyards)
-            for vineyard_name in pre_save_name_list:
-                if vineyard_name not in post_save_name_set:
-                    vineyard = frappe.get_doc("Vineyard", vineyard_name)
-                    customers = vineyard.get("customers")
-                    new_customer_list = []
-                    for customer_container in customers:
-                        if customer_container.customer != self.name:
-                            new_customer_list.append(customer_container)
-                    vineyard.customers = new_customer_list
-                    vineyard.save()
+        if frappe.db.exists("Customer", self.name):
+            self_copy = frappe.get_doc("Customer", self.name)
+            current_vineyards_containers = self_copy.vineyards
+            if len(current_vineyards_containers) > len(self.vineyards):
+                pre_save_name_list = [frappe.get_doc("vineyard_container", container.name).vineyard for container in current_vineyards_containers]
+                post_save_name_set = set(frappe.get_doc("vineyard_container", container.name).vineyard for container in self.vineyards)
+                for vineyard_name in pre_save_name_list:
+                    if vineyard_name not in post_save_name_set:
+                        vineyard = frappe.get_doc("Vineyard", vineyard_name)
+                        customers = vineyard.get("customers")
+                        new_customer_list = []
+                        for customer_container in customers:
+                            if customer_container.customer != self.name:
+                                new_customer_list.append(customer_container)
+                        vineyard.customers = new_customer_list
+                        vineyard.save()
 
     def add_self_to_vineyard_customers_container(self, vineyard):
         customer_container = frappe.get_doc({"doctype":"customer_container"})
