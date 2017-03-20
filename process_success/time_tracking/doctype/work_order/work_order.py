@@ -21,14 +21,14 @@ class work_order(WebsiteGenerator):
         print("############## CONTEXT ###############")
         context.parents = [{"name": "work_orders", "title": "Work Orders", "route": "/work_orders"}]
         context.name = self.name
-        context.status = self.status if context.status else "Unknown"
-        context.date = self.date if context.date else "Unassigned"
-        context.location = self.location
-        context.customer = self.customer
-        context.crew = self.crew
-        context.crew_lead = self.crewlead
-        if(len(self.subtask) > 0):
-            context.tasks = [frappe.get_doc("sub_task_work_order", stask) for stask in self.subtask]
+        context.status = self.status if self.status else "Unknown"
+        context.date = self.date if self.date else "Not provided"
+        context.location = self.location if self.location else "Not provivded"
+        context.customer = self.customer if self.customer else "Unknown"
+        context.crew = self.crew if self.crew else "Unassigned"
+        context.crew_lead = self.crewlead if self.crewlead else "Unassigned"
+        context.subtasks = [task for task in self.get("subtask")]
+
 
     def set_path(self):
         self.page_name = self.name

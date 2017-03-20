@@ -9,7 +9,20 @@
 {% endblock %}
 
 {% block page_content %}
-
-<h3>{{doc}}</h3>
-
+    <h4>Info:</h4>
+    <p>
+        Word Order ID: {{name}}<br>
+        Status: {{doc.status}}<br>
+        Date: {{doc.date}}<br>
+        Location: {{doc.status}}<br>
+        Customer: {{doc.name}}<br>
+        Crew: {{doc.crew}}<br>
+        Crewlead: {{ doc.crewlead }}<br>
+        Subtasks:
+            <ul>
+            {% for task in subtasks %}
+                <li>{{ task.task }}: {{ "Completed" if task.status == 1 else "Incomplete"}}</li>
+            {%  endfor %}
+            </ul>
+    </p>
 {% endblock %}
