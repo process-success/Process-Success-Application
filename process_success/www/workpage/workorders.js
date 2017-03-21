@@ -52,7 +52,7 @@
 		$.each($(".workorder"),function(i,o){
 			var status=$(o).find(".status option:selected").text();
 			$.each($(o).find(".checkbox"),function(ai,ao){
-				$(ao).find("lable").removeClass("line-through");
+				$(ao).find("label").removeClass("line-through");
 				if ($(ao).find("input").is(":checked")){
 					$(ao).find("label").addClass("line-through");
 				}

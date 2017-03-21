@@ -97,9 +97,26 @@ def update_time_units(time_units):
 			print (time_obj.start)
 			time_obj.save();
 
+
+"""
+MOVE THIS TO WORKORDERS
+MAKE ALL FILTERS OPTIONAL
+"""
 @frappe.whitelist()
-def get_workorders(crew, date):
-	workorders=frappe.get_all("work_order",filters={'date': date, "crew":crew},fields=["name"])
+def get_workorders(crew=0, date=0,status=0,location=0):
+	filter={}
+	if crew:
+		filter['crew']=crew
+	if date:
+		filter['date']=date
+	if status:
+		filter['status']=date
+	if location:
+		filter['location']=date
+	if not filter:
+		filter={"*"}
+
+	workorders=frappe.get_all("work_order",filters=filter,fields=["name"])
 	print ("___________WORK ORDERS _________________")
 	print (workorders)
 	woo=[]
