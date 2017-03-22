@@ -15,5 +15,5 @@ class Location(Document):
 		# Mechanism for retrieving dynamically linked doctype
 		# linked_doc = frappe.get_doc(self.document_type, self.document_id)
 		parent_doc = frappe.get_doc(self.parenttype, self.parent)
-		self.name = parent_doc.vineyard_name + " - " + self.document_id
+		self.name = self.parenttype + " - " + self.document_id
 		
