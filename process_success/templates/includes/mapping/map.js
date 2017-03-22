@@ -25,8 +25,8 @@
     }
 
     frappe.ready(function(){
+        // requires JSON. import json and uses dumps in your .py controller files.
         var geojson = {{geojson}}
-
         google.maps.event.addDomListener(window, 'load', initMap(geojson.data, geojson.center));
     });
 
