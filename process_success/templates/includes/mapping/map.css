@@ -4,7 +4,7 @@
 					border: 2px solid #CCC; 
 					margin-bottom: 20px; 
 					background-color:#FFF }
-	  #map-container { height: 400px }
+	  #map { height: 400px }
 	  @media all and (max-width: 991px) {
 		#map-outer  { height: 650px }
 		}
