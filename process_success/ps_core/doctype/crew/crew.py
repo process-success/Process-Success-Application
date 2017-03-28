@@ -4,10 +4,14 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe.model.naming import make_autoname
 from frappe.model.document import Document
 from frappe import throw, msgprint, _
 
 class Crew(Document):
+
+	def autoname(self):
+		self.name = make_autoname("CREW" + "-" + ".####")
 
 	def validate(self):
 		#if adding an employee
