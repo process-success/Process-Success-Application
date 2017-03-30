@@ -14,7 +14,21 @@ def install_basic_docs():
         {'doctype': "Role", "role_name": "Employee"},
         {'doctype': "Role", "role_name": "Crew Lead"},
         {'doctype': "Role", "role_name": "Customer"},
-        {'doctype': "Role", "role_name": "Manager", "desk_access": 1}
+        {'doctype': "Role", "role_name": "Manager", "desk_access": 1},
+        {'doctype': "Top Bar Item", "parent":"Website Settings", "parentfield":"top_bar_items",
+                    "parenttype": "Website Settings", "label": "Directory"},
+        {'doctype': "Top Bar Item", "parent": "Website Settings", "parentfield": "top_bar_items",
+                    "parenttype": "Website Settings", "parent_label": "Directory", "url": "/employees",
+                    "label": "Employees"},
+        {'doctype': "Top Bar Item", "parent": "Website Settings", "parentfield": "top_bar_items",
+         "parenttype": "Website Settings", "parent_label": "Directory", "url": "/customers",
+         "label": "Customers"},
+        {'doctype': "Top Bar Item", "parent": "Website Settings", "parentfield": "top_bar_items",
+         "parenttype": "Website Settings", "parent_label": "Directory", "url": "/vineyards",
+         "label": "Vineyards"},
+        {'doctype': "Top Bar Item", "parent": "Website Settings", "parentfield": "top_bar_items",
+         "parenttype": "Website Settings", "parent_label": "Directory", "url": "/work_orders",
+         "label": "Work Orders"}
     ]
 
     for d in install_docs:
