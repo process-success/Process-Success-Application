@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# Process Success
+/*
+/index.html
+http://localhost:8000/
+http://localhost:8000/assets/css/frappe-web.css
+http://localhost:8000/assets/js/frappe-web.min.js
+http://localhost:8000/assets/frappe/js/lib/awesomplete/awesomplete.min.js
+http://localhost:8000/assets/frappe/js/lib/awesomplete/awesomplete.css
+http://localhost:8000/assets/frappe/css/bootstrap.css
+
+NETWORK:
+http://localhost:9000/socket.io/

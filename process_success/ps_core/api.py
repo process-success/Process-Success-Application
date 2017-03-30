@@ -3,6 +3,7 @@ from frappe import msgprint
 from frappe.utils import random_string
 from frappe import throw, msgprint, _
 from frappe.model.document import Document
+from frappe.utils import cint, nowdate, nowtime, cstr, add_days, flt, today
 
 def testFunction(workorder):
 	workorder = frappe.get_doc("work_order" , workorder)
@@ -163,10 +164,26 @@ def get_employees_crew(employee_name):
 	else:
 		return 0
 		
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
 def get_all_employees():
 	employees=frappe.get_all("Employee",fields =["name","full_name"])
 	return employees
+
+
+@frappe.whitelist(allow_guest=True)
+def get_current_users_info():
+	user={};
+	user['username'] = frappe.session.user
+	user['current_user'] = frappe.db.get("User",{"name":user['username']})
+	crew = get_employees_crew(user['username'])
+	if not crew:
+		user['crew'] = 'none'
+	else:
+		user['crew'] = get_employees_crew(user['username']).name
+	user['today'] = today()
+	users=[]
+	users.append(user)
+	return user
 
 
 # to be called in validate or insertion
@@ -194,10 +211,3 @@ def check_field_changed(self):
 
 	# return (changed, added_employees)
 
-
-
-
-
-
-
-		

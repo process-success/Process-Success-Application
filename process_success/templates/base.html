@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Built on Frappe. https://frappe.io/ -->
-<html lang="en">
+<html lang="en" manifest="{{ manifest or '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,15 +26,20 @@
 
         {%- for link in web_include_css %}
         <link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
+        
+
         <!--  START PS CSS ADDITIONS SHOULD BE COMPLILED-->
+
         <link type="text/css" rel="stylesheet" href="/assets/frappe/js/lib/awesomplete/awesomplete.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style>
+        {% include "www/js/core/bootstrap.min.css" %}
         {% include "/www/js/core/jquery.timepicker.css" %}
         {% include "/www/js/core/timesheet.css" %}
         .ui-timepicker-container {
             z-index: 1050!important;
         }
+
+
         </style>
 
 
@@ -94,17 +99,26 @@
     </div>
     {% block base_scripts %}
     <!-- js should be loaded in body! -->
-    <script type="text/javascript"
+        <script type="text/javascript"
         src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript"
         src="/assets/js/frappe-web.min.js"></script>
+
 
         <!-- !!! PS JS should be compiled and minimized     -->
         <!--     PS JS should be compiled and minimized     -->
         <!--     PS JS should be compiled and minimized !!!!-->
         <script type="text/javascript"
+        src="/assets/frappe/js/lib/socket.io.min.js"></script>
+         <script type="text/javascript"
+        src="assets/process_success/dist/lib.js"></script>
+
+
+        <!--     Dev ok but in real thing scripts tag    -->
+         <script>{% include "/public/dist/main.js" %}</script>
+
+        <script type="text/javascript"
         src="/assets/frappe/js/lib/awesomplete/awesomplete.min.js"></script>
-        <script>{% include "/www/js/core/ps.js" %}</script>
         <script>{% include "/www/js/core/jquery.timepicker.min.js" %}</script>
 
     {% endblock %}

@@ -6,6 +6,8 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
+import json
+import copy
 
 class work_order(WebsiteGenerator):
     
@@ -36,3 +38,53 @@ class work_order(WebsiteGenerator):
 
     def validate(self):
         self.set_path()
+
+
+@frappe.whitelist()
+def get_workorders(crew=0, date=0,status=0,location=0):
+    filter={}
+    if crew:
+        filter['crew']=crew
+    if date:
+        filter['date']=date
+    if status:
+        filter['status']=status
+    if location:
+        filter['location']=location
+    if not filter:
+        filter={"*"}
+    workorders=frappe.get_all("work_order",filters=filter,fields=["*"])
+    print ("_________________get_workorders _________________")
+    print (workorders)
+    workorder_list=[]
+    if workorders:
+        for workorder in workorders:
+            workorder_list.append(frappe.get_doc("work_order",workorder.name))
+    return workorder_list
+
+@frappe.whitelist()
+def update_workorder(item):
+    """ takes the jason representation 
+    Can update 
+    start
+    end
+    status
+    subtasks.status changes
+    """
+    j=json.loads(item)
+    workorderObj=frappe.get_doc("work_order",j["name"])
+    workorderObj.start=j["start"]
+    workorderObj.end=j["end"]
+    workorderObj.status=j["status"]
+
+    if workorderObj.subtask:
+        index = 0
+        for task in workorderObj.subtask:
+            task.status=j["subtask"][index]["status"]
+            index+=1
+    workorderObj.save()
+
+    return workorderObj
+
+
+

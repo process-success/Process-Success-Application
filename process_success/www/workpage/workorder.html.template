@@ -1,27 +1,41 @@
 
 {% raw %}
-<div class="col-md-4 col-sm-4">
-	<div class="panel panel-default workorder">
-		<div class="panel-heading"><h3 class="panel-title"><a>{{location}}</a></h3></div>
+
+	{% 
+	var panelclass="panel-default";
+	if (status=="Incomplete"){
+		panelclass="panel-danger"; 
+	}
+	if (status=="Complete"){
+		panelclass="panel-success"; 
+	}
+	if (status=="Started"){
+		panelclass="panel-warning"; 
+	}
+
+	%} 
+	<div id="{{name}}" class="panel {{panelclass}} workorder" >
+		<div class="panel-heading"><h3 class="panel-title"><a href="{{location_route}}">{{location}}</a></h3></div>
 		<div class="panel-body">
 			<label class="control-label">Status</label>
 
 
-			<select class="form-control status">
+			<select data-workorder="{{name}}" class="form-control status">
 				<option {%  if (status=="Incomplete"){  %}  selected {% } %}>Incomplete</option>
 				<option {%  if (status=="Complete"){  %}  selected {% } %}>Complete</option>
-				<option {%  if (status=="Pending"){  %}  selected {% } %}>Pending</option>
+				<option {%  if (status=="Pending"||status=="Created"){  %}  selected {% } %}>Pending</option>
 				<option {%  if (status=="Started"){  %}  selected {% } %}>Started</option>
 			</select>
 
 			<div class="check_boxes">
 				{% for (var i = 0; i < subtask.length; i++){ task=subtask[i];%}
-				<div class="checkbox"><label><input type="checkbox" 
+				<div class="checkbox" data-workorder="{{name}}" data-subidx="{{task.idx}}">
+				<label {% if (task.status){  %} class="line-through"    {%  }  %}>
+				<input type="checkbox" 
 				{% if (task.status){  %} checked    {%  }  %}>{{task.task}}</label></div>
 				{% } %}
 			</div>
-			<a class="" href="">More Information</a></div>
+			<a class="" href="{{route}}">More Information</a></div>
 		</div>
 	</div>
-</div>
 {% endraw %}

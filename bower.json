@@ -1,0 +1,31 @@
+{
+  "name": "process_success",
+  "description": "Application process success",
+  "private": true,
+  "main": "ps_main.js",
+  "authors": [
+    "Derek Brenner <derekbrenner@gmail.com>"
+  ],
+  "homepage": "https://github.com/process-success/Process-Success-Application",
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6",
+    "modernizr": "~2.8.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "directory": "process_success/public/vendor"
+}
+
+
+
+  // "overrides": {
+  //   "bootstrap": {
+  //     "main": [
+  //       "scss/bootstrap.scss",
+  //       "dist/js/bootstrap.js"
+  //     ]
+  //   }
+  // },
+
