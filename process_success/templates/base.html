@@ -64,6 +64,15 @@
     </script>
 </head>
 <body data-path="{{ path }}">
+    <div id="alerts">
+        <div hidden display="none" class="alert alert-success" role="alert">
+        <strong>Success:</strong><span class="success-text"></span>
+        </div>
+        <div hidden display="none" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        <strong>Fail:</strong><span class="fail-text"></span>
+        </div>
+    </div>
     <div class="main-section">
         <div>
             {%- block banner -%}

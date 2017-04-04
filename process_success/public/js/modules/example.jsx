@@ -35,39 +35,39 @@ export default class DaysWorkorders extends React.Component{
 		//init the object
 		//the object should be defined in:
 		//   public/js/core/ps.init_ob.js
-		this.workorderTool=ps.initWorkorder();
+		this.objTool=ps.initWorkorder();
 		
 		//Call the get function 
 		//populates the items
-		this.workorderTool.get(args,function(){
+		this.objTool.get(args,function(){
 			//call the function that updates the state 
 			this.updateFromServer();
 			//Setup function for react
 			//takes a callback to update/renderfunction
 			//callback is used when a change is emiited from elsewhere
-			this.workorderTool.reactSetup(this.updateFromServer);
+			this.objTool.reactSetup(this.updateFromServer);
 		}.bind(this));
 
 		//Finaly we set the state,  this is probably from local cache 
 		//when the server call is done it will be set again from the update
-		if (this.workorderTool.items===undefined ||this.workorderTool.items=== 0 ){
-		}else{this.state.workorders=this.workorderTool.items;}
+		if (this.objTool.items===undefined ||this.objTool.items=== 0 ){
+		}else{this.state.items=this.objTool.items;}
 	}
 
 	//action function
 	onStatusChanged(status, index){
 		//change the thing that changed in the tool object
-		this.workorderTool.items[index].status=status;
+		this.objTool.items[index].status=status;
 		//Set state makes the module update
-		this.setState({workorders:this.workorderTool.items});
+		this.setState({items:this.objTool.items});
 		//run an update on the object
 		//changes to server
 		//sends out a change emmit
-		this.workorderTool.update(this.workorderTool.items[index]);
+		this.objTool.update(this.objTool.items[index]);
 	}
 	//simple updates state from what in tool object
 	updateFromServer(){
-		this.setState({workorders:this.workorderTool.items});
+		this.setState({items:this.objTool.items});
 	}
 
 	//optinal helper function to build out a compnent 
@@ -91,20 +91,20 @@ export default class DaysWorkorders extends React.Component{
 	//-----------------------
 	render(){
 		//handel empty return
-		if (this.state.workorders===0||this.state.workorders==0){
-			return (<div>No Workorders</div>);
+		if (this.state.items===0||this.state.items===undefined){
+			return (<div>No items</div>);
 		}
 		//store output
 		var output=[]
 		//do some loop
-		this.state.workorders.map(function(item, index){
+		this.state.items.map(function(item, index){
 			//you can add logic here to sort
 			//add the workorder component to the output
 			output.push(this.workorderObj(item,index));
 		}.bind(this));
 
 
-		console.log(this.workorderTool);
+		console.log(this.objTool);
 		return(
 			<div className="workorder_container">
 				{output}

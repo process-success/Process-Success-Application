@@ -59,38 +59,50 @@
 			return obj.items;
 		};
 
-		obj.update=function(item,success){
+		obj.update=function(item,success,after){
 			updateStorage();
 			var args={};
 			args.cmd=obj.update_function;
 			args.item=item;
 			if (ps.online){
-				console.log("________update__________");
-				console.log(item);
+
 				ps.call(args,function(data){
-					ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+					if (typeof(after)!='undefined' && after==1){
+						var index=obj.get_index_of_item(item.name);
+						console.log(data);
+						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:data.message});
+					}else{
+						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+					}
+
 					if (typeof(success)!="undefined"){
-						success();
+						success(data.message);
 					}
 				});
 			}
 			else{
-				var previousItems=ps.storage.get(obj.id+"que");
-				if (typeof(previousItems)!="undefined"){
-					var insert=1;
-					for(var i = 0; i < previousItems.length; i++){
-						if (previousItems[i]==item.name){
-							insert=0;
-						}
-					}
-					if(insert){
-						previousItems.push(item.name);
-					}
-
-				}else{previousItems=[item.name];}
-				ps.storage.store(obj.id+"que",previousItems);
-				obj.hasUpdates=1;
+				obj.addUpdateQue(item);
 			}
+		};
+		obj.changed=function(item){
+			ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+		};
+		obj.addUpdateQue=function(item){
+			var previousItems=ps.storage.get(obj.id+"que");
+			if (typeof(previousItems)!="undefined"){
+				var insert=1;
+				for(var i = 0; i < previousItems.length; i++){
+					if (previousItems[i]==item.name){
+						insert=0;
+					}
+				}
+				if(insert){
+					previousItems.push(item.name);
+				}
+
+			}else{previousItems=[item.name];}
+			ps.storage.store(obj.id+"que",previousItems);
+			obj.hasUpdates=1;
 		};
 
 		obj.updateQue=function(callback){
@@ -120,12 +132,16 @@
 				else{callback();}
 			}
 		};
+		//This needs to be able to handel adding and removing items, currently nope
 		obj.reactSetup=function(callback){
 			obj.renderHook=callback;
-			for(var i = 0; i < obj.items.length; i++){ 
-				var item=obj.items[i];
-				console.log(obj.doctype+'_'+item.name);
-				ps.socket.socket.on('update_'+obj.doctype+'_'+item.name, return_react_emit());
+			if (typeof(obj.items)=="undefined"){}
+			else{
+				for(var i = 0; i < obj.items.length; i++){ 
+					var item=obj.items[i];
+					console.log(obj.doctype+'_'+item.name);
+					ps.socket.socket.on('update_'+obj.doctype+'_'+item.name, return_react_emit());
+				}
 			}
 		},
 		obj.render=function(item,template,selector,bindings){
@@ -175,12 +191,13 @@
 					obj.derender(item_pushed);
 					obj.rerender(item_pushed,template,selector,bindings);
 				}
-				console.log("render hook");
+				//console.log("render hook");
 				obj.renderHook();
 			};
 		}
 		function return_react_emit(){
 			return function(item_pushed) {
+				console.log("react emmit", item_pushed);
 				var index=obj.get_index_of_item(item_pushed.name);
 				obj.items[index]=item_pushed;
 				obj.renderHook();
@@ -190,7 +207,9 @@
 		function get_from_server(args,callback){
 			ps.call(obj.args,function(data){
 				set_items(obj.args,data.message);
+				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
+				console.log("-----------------------------------------------");
 				if(typeof(callback)!='undefined'){callback();}
 			});
 		}

@@ -8,49 +8,23 @@
 {% endblock %}
 
 {% block page_content %}
-<h2 class="text-center">Welcome <span class="username"></span>. It is <span class="today"></span>.</h2>
 
-<form class="form-checkin" role="form">
-
-	<input class="btn btn-lg btn-success btn-block" type="submit" value="Clock in">
-</form>
-
-<div>
-</div>
-
-<br><br>
-<div class="time">
-</div>
-<div class="workorders"><h3>Workorders</h3></div>
-
+<br />
 
 <div class="work-orders">
 </div>
 <div id="root"></div>
+<div id="time"></div>
 <div id="app"></div>
+
 
 {% endblock %}
 
 {% block script %}
 	
 
-	<script>{% include "/www/workpage/workpage2.js" %}</script>
+	<script>{% include "/www/workpage/workpage.js" %}</script>
 
-	<!-- TEMPLATES!!!! -->
-		<script id="time_sheet_template" type="text/template">
-			{% include "/www/workpage/time_sheet.html" %}
-		</script>
-		<script id="time_sheet_wrapper" type="text/template">
-			{% include "/www/workpage/time_sheet_wrapper.html" %}
-		</script>
-		<script id="workorder" type="text/template">
-			{% include "/www/workpage/workorder.html.template" %}
-		</script>
-	<!-- End Templates -->
-
-
-    <script>
-    </script> 
 {% endblock %}
 
 {% block sidebar %}{% endblock %}

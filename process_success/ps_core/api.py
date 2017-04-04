@@ -189,25 +189,44 @@ def get_current_users_info():
 # to be called in validate or insertion
 def check_field_changed(self):
 	pass
-	##  Can make this into a util function check_table_changed(newItem, tableName)
-	## return (changed, added[], removed[])
-	## could handel non tables
-	## return (changed, newval, oldval)
-	# changed=0
-	# added_employees=[]
-	# #check if exists first
-	# if not frappe.db.get("Time Sheet",self.name):
-	# 	if self.employees:
-	# 		changed=1
-	# 		for container in self.employees:
-	# 			added_employees.append(container.employee)
-	# else:
-	# 	original_time_sheet = frappe.get_doc("Time Sheet", self.name)
-	# 	original_employees= [container.employee for container in original_time_sheet.employees]
-	# 	for container in self.employees:
-	# 		if not container.employee in original_employees:
-	# 			added_employees.append(container.employee)
-	# 			changed=1
 
-	# return (changed, added_employees)
+def check_table_changed(newItem, tableName):
+	## return (changed, added[], removed[])
+	## return (changed, newval, oldval)
+	#usage
+	# return_dic=check_table_changed(this, 'table_name')
+	# for toDelete in return_dic['removed']:
+	# 	frappe.get_doc(toDelete.doctype, toDelete.name).delete()
+	changed=0
+	added=[]
+	removed=[]
+	old_item=frappe.db.get(newItem.doctype, newItem.name)
+
+	if not old_item:
+	 	if newItem[tableName]:
+	 		for item in newItem[tableName]:
+	 			added_employees.append(item)
+	 			changed=1
+	else:
+		original_items= [container for container in old_item[tableName]]
+		new_items_items= [container for container in new_item[tableName]]
+
+		for container in newItem[tableName]:
+			if not container in original_items:
+				added.append(container)
+				changed=1
+
+		for container in original_items:
+			if not container in new_items_items:
+				removed.append(container)
+				changed=1
+
+	return {'changed':changed, 'added' : added, 'removed':removed};
+
+
+
+
+
+
+
 

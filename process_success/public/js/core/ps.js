@@ -28,7 +28,29 @@
 	//   ps.set_handlers
 	//   ps.call
 	//----------------------------------------
+	ps.alert={};
+	ps.alert.config={
+		fadeIn:200,
+		fadeOut:600,
+		showFor:2000
+	};
+	ps.successAlert=function(msg){
+		$(".success-text").html(" "+msg);
+		var alert=$("#alerts .alert-success");
+		alert.fadeIn(ps.alert.config.fadeIn);
+		setTimeout(function(){
+		  alert.fadeOut(ps.alert.config.fadeOut);
+		}, ps.alert.config.showFor);
 
+	};
+	ps.failAlert=function(msg){
+		$(".fail-text").html(" "+msg);
+		var alert=$("#alerts .alert-danger");
+		alert.fadeIn(ps.alert.config.fadeIn);
+		setTimeout(function(){
+		  alert.fadeOut(ps.alert.config.fadeOut);
+		}, ps.alert.config.showFor);
+	};
 	ps.set_handlers = function(success,fail) {
 		var get_error_handler = function(default_message,success,fail) {
 			return function(xhr, data) {
@@ -84,7 +106,7 @@
 	// probably outdated depreciated.   might move away form the original plugin
 	//in favor of the standard type="time" feilds html5
 
-	ps.preptime=function(time){
+	ps.am_to_numeric=function(time){
 		var finaltime="";
 		var timearray=time.split(":");
 		var am=timearray[1].split("A");
@@ -96,6 +118,29 @@
 		}
 		return finaltime;
 	};
+	ps.time_add_digits=function(time){
+		var timearr=time.split(':');
+		if(timearr.length==2){
+			return timearr[0]+":"+timearr[1]+":00";
+		}
+		else{return time;}
+	};
+	ps.time_add_front_zero=function(time){
+		if(typeof(time)!="undefined"){
+			var timearr=time.split(':');
+			var returnTime="";
+			for(var i = 0; i < timearr.length; i++){
+				var digit=timearr[i];
+				if(digit.length==1){
+					digit="0"+digit;
+				}
+				if(i==0){returnTime+=digit;}
+				else{returnTime+=":"+digit;}
+			}
+			return returnTime;
+		}
+	};
+
 
 	ps.frappe.isready=0;
 

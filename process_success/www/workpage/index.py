@@ -7,7 +7,7 @@ no_cache = 1
 no_sitemap = 1
 
 def get_context(context):
-	context.manifest="/assets/process_success/app.appcache2"
+	context.manifest="/assets/process_success/app.appcache"
 
 
 

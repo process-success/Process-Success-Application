@@ -28,7 +28,29 @@
 	//   ps.set_handlers
 	//   ps.call
 	//----------------------------------------
+	ps.alert={};
+	ps.alert.config={
+		fadeIn:200,
+		fadeOut:600,
+		showFor:2000
+	};
+	ps.successAlert=function(msg){
+		$(".success-text").html(" "+msg);
+		var alert=$("#alerts .alert-success");
+		alert.fadeIn(ps.alert.config.fadeIn);
+		setTimeout(function(){
+		  alert.fadeOut(ps.alert.config.fadeOut);
+		}, ps.alert.config.showFor);
 
+	};
+	ps.failAlert=function(msg){
+		$(".fail-text").html(" "+msg);
+		var alert=$("#alerts .alert-danger");
+		alert.fadeIn(ps.alert.config.fadeIn);
+		setTimeout(function(){
+		  alert.fadeOut(ps.alert.config.fadeOut);
+		}, ps.alert.config.showFor);
+	};
 	ps.set_handlers = function(success,fail) {
 		var get_error_handler = function(default_message,success,fail) {
 			return function(xhr, data) {
@@ -84,7 +106,7 @@
 	// probably outdated depreciated.   might move away form the original plugin
 	//in favor of the standard type="time" feilds html5
 
-	ps.preptime=function(time){
+	ps.am_to_numeric=function(time){
 		var finaltime="";
 		var timearray=time.split(":");
 		var am=timearray[1].split("A");
@@ -96,6 +118,29 @@
 		}
 		return finaltime;
 	};
+	ps.time_add_digits=function(time){
+		var timearr=time.split(':');
+		if(timearr.length==2){
+			return timearr[0]+":"+timearr[1]+":00";
+		}
+		else{return time;}
+	};
+	ps.time_add_front_zero=function(time){
+		if(typeof(time)!="undefined"){
+			var timearr=time.split(':');
+			var returnTime="";
+			for(var i = 0; i < timearr.length; i++){
+				var digit=timearr[i];
+				if(digit.length==1){
+					digit="0"+digit;
+				}
+				if(i==0){returnTime+=digit;}
+				else{returnTime+=":"+digit;}
+			}
+			return returnTime;
+		}
+	};
+
 
 	ps.frappe.isready=0;
 
@@ -351,38 +396,50 @@ ps.storage={
 			return obj.items;
 		};
 
-		obj.update=function(item,success){
+		obj.update=function(item,success,after){
 			updateStorage();
 			var args={};
 			args.cmd=obj.update_function;
 			args.item=item;
 			if (ps.online){
-				console.log("________update__________");
-				console.log(item);
+
 				ps.call(args,function(data){
-					ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+					if (typeof(after)!='undefined' && after==1){
+						var index=obj.get_index_of_item(item.name);
+						console.log(data);
+						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:data.message});
+					}else{
+						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+					}
+
 					if (typeof(success)!="undefined"){
-						success();
+						success(data.message);
 					}
 				});
 			}
 			else{
-				var previousItems=ps.storage.get(obj.id+"que");
-				if (typeof(previousItems)!="undefined"){
-					var insert=1;
-					for(var i = 0; i < previousItems.length; i++){
-						if (previousItems[i]==item.name){
-							insert=0;
-						}
-					}
-					if(insert){
-						previousItems.push(item.name);
-					}
-
-				}else{previousItems=[item.name];}
-				ps.storage.store(obj.id+"que",previousItems);
-				obj.hasUpdates=1;
+				obj.addUpdateQue(item);
 			}
+		};
+		obj.changed=function(item){
+			ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+		};
+		obj.addUpdateQue=function(item){
+			var previousItems=ps.storage.get(obj.id+"que");
+			if (typeof(previousItems)!="undefined"){
+				var insert=1;
+				for(var i = 0; i < previousItems.length; i++){
+					if (previousItems[i]==item.name){
+						insert=0;
+					}
+				}
+				if(insert){
+					previousItems.push(item.name);
+				}
+
+			}else{previousItems=[item.name];}
+			ps.storage.store(obj.id+"que",previousItems);
+			obj.hasUpdates=1;
 		};
 
 		obj.updateQue=function(callback){
@@ -412,12 +469,16 @@ ps.storage={
 				else{callback();}
 			}
 		};
+		//This needs to be able to handel adding and removing items, currently nope
 		obj.reactSetup=function(callback){
 			obj.renderHook=callback;
-			for(var i = 0; i < obj.items.length; i++){ 
-				var item=obj.items[i];
-				console.log(obj.doctype+'_'+item.name);
-				ps.socket.socket.on('update_'+obj.doctype+'_'+item.name, return_react_emit());
+			if (typeof(obj.items)=="undefined"){}
+			else{
+				for(var i = 0; i < obj.items.length; i++){ 
+					var item=obj.items[i];
+					console.log(obj.doctype+'_'+item.name);
+					ps.socket.socket.on('update_'+obj.doctype+'_'+item.name, return_react_emit());
+				}
 			}
 		},
 		obj.render=function(item,template,selector,bindings){
@@ -467,12 +528,13 @@ ps.storage={
 					obj.derender(item_pushed);
 					obj.rerender(item_pushed,template,selector,bindings);
 				}
-				console.log("render hook");
+				//console.log("render hook");
 				obj.renderHook();
 			};
 		}
 		function return_react_emit(){
 			return function(item_pushed) {
+				console.log("react emmit", item_pushed);
 				var index=obj.get_index_of_item(item_pushed.name);
 				obj.items[index]=item_pushed;
 				obj.renderHook();
@@ -482,7 +544,9 @@ ps.storage={
 		function get_from_server(args,callback){
 			ps.call(obj.args,function(data){
 				set_items(obj.args,data.message);
+				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
+				console.log("-----------------------------------------------");
 				if(typeof(callback)!='undefined'){callback();}
 			});
 		}
@@ -534,11 +598,50 @@ ps.initCurrentUser=function(){
 	return userinfo;
 };
 
+ps.initTimeSheets=function(){
+	var obj=ps.obj.init();
+	obj.doctype="Time_Sheet";
+	obj.get_function='process_success.time_tracking.doctype.time_sheet.time_sheet.get_make_days_timesheets';
+	obj.update_function="process_success.time_tracking.doctype.time_sheet.time_sheet.update_timesheet";
+	obj.add_employee_to_sheet="";
+	return obj;
+};
 
-//can we make a general tool 
-//that takes in a predefined doctype 
-//but defaults to a general getdoc call
-//the update function would need a legend to write
+	// ps.timesheet.remove_employee_from_sheet=function(time_sheet,employee){
+	// 	args={};
+	// 	args.cmd=remove_employee_from_sheet;
+	// 	args.employee=employee;
+	// 	args.time_sheet=time_sheet;
+	// 	//console.log(employee);
+	// 	ps.call(args,function(data){
+	// 		$("#"+ ps.escapeAttr(employee)).remove();
+	// 	});
+	// };
+	// ps.timesheet.add_employee_to_sheet=function(time_sheet,employee){
+	// 	args={};
+	// 	args.cmd=add_employee_to_sheet;
+	// 	args.employee=employee;
+	// 	args.save=1;
+	// 	args.time_sheet=time_sheet;
+	// 	ps.call(args,function(data){
+	// 		//console.log(data);
+	// 	 	$("#"+ ps.escapeAttr(employee)).remove();
+	// 	 	employee_container=data.message[0];
+	// 	 	employee_container.time_unit_obj=data.message[1];
+	// 	 	add_employee_ui(employee_container,data.message[0].parent);
+	// 	 	ps.init_ui();
+	// 	});
+
+	// }
+ps.initEmployeeList=function(){
+	var obj=ps.obj.init();
+	obj.doctype="Employee";
+	obj.get_function="process_success.ps_core.api.get_all_employees";
+	obj.update_function="";
+	return obj;
+};
+
+
 ps.initGeneral=function(){
 
 };

@@ -7,4 +7,13 @@ import frappe
 from frappe.model.document import Document
 
 class employee_link_with_time(Document):
-	pass
+
+	def before_insert(self):
+		print("__________time unit insert _________________")
+
+	def validate(self):
+		frappe.db.get("Time Sheet", self.parent)
+		print ("_______________VALIDATE!!!!!!!!!!!!_________________________")
+		print(self.parent)
+
+

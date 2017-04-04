@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class timeshee_splits(Document):
+class timesheet_splits(Document):
 	pass

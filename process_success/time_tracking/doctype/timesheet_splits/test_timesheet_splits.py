@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 import unittest
 
-# test_records = frappe.get_test_records('timeshee_splits')
+# test_records = frappe.get_test_records('timesheet_splits')
 
-class Testtimeshee_splits(unittest.TestCase):
+class Testtimesheet_splits(unittest.TestCase):
 	pass
