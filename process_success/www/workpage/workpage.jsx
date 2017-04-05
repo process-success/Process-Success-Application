@@ -165,14 +165,5 @@ class AffixWrapper extends React.Component{
 
 
 frappe.ready(function(){
-	// var currentUser=ps.initCurrentUser();
-	// currentUser.get({},function(){});
-	//if(frappe.user_id=="Guest"){window.location = "/login";}
-	// var args={};
-	// args.date='2017-03-30';
-	// var timesheetTool=ps.initTimeSheets()
-	// timesheetTool.get({date:'2017-03-30'},function(){
-
-	// });
 
 });
