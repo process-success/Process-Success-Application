@@ -15,12 +15,11 @@ http://localhost:8000/
 
 
 NETWORK:
-http://localhost:9000/socket.io/
-http://localhost:8000/test.html
+http://localhost:8000/socket.io/
 http://127.0.0.1:35729/livereload.js?ext=Chrome&extver=2.1.0 
-http://localhost:8000/login
-http://localhost:8000/login#login
-http://localhost:8000/?cmd=web_logout 
+/login
+/login#login
+/?cmd=web_logout 
  
  
  
