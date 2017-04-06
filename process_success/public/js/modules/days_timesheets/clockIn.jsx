@@ -89,9 +89,9 @@ export default class ClockIn extends React.Component{
 		return(
 			<div>
 				<h3 className="text-center">
-					Welcome <span className="username">{this.props.full_name}</span><br/> It is <span className="today">{this.state.date.toDateString()}</span>
+					Welcome <span className="username">{this.props.full_name}</span>
 				</h3>
-				<h3 className="text-center">{this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</h3>
+				<h3 className="text-center">{this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} on {this.state.date.toDateString()} </h3>
 				<div className='clockIn'>
 					<form className="form-checkin" role="form">
 						{input}
@@ -105,7 +105,7 @@ export default class ClockIn extends React.Component{
 								/>
 							</div>
 							<br/>
-							<a className="btn btn-default" onClick={this.toggleTimeInput}>{this.state.specifyTime?' - Use Current Time':' + Specify a Clock In Time'}</a>
+							<a className="btn btn-default" onClick={this.toggleTimeInput}>{this.state.specifyTime?' - Use Current Time':' + Specify a Time'}</a>
 						</div>
 					</form>
 				</div>
