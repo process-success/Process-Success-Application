@@ -53,6 +53,7 @@ class WorkPage extends React.Component{
 		
 	}
 	stateUpdate(){
+		//alert("update");
 		this.state.items=this.currentUser.items;
 		this.setState(this.state);
 
@@ -83,31 +84,42 @@ class WorkPage extends React.Component{
 	//<AffixWrapper className="sticky_subnav text-center"  offset={140} height="40px"></AffixWrapper>
 	render(){
 		console.log(this.state);
-		return(
-			<div>
-				
+
+		var output='';
+		if (this.state.items.username=="Guest"||this.state.items.username=="Administrator"){
+			output=(<h3>Loading...</h3>);
+		}
+		else{
+			output=(
+				<div>
 					<ul className="nav nav-pills center-pills">
 						<li onClick={this.mainClicked} role="presentation" className={this.state.page=='main'?'active':''}><a href="#main">Main</a></li>
 						<li onClick={this.workordersClicked} role="presentation" className={this.state.page=='workorders'?'active':''}><a href="#workorders">Workorders</a></li>
 						<li onClick={this.timesheetClicked} role="presentation" className={this.state.page=='timesheet'?'active':''}><a href="#timesheet">Time Sheets</a></li>
 					</ul>
 					<br/>
-				<div className={this.state.page=='timesheet' || this.state.page=='main'?'':'hidden'}>
-					<DaysTimesheets 
-						date={this.state.items.today}
-						full_name={this.state.items.current_user.full_name}
-						page={this.state.page}
-						crew={this.state.items.crew}
-					/>
+					<div className={this.state.page=='timesheet' || this.state.page=='main'?'':'hidden'}>
+						<DaysTimesheets 
+							date={this.state.items.today}
+							full_name={this.state.items.current_user.full_name}
+							page={this.state.page}
+							crew={this.state.items.crew}
+						/>
+					</div>
+					<div className={this.state.page=='workorders'?'':'hidden'}>
+						<DaysWorkorders 
+							crew={this.state.items.crew} 
+							date={this.state.items.today}
+							//completed={this.state.completed}
+							//inprogress={this.state.inprogress}
+						/>
+					</div>
 				</div>
-				<div className={this.state.page=='workorders'?'':'hidden'}>
-					<DaysWorkorders 
-						crew={this.state.items.crew} 
-						date={this.state.items.today}
-						//completed={this.state.completed}
-						//inprogress={this.state.inprogress}
-					/>
-				</div>
+			);
+		}
+
+		return(<div>
+			{output}
 			</div>
 		);
 	}
@@ -118,46 +130,7 @@ class WorkPage extends React.Component{
 		<WorkPage />
 	, timesheets );
 })();
-// class AffixWrapper extends React.Component{
 
-// 	constructor() {
-// 		super();
-// 		this.handleScroll=this.handleScroll.bind(this);
-// 		this.state = {affix: false,};
-// 	}
-
-// 	handleScroll() {
-// 		var affix = this.state.affix;
-// 		var offset = this.props.offset;
-// 		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-// 		if (!affix && scrollTop >= offset) {
-// 			this.setState({affix: true});
-// 		}
-// 		if (affix && scrollTop < offset) {
-// 			this.setState({affix: false});
-// 		}
-// 	}
-// 	componentDidMount() {
-// 		window.addEventListener('scroll', this.handleScroll);
-// 	}
-// 	componentWillUnmount() {
-// 		window.removeEventListener('scroll', this.handleScroll);
-// 	}
-// 	render() {
-// 		const affix = this.state.affix ? 'affix' : '';
-// 		const className = this.props.className + ' ' + affix;
-// 		const placeholder= this.state.affix ? (<div className={this.props.className}></div>):'';
-
-// 		return (
-// 			<div>
-// 				{placeholder}
-// 				<div className={className} height={this.props.height}>
-// 					{this.props.children}
-// 				</div>
-// 			</div>
-// 		);
-// 	}
-// }
 
 
 
