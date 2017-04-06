@@ -1,28 +1,64 @@
 {% extends "templates/web.html" %}
- 
+
 {% block breadcrumbs %}
-	{% include "templates/includes/breadcrumbs.html" %}
+    {% include "templates/includes/breadcrumbs.html" %}
 {% endblock %}
 
 {% block header %}
-<h1>{{doc.name}}</h1>
+
+    <h1>{{ name }}</h1>
 {% endblock %}
 
 {% block page_content %}
-    <h4>Info:</h4>
-    <p>
-        Word Order ID: {{name}}<br>
-        Status: {{doc.status}}<br>
-        Date: {{doc.date}}<br>
-        Location: {{doc.status}}<br>
-        Customer: {{doc.name}}<br>
-        Crew: {{doc.crew}}<br>
-        Crewlead: {{ doc.crewlead }}<br>
-        Subtasks:
-            <ul>
-            {% for task in subtasks %}
-                <li>{{ task.task }}: {{ "Completed" if task.status == 1 else "Incomplete"}}</li>
-            {%  endfor %}
-            </ul>
-    </p>
+    {#    <script type="text/javascript">{% include "templates/includes/issues/issues.js" %}</script>#}
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-4">
+                <p>
+                    ID: {{ name }}<br>
+                    Status: {{ status }}<br>
+                    Date: {{ date }}<br>
+                    Location: {{ status }}<br>
+                    Customer: {{ customer }}<br>
+                    Crew: {{ crew }}<br>
+                    Crewlead: {{ crewlead }}<br>
+                </p>
+                <br>
+                <h4>Subtasks:</h4>
+                <p>
+                <ul>
+                    {% for task in subtasks %}
+                        <li>{{ task.task }}: {{ "Completed" if task.status == 1 else "Incomplete" }}</li>
+                    {% endfor %}
+                </ul>
+                </p>
+                <br>
+                <h4>Referenced Issues:</h4>
+                <p>
+                <ul>
+                    {% for issue in issues %}
+                        <li><a href="#" data-toggle="popover" title="Issue Description"
+                               data-content="{{ issue.issue }}">{{ issue.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h4>Map:</h4>
+                {% include "templates/includes/mapping/map.html" %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        frappe.ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+{% endblock %}
+
+{% block script %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_k9KqK-kXGq5t7-35Hnem541bOK7HiLA"></script>
+    <script> {% include "/templates/includes/mapping/map.js" %} </script>
 {% endblock %}

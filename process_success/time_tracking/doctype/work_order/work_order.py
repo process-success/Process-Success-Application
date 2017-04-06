@@ -4,6 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
+import json
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
 import json
@@ -12,7 +13,7 @@ import copy
 class work_order(WebsiteGenerator):
     
     website = frappe._dict(
-        template = "templates/generators/work_order/work_order_profile.html"
+        template="templates/generators/work_order/work_order_profile.html"
     )
 
     def autoname(self):
@@ -20,6 +21,29 @@ class work_order(WebsiteGenerator):
         self.set_path()
 
     def get_context(self, context):
+        geojson = {}
+        geojson['data'] = {
+              "type": "FeatureCollection",
+              "features": [
+                {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                      -120.201,
+                      34.6122
+                    ]
+                  },
+                  "properties": {
+                    "marker-color": "#800b0b",
+                    "marker-size": "medium",
+                    "name": "Margerum Wines"
+                  }
+                }
+              ]
+            }
+        geojson['center'] = [-120.201, 34.6122]
+
         print("############## CONTEXT ###############")
         context.parents = [{"name": "work_orders", "title": "Work Orders", "route": "/work_orders"}]
         context.name = self.name
@@ -28,9 +52,11 @@ class work_order(WebsiteGenerator):
         context.location = self.location if self.location else "Not provivded"
         context.customer = self.customer if self.customer else "Unknown"
         context.crew = self.crew if self.crew else "Unassigned"
-        context.crew_lead = self.crewlead if self.crewlead else "Unassigned"
+        context.crewlead = self.crewlead if self.crewlead else "Unassigned"
         context.subtasks = [task for task in self.get("subtask")]
-
+        context.issues = frappe.get_all("Issue", fields=["*"], filters=[["work_order", "=", self.name]])
+        context.geojson = json.dumps(geojson, separators=(',', ': '))
+        print(context.geojson)
 
     def set_path(self):
         self.page_name = self.name
