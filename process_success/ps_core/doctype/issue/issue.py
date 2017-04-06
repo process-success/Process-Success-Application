@@ -5,7 +5,6 @@
 from __future__ import unicode_literals
 import frappe
 import dateutil
-import ast
 import json
 from frappe.model.naming import make_autoname
 from frappe.model.document import Document
