@@ -41,10 +41,6 @@ class Employee(WebsiteGenerator):
 
 	def validate(self):
 		print("-------------validate-----------------")
-		print(self.workflow_state)
-
-		if self.status=="approved":
-			self.published= 1
 
 		formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
 		user=frappe.get_doc("User", self.user)

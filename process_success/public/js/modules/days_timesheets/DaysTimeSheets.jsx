@@ -29,6 +29,8 @@ export default class DaysTimeSheets extends React.Component{
 
 		this.autocompleteArr=[];
 		var args={};
+
+		//Grab the employee timesheet data
 		this.objTool=ps.initTimeSheets()
 		this.objTool.get({date:props.date},function(){
 			this.updateFromServer();
@@ -37,7 +39,19 @@ export default class DaysTimeSheets extends React.Component{
 
 		if (this.objTool.items===undefined ||this.objTool.items=== 0 ){
 		}else{this.state.items=this.objTool.items;}
-		
+
+		//Grab the employee list
+		var tool=ps.initEmployeeList();
+		tool.get({},function(){
+			ps.employee_lables= tool.items.map(function(obj) { 
+				var rObj = {};
+				rObj.label=obj.full_name;
+				rObj.value=obj.name;
+				return rObj;
+			});
+			$(document).trigger("employeeLablesLoaded");
+		});
+
 
 		
 

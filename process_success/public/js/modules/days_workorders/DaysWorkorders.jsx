@@ -69,7 +69,7 @@ export default class DaysWorkorders extends React.Component{
 	//-----------------------
 	render(){
 		if (this.state.workorders===0||this.state.workorders===undefined){
-			return (<div>No Workorders</div>);
+			return (<div className="text-center"><h3>No Workorders</h3></div>);
 		}
 		var todo=[];
 		var complete=[];
