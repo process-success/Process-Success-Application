@@ -16,12 +16,45 @@ class WorkPage extends React.Component{
 		this.timesheetClicked=this.timesheetClicked.bind(this);
 		this.handelClockIn=this.handelClockIn.bind(this);
 		this.handelRoute=this.handelRoute.bind(this);
+		this.stateUpdate=this.stateUpdate.bind(this);
+		
 
-		this.state={page:this.props.defaultPage};
+		//Handel User lOad
+		this.currentUser=ps.initCurrentUser();
+		this.currentUser.get({},function(){
+			if(this.currentUser.items.username=="Guest"){
+				window.location = "/login";
+			}else{
+				$(document).trigger("userLoaded");
+				console.log("after Load",this.currentUser.items);
+			}
+		}.bind(this));
+		console.log("before load",this.currentUser.items);
 
+		this.state={items:this.currentUser.items};
+		console.log("before load",this.state.items.today);
+		$(document).bind('userLoaded',this.stateUpdate);
+
+
+		//Routing
 		$(window).on("hashchange", function() {
 			this.handelRoute();
 		}.bind(this));
+		var route = window.location.hash.slice(1);
+		if(!route) route = "#main";
+		this.state.page=route;
+		if (!window.location.hash) {
+			window.location.hash = "#main";
+		}
+		$(window).trigger("hashchange");
+
+	}
+	componentDidMount(){
+		
+	}
+	stateUpdate(){
+		this.state.items=this.currentUser.items;
+		this.setState(this.state);
 
 	}
 	handelRoute(){
@@ -49,7 +82,7 @@ class WorkPage extends React.Component{
 	}
 	//<AffixWrapper className="sticky_subnav text-center"  offset={140} height="40px"></AffixWrapper>
 	render(){
-		console.log(this.state.page);
+		console.log(this.state);
 		return(
 			<div>
 				
@@ -61,16 +94,16 @@ class WorkPage extends React.Component{
 					<br/>
 				<div className={this.state.page=='timesheet' || this.state.page=='main'?'':'hidden'}>
 					<DaysTimesheets 
-						date={this.props.date}
-						full_name={this.props.full_name}
+						date={this.state.items.today}
+						full_name={this.state.items.current_user.full_name}
 						page={this.state.page}
-						crew={this.props.crew} 
+						crew={this.state.items.crew}
 					/>
 				</div>
 				<div className={this.state.page=='workorders'?'':'hidden'}>
 					<DaysWorkorders 
-						crew={this.props.crew} 
-						date={this.props.date}
+						crew={this.state.items.crew} 
+						date={this.state.items.today}
 						//completed={this.state.completed}
 						//inprogress={this.state.inprogress}
 					/>
@@ -79,91 +112,53 @@ class WorkPage extends React.Component{
 		);
 	}
 }
-class AffixWrapper extends React.Component{
-
-	constructor() {
-		super();
-		this.handleScroll=this.handleScroll.bind(this);
-		this.state = {affix: false,};
-	}
-
-	handleScroll() {
-		var affix = this.state.affix;
-		var offset = this.props.offset;
-		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-		if (!affix && scrollTop >= offset) {
-			this.setState({affix: true});
-		}
-		if (affix && scrollTop < offset) {
-			this.setState({affix: false});
-		}
-	}
-	componentDidMount() {
-		window.addEventListener('scroll', this.handleScroll);
-	}
-	componentWillUnmount() {
-		window.removeEventListener('scroll', this.handleScroll);
-	}
-	render() {
-		const affix = this.state.affix ? 'affix' : '';
-		const className = this.props.className + ' ' + affix;
-		const placeholder= this.state.affix ? (<div className={this.props.className}></div>):'';
-
-		return (
-			<div>
-				{placeholder}
-				<div className={className} height={this.props.height}>
-					{this.props.children}
-				</div>
-			</div>
-		);
-	}
-}
-
-
 
 (function(){
-	var currentUser=ps.initCurrentUser();
-	currentUser.get({},function(){
-		if(currentUser.items.username=="Guest"){
-			window.location = "/login";
-		}
-	});
-	currentUser.items;
-	var tool=ps.initEmployeeList();
-	
-	tool.get({},function(){
-		var lables = tool.items.map(function(obj) { 
-			var rObj = {};
-			rObj.label=obj.full_name;
-			rObj.value=obj.name;
-			return rObj;
-		});
-		ps.employee_lables=lables;
-		var route = window.location.hash.slice(1);
-		if(!route) route = "main";
-		if (!window.location.hash) {
-			window.location.hash = "#main";
-		}
-		$(window).trigger("hashchange");
-		ReactDOM.render( 
-			<WorkPage
-				full_name={currentUser.items.current_user.full_name}
-				crew={currentUser.items.crew}
-				date={currentUser.items.today}
-				defaultPage={route}
-			/>
-		, timesheets );
-	});
-	
-	
-
-
+	ReactDOM.render( 
+		<WorkPage />
+	, timesheets );
 })();
+// class AffixWrapper extends React.Component{
+
+// 	constructor() {
+// 		super();
+// 		this.handleScroll=this.handleScroll.bind(this);
+// 		this.state = {affix: false,};
+// 	}
+
+// 	handleScroll() {
+// 		var affix = this.state.affix;
+// 		var offset = this.props.offset;
+// 		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+// 		if (!affix && scrollTop >= offset) {
+// 			this.setState({affix: true});
+// 		}
+// 		if (affix && scrollTop < offset) {
+// 			this.setState({affix: false});
+// 		}
+// 	}
+// 	componentDidMount() {
+// 		window.addEventListener('scroll', this.handleScroll);
+// 	}
+// 	componentWillUnmount() {
+// 		window.removeEventListener('scroll', this.handleScroll);
+// 	}
+// 	render() {
+// 		const affix = this.state.affix ? 'affix' : '';
+// 		const className = this.props.className + ' ' + affix;
+// 		const placeholder= this.state.affix ? (<div className={this.props.className}></div>):'';
+
+// 		return (
+// 			<div>
+// 				{placeholder}
+// 				<div className={className} height={this.props.height}>
+// 					{this.props.children}
+// 				</div>
+// 			</div>
+// 		);
+// 	}
+// }
 
 
 
 
-frappe.ready(function(){
-
-});

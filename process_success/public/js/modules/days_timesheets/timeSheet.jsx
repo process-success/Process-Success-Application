@@ -7,7 +7,6 @@ export default class TimeSheet extends React.Component{
 		this.autocomplete=this.autocomplete.bind(this);
 		this.addChanged=this.addChanged.bind(this);
 		this.addClicked=this.addClicked.bind(this);
-
 	}
 
 	autocomplete(input){
@@ -36,7 +35,10 @@ export default class TimeSheet extends React.Component{
 			'awesomplete-selectcomplete',
 				this.addChanged
 		);
-		aw.list=ps.employee_lables;
+		aw.list=ps.employee_lables
+		$(document).bind('employeeLablesLoaded',function(){
+			aw.list=ps.employee_lables;
+		});
 	}
 	addChanged(e){
 		this.add=e.target.value;
