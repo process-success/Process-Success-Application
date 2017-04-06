@@ -81,7 +81,4 @@ class Employee(WebsiteGenerator):
 		context.parents = [{"name": "employees", "title": "Employees","route": "/employees"}]
 		#context.user_object = frappe.get_doc("User", self.user)
 		#print(context.user_object.first_name)
- 
-
-
 
