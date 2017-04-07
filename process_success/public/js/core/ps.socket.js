@@ -13,6 +13,27 @@ ps.get_host= function() {
 	}
 	return host;
 };
+
+// ps.checkOnline= function(callback) {
+// 	$.ajax({
+// 		url: '/test.html',
+// 		success: function(result){
+// 			console.log("ONLINE CHECK");
+// 			ps.online=true;
+// 			callback();
+// 		},     
+// 		error: function(result){
+// 			ps.online=false;
+// 		}
+// 	});
+// };
+// ps.checkOnline(function(){});
+// var x=performance.now();
+// for (var i =0; i<=99; i++){
+// 	ps.checkOnline(function(){});
+// }
+// ps.checkOnline(function(){console.log((x-performance.now())/101);});
+
 ps.hostReachable= function() {
 	// Handle IE and more capable browsers
 	var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
@@ -25,6 +46,15 @@ ps.hostReachable= function() {
 	return false;
 	}
 };
+
+// var x=performance.now();
+// for (var i =0; i<=100; i++){
+// 	console.log(ps.hostReachable());
+// }
+// console.log((x-performance.now())/101);
+
+
+
 
 ps.online=ps.hostReachable();
 ps.socket = {

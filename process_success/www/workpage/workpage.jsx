@@ -21,7 +21,7 @@ class WorkPage extends React.Component{
 
 		//Handel User lOad
 		this.currentUser=ps.initCurrentUser();
-		this.currentUser.get({},function(){
+		this.currentUser.get({},function(items){
 			if(this.currentUser.items.username=="Guest"){
 				window.location = "/login";
 			}else{
@@ -29,10 +29,7 @@ class WorkPage extends React.Component{
 				console.log("after Load",this.currentUser.items);
 			}
 		}.bind(this));
-		console.log("before load",this.currentUser.items);
-
 		this.state={items:this.currentUser.items};
-		console.log("before load",this.state.items.today);
 		$(document).bind('userLoaded',this.stateUpdate);
 
 
@@ -87,7 +84,10 @@ class WorkPage extends React.Component{
 
 		var output='';
 		if (this.state.items.username=="Guest"||this.state.items.username=="Administrator"){
-			output=(<h3>Loading...</h3>);
+			output=(<h3>Geust Or Admin</h3>);
+		}
+		else if(this.state.items.length===0){
+			output=(<h3>No User Data</h3>);
 		}
 		else{
 			output=(
@@ -126,9 +126,12 @@ class WorkPage extends React.Component{
 }
 
 (function(){
-	ReactDOM.render( 
+	frappe.ready(function(){
+		ReactDOM.render( 
 		<WorkPage />
 	, timesheets );
+	})
+
 })();
 
 

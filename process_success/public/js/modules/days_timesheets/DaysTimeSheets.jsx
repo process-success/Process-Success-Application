@@ -260,7 +260,8 @@ export default class DaysTimeSheets extends React.Component{
 	//-----------------------
 	render(){
 		//handel empty return
-		if (this.state.items===0||this.state.items===undefined){
+		console.log("in renders",this.state.items);
+		if (this.state.items.length===0||this.state.items===undefined){
 			return (<div>No Time Sheets, start by <a href="/desk">creating some crews!</a></div>);
 		}
 		var output=[]
@@ -273,6 +274,11 @@ export default class DaysTimeSheets extends React.Component{
 		}.bind(this));
 
 		var ts_index=this.crewsTimesheetIndex(this.props.crew);
+		console.log("TS INDEX!!!", ts_index);
+		var status='';
+		if (ts_index==undefined){var status=false;}
+		else{status =this.state.items[ts_index].status}
+		
 
 		//MAIN RENDER
 		return(
@@ -281,7 +287,7 @@ export default class DaysTimeSheets extends React.Component{
 					<ClockIn
 						clockIn={this.clockIn}
 						clockOut={this.clockOut}
-						status={this.state.items[ts_index].status}
+						status={status}
 						full_name={this.props.full_name}
 						date={this.props.date}
 						crew={this.props.crew}

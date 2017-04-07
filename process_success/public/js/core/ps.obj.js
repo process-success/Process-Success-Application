@@ -30,7 +30,7 @@
 		obj.renderHook=function(){};
 		obj.rendermode=0;
 
-		obj.get=function(args,callback){
+		obj.get=function(args,callback,fail){
 			//CHECK THE QUE FIRST
 			if (typeof(args)=="undefined"){
 				args={};
@@ -45,11 +45,11 @@
 			if(ps.online){
 				//is frappe ready?
 				if(ps.frappe.isready){
-					obj.updateQue(function(){get_from_server(obj.args,callback);});
+					obj.updateQue(function(){get_from_server(obj.args,callback,fail);});
 				}
 				else{
 					frappe.ready(function(){
-						obj.updateQue(function(){get_from_server(obj.args,callback);});
+						obj.updateQue(function(){get_from_server(obj.args,callback,fail);});
 					});
 				}
 			}
@@ -204,13 +204,16 @@
 			};
 		}
 
-		function get_from_server(args,callback){
+		function get_from_server(args,callback,fail){
 			ps.call(obj.args,function(data){
 				set_items(obj.args,data.message);
 				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
 				console.log("-----------------------------------------------");
-				if(typeof(callback)!='undefined'){callback();}
+				if(typeof(callback)!='undefined'){callback(data.message);}
+			},function(){ 
+				console.log("call fail callback");
+				if(typeof(callback)!='undefined'){fail();}
 			});
 		}
 

@@ -4,6 +4,8 @@ from frappe.utils import random_string
 from frappe import throw, msgprint, _
 from frappe.model.document import Document
 from frappe.utils import cint, nowdate, nowtime, cstr, add_days, flt, today
+from frappe.sessions import get_csrf_token
+
 
 def testFunction(workorder):
 	workorder = frappe.get_doc("work_order" , workorder)
@@ -183,12 +185,15 @@ def get_current_users_info():
 	user['today'] = today()
 	users=[]
 	users.append(user)
+	#return get_csrf_token()
 	return user
 
 
 # to be called in validate or insertion
 def check_field_changed(self):
 	pass
+
+
 
 def check_table_changed(newItem, tableName):
 	## return (changed, added[], removed[])
@@ -222,6 +227,10 @@ def check_table_changed(newItem, tableName):
 				changed=1
 
 	return {'changed':changed, 'added' : added, 'removed':removed};
+
+@frappe.whitelist()
+def get_csrf():
+	return get_csrf_token()
 
 
 

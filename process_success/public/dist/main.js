@@ -52,7 +52,7 @@
 		}, ps.alert.config.showFor);
 	};
 	ps.set_handlers = function(success,fail) {
-		var get_error_handler = function(default_message,success,fail) {
+		var get_error_handler = function(default_message,fail) {
 			return function(xhr, data) {
 				if(xhr.responseJSON) {
 					data = xhr.responseJSON;
@@ -74,6 +74,9 @@
 
 				//frappe.msgprint(message);
 				console.log(message);
+				if(typeof(fail)!="undefined"){
+					fail();
+				}
 			};
 		};
 
@@ -81,18 +84,20 @@
 			200: function(data) {
 				success(data);
 			},
-			401: get_error_handler(__("error")),
-			417: get_error_handler(__("error"))
+			401: get_error_handler(__("error"),fail),
+			417: get_error_handler(__("error"),fail),
+			404: get_error_handler(__("error"),fail),
+			400: get_error_handler(__("error"),fail)
 		};
 		return call_handelers;
 	};
 
-	ps.call = function(args,success) {
+	ps.call = function(args,success,fail) {
 		return frappe.call({
 			type: "POST",
 			args: args,
 			freeze: true,
-			statusCode: ps.set_handlers(success)
+			statusCode: ps.set_handlers(success,fail)
 		});
 	};
 
@@ -169,6 +174,27 @@ ps.get_host= function() {
 	}
 	return host;
 };
+
+// ps.checkOnline= function(callback) {
+// 	$.ajax({
+// 		url: '/test.html',
+// 		success: function(result){
+// 			console.log("ONLINE CHECK");
+// 			ps.online=true;
+// 			callback();
+// 		},     
+// 		error: function(result){
+// 			ps.online=false;
+// 		}
+// 	});
+// };
+// ps.checkOnline(function(){});
+// var x=performance.now();
+// for (var i =0; i<=99; i++){
+// 	ps.checkOnline(function(){});
+// }
+// ps.checkOnline(function(){console.log((x-performance.now())/101);});
+
 ps.hostReachable= function() {
 	// Handle IE and more capable browsers
 	var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
@@ -181,6 +207,15 @@ ps.hostReachable= function() {
 	return false;
 	}
 };
+
+// var x=performance.now();
+// for (var i =0; i<=100; i++){
+// 	console.log(ps.hostReachable());
+// }
+// console.log((x-performance.now())/101);
+
+
+
 
 ps.online=ps.hostReachable();
 ps.socket = {
@@ -367,7 +402,7 @@ ps.storage={
 		obj.renderHook=function(){};
 		obj.rendermode=0;
 
-		obj.get=function(args,callback){
+		obj.get=function(args,callback,fail){
 			//CHECK THE QUE FIRST
 			if (typeof(args)=="undefined"){
 				args={};
@@ -382,11 +417,11 @@ ps.storage={
 			if(ps.online){
 				//is frappe ready?
 				if(ps.frappe.isready){
-					obj.updateQue(function(){get_from_server(obj.args,callback);});
+					obj.updateQue(function(){get_from_server(obj.args,callback,fail);});
 				}
 				else{
 					frappe.ready(function(){
-						obj.updateQue(function(){get_from_server(obj.args,callback);});
+						obj.updateQue(function(){get_from_server(obj.args,callback,fail);});
 					});
 				}
 			}
@@ -541,13 +576,16 @@ ps.storage={
 			};
 		}
 
-		function get_from_server(args,callback){
+		function get_from_server(args,callback,fail){
 			ps.call(obj.args,function(data){
 				set_items(obj.args,data.message);
 				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
 				console.log("-----------------------------------------------");
-				if(typeof(callback)!='undefined'){callback();}
+				if(typeof(callback)!='undefined'){callback(data.message);}
+			},function(){ 
+				console.log("call fail callback");
+				if(typeof(callback)!='undefined'){fail();}
 			});
 		}
 
