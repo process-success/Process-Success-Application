@@ -210,7 +210,7 @@
 				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
 				console.log("-----------------------------------------------");
-				if(typeof(callback)!='undefined'){callback();}
+				if(typeof(callback)!='undefined'){callback(data.message);}
 			});
 		}
 
@@ -230,6 +230,7 @@
 				console.log("Get local failed");
 			}
 			else{set_items(args,item_from_storage);}
+			console.log("GET LOCAL CALL BACK",typeof(callback)!='undefined');
 			if (typeof(callback)!="undefined"){callback();}
 		}
 

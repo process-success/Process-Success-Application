@@ -169,11 +169,24 @@ ps.get_host= function() {
 	}
 	return host;
 };
+ps.checkOnline= function() {
+	console.log("ONLINE CHECK");
+	$.ajax({
+		url: '/assets/process_success/ping.html',
+		success: function(result){
+			ps.online=true;
+		},     
+		error: function(result){
+			ps.online=false;
+		}
+	});
+};
+ps.checkOnline();
 ps.hostReachable= function() {
 	// Handle IE and more capable browsers
 	var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
 	var status;
-	xhr.open( "HEAD", "//" + ps.get_host()+"/test.html", false );
+	xhr.open( "HEAD", "//" + ps.get_host()+"/assets/process_success/ping.html", false );
 	try {
 	xhr.send();
 	return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
@@ -547,7 +560,7 @@ ps.storage={
 				console.log("_________ps.obj From Server call_______________");
 				console.log(obj.args,data.message);
 				console.log("-----------------------------------------------");
-				if(typeof(callback)!='undefined'){callback();}
+				if(typeof(callback)!='undefined'){callback(data.message);}
 			});
 		}
 
@@ -567,6 +580,7 @@ ps.storage={
 				console.log("Get local failed");
 			}
 			else{set_items(args,item_from_storage);}
+			console.log("GET LOCAL CALL BACK",typeof(callback)!='undefined');
 			if (typeof(callback)!="undefined"){callback();}
 		}
 

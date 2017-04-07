@@ -260,7 +260,8 @@ export default class DaysTimeSheets extends React.Component{
 	//-----------------------
 	render(){
 		//handel empty return
-		if (this.state.items===0||this.state.items===undefined){
+		console.log("in renders",this.state.items);
+		if (this.state.items.length===0||this.state.items===undefined){
 			return (<div>No Time Sheets, start by <a href="/desk">creating some crews!</a></div>);
 		}
 		var output=[]

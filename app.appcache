@@ -1,13 +1,25 @@
 CACHE MANIFEST
-# Process Success
-/*
-/index.html
-http://localhost:8000/
-http://localhost:8000/assets/css/frappe-web.css
-http://localhost:8000/assets/js/frappe-web.min.js
-http://localhost:8000/assets/frappe/js/lib/awesomplete/awesomplete.min.js
-http://localhost:8000/assets/frappe/js/lib/awesomplete/awesomplete.css
-http://localhost:8000/assets/frappe/css/bootstrap.css
+# Process Success 1
+/
+/assets/css/frappe-web.css
+/assets/process_success/dist/lib.js
+/assets/js/frappe-web.min.js
+/assets/frappe/js/lib/awesomplete/awesomplete.min.js
+/assets/frappe/js/lib/awesomplete/awesomplete.css
+/assets/frappe/css/bootstrap.css
+/website_script.js
+/assets/frappe/js/lib/socket.io.min.js
+/assets/frappe/js/lib/jquery/jquery.min.js
+/assets/process_success/dist/main.js
+
 
 NETWORK:
 http://localhost:9000/socket.io/
+/assets/process_success/ping.html
+/test.html
+http://127.0.0.1:35729/livereload.js?ext=Chrome&extver=2.1.0 
+/login
+/login#login
+/?cmd=web_logout 
+  
+ 
