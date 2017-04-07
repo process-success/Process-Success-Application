@@ -11,9 +11,7 @@ export default class ClockIn extends React.Component{
 			date:new Date(),
 			specifyTime:false
 		};
-		var d = new Date();
 
-		console.log("STATE_______",this.state.specifyTime);
 	}
 	clockIn(e){
 		e.preventDefault();
@@ -84,17 +82,21 @@ export default class ClockIn extends React.Component{
 			'Subminted':['','Already Subminted','btn btn-lg btn-success btn-block'],
 			'Aproved':['','Already Subminted','btn btn-lg btn-success btn-block']
 		}[this.props.status];
-		var input = ( <input type="button" className={values[2]} onClick={values[0]} value={values[1]} />);
-
-		return(
-			<div>
+		var output='';
+		if (values==undefined){
+			output=(<a href="#timesheet">You are not in a Time Sheet add yourself.</a>);
+		}
+		else{
+			var inputField = ( <input type="button" className={values[2]} onClick={values[0]} value={values[1]} />);
+			output=(
+				<div>
 				<h3 className="text-center">
 					Welcome <span className="username">{this.props.full_name}</span>
 				</h3>
 				<h3 className="text-center">{this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} on {this.state.date.toDateString()} </h3>
 				<div className='clockIn'>
 					<form className="form-checkin" role="form">
-						{input}
+						{inputField}
 						<br/>
 						<div className='text-center'>
 							<div className="text-center">
@@ -109,6 +111,12 @@ export default class ClockIn extends React.Component{
 						</div>
 					</form>
 				</div>
+				</div>
+			);
+		}
+		return(
+			<div>
+				{output}
 			</div>
 		);
 	}

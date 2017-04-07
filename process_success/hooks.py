@@ -16,7 +16,6 @@ update_website_context = "process_success.website_options.util.update_website_co
 
 website_context = {
 	"disable_website_theme": True,
-	"test":"hello"
 }
 
 # Includes in <head>
@@ -42,7 +41,7 @@ website_context = {
 # ----------
 
 # application home page (will override Website Settings)
-home_page = "workpage"
+#home_page = "workpage"
 
 # website user home page (by Role)
 # role_home_page = {

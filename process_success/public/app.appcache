@@ -1,7 +1,5 @@
-#time  
 CACHE MANIFEST
-# Process Success 1
-/
+# process Success 1
 /assets/css/frappe-web.css
 /assets/process_success/dist/lib.js
 /assets/js/frappe-web.min.js
@@ -12,15 +10,11 @@ CACHE MANIFEST
 /assets/frappe/js/lib/socket.io.min.js
 /assets/frappe/js/lib/jquery/jquery.min.js
 /assets/process_success/dist/main.js
-
+/workpage/workPageOffline
 
 NETWORK:
-http://localhost:9000/socket.io/
-/assets/process_success/ping.html
-/test.html
-http://127.0.0.1:35729/livereload.js?ext=Chrome&extver=2.1.0 
-/login
-/login#login
-/?cmd=web_logout 
-  
+*
+
+FALLBACK:
+/workpage /workpage/workPageOffline 
  

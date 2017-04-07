@@ -22,8 +22,6 @@ class WorkPage extends React.Component{
 		//Handel User lOad
 		this.currentUser=ps.initCurrentUser();
 		this.currentUser.get({},function(items){
-			console.log(this.currentUser.items);
-			console.log(items);
 			if(this.currentUser.items.username=="Guest"){
 				window.location = "/login";
 			}else{
@@ -31,10 +29,7 @@ class WorkPage extends React.Component{
 				console.log("after Load",this.currentUser.items);
 			}
 		}.bind(this));
-		console.log("before load",this.currentUser.items);
-
 		this.state={items:this.currentUser.items};
-		console.log("before load",this.state.items.today);
 		$(document).bind('userLoaded',this.stateUpdate);
 
 

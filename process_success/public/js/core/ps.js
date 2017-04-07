@@ -52,7 +52,7 @@
 		}, ps.alert.config.showFor);
 	};
 	ps.set_handlers = function(success,fail) {
-		var get_error_handler = function(default_message,success,fail) {
+		var get_error_handler = function(default_message,fail) {
 			return function(xhr, data) {
 				if(xhr.responseJSON) {
 					data = xhr.responseJSON;
@@ -74,6 +74,9 @@
 
 				//frappe.msgprint(message);
 				console.log(message);
+				if(typeof(fail)!="undefined"){
+					fail();
+				}
 			};
 		};
 
@@ -81,18 +84,20 @@
 			200: function(data) {
 				success(data);
 			},
-			401: get_error_handler(__("error")),
-			417: get_error_handler(__("error"))
+			401: get_error_handler(__("error"),fail),
+			417: get_error_handler(__("error"),fail),
+			404: get_error_handler(__("error"),fail),
+			400: get_error_handler(__("error"),fail)
 		};
 		return call_handelers;
 	};
 
-	ps.call = function(args,success) {
+	ps.call = function(args,success,fail) {
 		return frappe.call({
 			type: "POST",
 			args: args,
 			freeze: true,
-			statusCode: ps.set_handlers(success)
+			statusCode: ps.set_handlers(success,fail)
 		});
 	};
 
