@@ -185,15 +185,15 @@ login.login_handlers = (function() {
 				}
 
 				if(data.redirect_to) {
-					//window.location.href = data.redirect_to;
+					window.location.href = data.redirect_to;
 					console.log("data. "+data.redirect_to);
 				}
 
 				if(last_visited && last_visited != "/login") {
-					//window.location.href = last_visited;
+					window.location.href = last_visited;
 					console.log("LAST VISITED "+last_visited);
 				} else {
-					//window.location.href = data.home_page;
+					window.location.href = data.home_page;
 					console.log("homepage "+data.home_page);
 				}
 			} else if(["#customer","#employee", "#forgot"].indexOf(window.location.hash)!==-1) {
