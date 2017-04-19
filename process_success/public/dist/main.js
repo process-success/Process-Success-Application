@@ -10,18 +10,7 @@
 	var get_all_employees="process_success.ps_core.api.get_all_employees";
 
 	ps.init_ui=function(){
-		var inputs=$('.timepicker').timepicker({
-		    timeFormat: 'h:mmp',
-		    // interval: 60,
-		    // minTime: '10',
-		    // maxTime: '6:00pm',
-		    defaultTime: 'pm',
-		    // startTime: '10:00',
-		    dynamic: false,
-		    dropdown: false,
-		    scrollbar: false
-		});
-		inputs.trigger("change");
+
 	};
 	//----------------------------------------
 	//   simplify Calls
@@ -164,12 +153,12 @@ frappe.ready(function() {
 --------------------------------------------- */
 ps.get_host= function() { 
 	var host = window.location.origin;
+	var parts = host.split(":");
+	var port = frappe.boot.socketio_port || '8000';		
+	if(parts.length >= 2) {
+		host =  parts[1];
+	}
 	if(window.dev_server) {
-		var parts = host.split(":");
-		var port = frappe.boot.socketio_port || '8000';
-		if(parts.length > 2) {
-			host =  parts[1];
-		}
 		host = host + ":" + port;
 	}
 	return host;

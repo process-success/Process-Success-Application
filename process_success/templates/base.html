@@ -33,7 +33,6 @@
         <link type="text/css" rel="stylesheet" href="/assets/frappe/js/lib/awesomplete/awesomplete.css">
         <style>
         {% include "www/js/core/bootstrap.min.css" %}
-        {% include "/www/js/core/jquery.timepicker.css" %}
         {% include "/www/js/core/timesheet.css" %}
         .ui-timepicker-container {
             z-index: 1050!important;
@@ -124,11 +123,10 @@
 
 
         <!--     Dev ok but in real thing scripts tag    -->
-         <script>{% include "/public/dist/main.js" %}</script>
+         <script type="text/javascript" src="/assets/process_success/dist/main.js"></script>
 
         <script type="text/javascript"
         src="/assets/frappe/js/lib/awesomplete/awesomplete.min.js"></script>
-        <script>{% include "/www/js/core/jquery.timepicker.min.js" %}</script>
 
     {% endblock %}
     {%- if js_globals is defined %}

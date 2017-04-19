@@ -10,7 +10,9 @@ from frappe import _
 from frappe.auth import LoginManager
 from frappe.integrations.doctype.ldap_settings.ldap_settings import get_ldap_settings
 
-no_cache = True
+no_cache = 1
+no_sitemap = 1
+
 
 def get_context(context):
 	if frappe.session.user != "Guest" and frappe.session.data.user_type=="System User":
