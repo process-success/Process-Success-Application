@@ -164,12 +164,12 @@ frappe.ready(function() {
 --------------------------------------------- */
 ps.get_host= function() { 
 	var host = window.location.origin;
+	var parts = host.split(":");
+	var port = frappe.boot.socketio_port || '8000';		
+	if(parts.length >= 2) {
+		host =  parts[1];
+	}
 	if(window.dev_server) {
-		var parts = host.split(":");
-		var port = frappe.boot.socketio_port || '8000';
-		if(parts.length > 2) {
-			host =  parts[1];
-		}
 		host = host + ":" + port;
 	}
 	return host;
