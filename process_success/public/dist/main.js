@@ -10,18 +10,7 @@
 	var get_all_employees="process_success.ps_core.api.get_all_employees";
 
 	ps.init_ui=function(){
-		var inputs=$('.timepicker').timepicker({
-		    timeFormat: 'h:mmp',
-		    // interval: 60,
-		    // minTime: '10',
-		    // maxTime: '6:00pm',
-		    defaultTime: 'pm',
-		    // startTime: '10:00',
-		    dynamic: false,
-		    dropdown: false,
-		    scrollbar: false
-		});
-		inputs.trigger("change");
+
 	};
 	//----------------------------------------
 	//   simplify Calls
