@@ -84,7 +84,7 @@ class WorkPage extends React.Component{
 
 		var output='';
 		if (this.state.items.username=="Guest"||this.state.items.username=="Administrator"){
-			output=(<h3>Geust Or Admin</h3>);
+			output=(<h3>Guest Or Admin</h3>);
 		}
 		else if(this.state.items.length===0){
 			output=(<h3>No User Data</h3>);

@@ -47,6 +47,7 @@ def sign_up(email, first_name, last_name, user_type, redirect_to, password):
 	if user:
 		if user_type=="employee":
 			ps_user = create_employee(email, first_name, last_name, user)
+
 		else:
 			ps_user= create_customer(email, first_name, last_name, user)
 
@@ -80,6 +81,9 @@ def create_employee(email, first_name, last_name, user):
 		})
 		employee.flags.ignore_permissions = True
 		employee.insert()
+		user = frappe.get_doc("User", employee.user)
+		user.set('roles', [{"role": "Employee"}])
+		user.save(ignore_permissions=True)
 	return employee
 
 def create_customer(email, first_name, last_name, user):
@@ -98,7 +102,11 @@ def create_customer(email, first_name, last_name, user):
 		})
 		customer.flags.ignore_permissions = True
 		customer.insert()
+		user = frappe.get_doc("User", customer.user)
+		user.set('roles', [{"role": "Customer"}])
+		user.save(ignore_permissions=True)
 	return customer
+
 def create_user(email, first_name, last_name, password=0):
 	print("-----------------CREATE USER ---------------------")
 	user = frappe.db.get("User", {"email": email})

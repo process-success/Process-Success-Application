@@ -33,11 +33,16 @@ class Employee(WebsiteGenerator):
 		full_name = self.first_name + " " + self.last_name
 
 		if not self.user:
-			user =create_user(self.email, self.first_name, self.last_name)
+			user = create_user(self.email, self.first_name, self.last_name)
 			if user==0:
 				frappe.throw("User already exists")
 			self.user=user.name
 
+	def on_update(self):
+		if self.user_type == "Crew Lead":
+			user = frappe.get_doc("User", self.user)
+			user.set('roles', [{"role": "Crew Lead"}])
+			user.save(ignore_permissions=True)
 
 	def validate(self):
 		print("-------------validate-----------------")

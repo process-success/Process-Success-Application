@@ -11,9 +11,9 @@ def install_basic_docs():
     # core users / roles
     install_docs = [
         {'doctype': "Role", "role_name": "Administrator", "desk_access": 1},
-        {'doctype': "Role", "role_name": "Employee"},
-        {'doctype': "Role", "role_name": "Crew Lead"},
-        {'doctype': "Role", "role_name": "Customer"},
+        {'doctype': "Role", "role_name": "Employee", "desk_access": 0},
+        {'doctype': "Role", "role_name": "Crew Lead", "desk_access": 0},
+        {'doctype': "Role", "role_name": "Customer", "desk_access": 0},
         {'doctype': "Role", "role_name": "Manager", "desk_access": 1},
         {'doctype': "Top Bar Item", "parent":"Website Settings", "parentfield":"top_bar_items",
                     "parenttype": "Website Settings", "label": "Directory"},
