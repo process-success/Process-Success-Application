@@ -1,6 +1,7 @@
 
 /*jshint ignore:start */
 import TaskCheck from './TaskCheck'
+import CreateIssue from './createIssue'
 
 export default class WorkorderTask extends React.Component{
 	constructor(props){
@@ -36,9 +37,18 @@ export default class WorkorderTask extends React.Component{
 			<div className='col-md-4 col-sm-4'>
 			<div id="" className={mainClass}>
 				<div className="panel-heading">
-					<h3 className="panel-title">
-						<a href={this.props.location_route}>{this.props.location}</a>
-					</h3>
+					<div className="row">
+						<h3 className="panel-title col-xs-10">
+							<a className="float-left" href={this.props.location_route}>{this.props.location}</a>
+						</h3>
+						<div className="col-xs-2 create-issue-header-button-container" >
+							<CreateIssue
+								workorder={this.props.workorder}
+							/>
+						</div>
+					</div>
+						
+
 				</div>
 				<div className="panel-body">
 					<label className="control-label">Status</label>
@@ -57,7 +67,7 @@ export default class WorkorderTask extends React.Component{
 
 					</div>
 					<div>
-					<a className="" href={this.props.route}>More Information</a>
+						<a className="" href={this.props.route}>More Information</a>
 					</div>
 				</div>
 			</div>

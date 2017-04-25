@@ -275,6 +275,12 @@ frappe.provide("ps.storage");
 	uses that json as a key
 	adds an expiration to the item
 	garbageCollect : garbage collects
+
+	Update Idea!  
+	Base all on doctype rather than call
+	each entry has an expire
+	run a search and return only requested items
+	like frappe.getdoc
 */
 ps.storage={
 	ident:"pstimed",
@@ -445,6 +451,27 @@ ps.storage={
 				obj.addUpdateQue(item);
 			}
 		};
+		// obj.create=function(item,success,after){
+		// 	var args={};
+		// 	args.cmd=obj.create_function;
+		// 	args.item=item;
+		// 	if (ps.online){
+		// 		ps.call(args,function(data){
+		// 			if (typeof(after)!='undefined' && after==1){
+		// 				var index=obj.get_index_of_item(item.name);
+		// 				console.log(data);
+		// 				ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:data.message});
+		// 			}else{
+		// 				ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+		// 			}
+
+		// 			if (typeof(success)!="undefined"){
+		// 				success(data.message);
+		// 			}
+		// 		});
+		// 	}
+
+		// };
 		obj.changed=function(item){
 			ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
 		};
@@ -630,6 +657,16 @@ ps.initTimeSheets=function(){
 	obj.doctype="Time_Sheet";
 	obj.get_function='process_success.time_tracking.doctype.time_sheet.time_sheet.get_make_days_timesheets';
 	obj.update_function="process_success.time_tracking.doctype.time_sheet.time_sheet.update_timesheet";
+	obj.add_employee_to_sheet="";
+	return obj;
+};
+
+ps.initIssue =function(){
+	var obj=ps.obj.init();
+	obj.doctype="Issue";
+	obj.get_function='process_success.core.doctype.issue.issue.get_issues';
+	obj.update_function="process_success.core.doctype.issue.issue.update_issue";
+	obj.create_function="process_success.core.doctype.issue.issue.create_issue";
 	obj.add_employee_to_sheet="";
 	return obj;
 };

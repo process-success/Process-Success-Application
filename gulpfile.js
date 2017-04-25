@@ -257,6 +257,7 @@ gulp.task('watch', function() {
     'process_success/template/**/*.js',
     'process_success/www/**/*.js',
     'process_success/public/**/*.js',
+    'process_success/public/**/*.css',
     'process_success/**/*.js',
     'process_success/**/*.html',
     'process_success/**/*.template',

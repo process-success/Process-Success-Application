@@ -6,6 +6,12 @@ frappe.provide("ps.storage");
 	uses that json as a key
 	adds an expiration to the item
 	garbageCollect : garbage collects
+
+	Update Idea!  
+	Base all on doctype rather than call
+	each entry has an expire
+	run a search and return only requested items
+	like frappe.getdoc
 */
 ps.storage={
 	ident:"pstimed",

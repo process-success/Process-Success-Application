@@ -14,6 +14,7 @@
     <link rel="icon"
         href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
         type="image/x-icon">
+
     {% endblock %}
     {%- block head -%}
         {% if meta_block is defined -%}
@@ -31,16 +32,8 @@
         <!--  START PS CSS ADDITIONS SHOULD BE COMPLILED-->
 
         <link type="text/css" rel="stylesheet" href="/assets/frappe/js/lib/awesomplete/awesomplete.css">
-        <style>
-        {% include "www/js/core/bootstrap.min.css" %}
-        {% include "/www/js/core/timesheet.css" %}
-        .ui-timepicker-container {
-            z-index: 1050!important;
-        }
-
-
-        </style>
-
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/timesheet.css">
 
 
         {%- endfor -%}
@@ -60,6 +53,7 @@
     </script>
 </head>
 <body data-path="{{ path }}">
+
     <div id="alerts">
         <div hidden display="none" class="alert alert-success" role="alert">
         <strong>Success:</strong><span class="success-text"></span>
@@ -119,7 +113,9 @@
         src="/assets/process_success/dist/lib.js"></script>
 
 
-        <!--     Dev ok but in real thing scripts tag    -->
+        <!--     Dev should be diffrent from prod
+                min vs regular  dev:main.js   prod:main.min.js
+           -->
          <script type="text/javascript" src="/assets/process_success/dist/main.js"></script>
 
         <script type="text/javascript"

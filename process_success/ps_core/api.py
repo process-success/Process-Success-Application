@@ -7,8 +7,6 @@ from frappe.utils import cint, nowdate, nowtime, cstr, add_days, flt, today
 from frappe.sessions import get_csrf_token
 
 
-def testFunction(workorder):
-	workorder = frappe.get_doc("work_order" , workorder)
 
 @frappe.whitelist()
 def get_work_orders(start, end):
@@ -129,6 +127,8 @@ def create_user(email, first_name, last_name, password=0):
 		user.insert()
 		return user
 
+## CREW UTIL
+
 def get_crews_employees(crew_name):
 	crew=frappe.get_doc("Crew", crew_name)
 	all_members=[]
@@ -228,9 +228,22 @@ def check_table_changed(newItem, tableName):
 
 	return {'changed':changed, 'added' : added, 'removed':removed};
 
+# @frappe.whitelist()
+# def get_csrf():
+# 	return get_csrf_token()
+
+#-------------------------------------
+#   Get all but with full Doctype 
+#-------------------------------------
+
 @frappe.whitelist()
-def get_csrf():
-	return get_csrf_token()
+def get_all_full_doc(doctype, filters):
+    docnames=frappe.get_all(doctype,filters=filters)
+    doc_list=[]
+    if docnames:
+        for docname in docnames:
+            doc_list.append(frappe.get_doc(doctype,docname.name))
+    return doc_list
 
 
 
