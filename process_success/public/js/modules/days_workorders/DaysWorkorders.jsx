@@ -57,6 +57,7 @@ export default class DaysWorkorders extends React.Component{
 				location={item.location}
 				tasks={item.subtask}
 				status={item.status}
+				workorder={item.name}
 				onTaskChecked={this.onTaskChecked}
 				onStatusChanged={this.onStatusChanged}
 				route={item.route}

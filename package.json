@@ -4,7 +4,7 @@
   "description": "Core application to be used in the Frappe framework.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-useref": "^3.0.0",
     "main-bower-files": "^2.5.0",
+    "mocha": "^3.3.0",
     "run-sequence": "^1.2.2"
   },
   "dependencies": {
@@ -66,6 +67,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-tap": "^0.1.3",
     "gulp-uglify": "^2.1.2",
+    "jasmine": "^2.6.0",
     "jshint": "^2.9.4",
     "lodash.assign": "^4.2.0",
     "main-bower-files": "^2.13.1",

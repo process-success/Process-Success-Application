@@ -47,9 +47,34 @@ def _edit_issue_fields(issue, key, value):
         issue.set(key, value)
     return issue
 
+
+
+
 @frappe.whitelist()
 def get_issue(name):
     return frappe.get_doc("Issue", name)
+
+# @frappe.whitelist()
+# def get_issues(crew=0, date=0,status=0,location=0):
+#     filter={}
+#     if crew:
+#         filter['crew']=crew
+#     if date:
+#         filter['date']=date
+#     if status:
+#         filter['status']=status
+#     if location:
+#         filter['location']=location
+#     if not filter:
+#         filter={"*"}
+#     workorders=frappe.get_all("work_order",filters=filter,fields=["*"])
+#     print ("_________________get_workorders _________________")
+#     print (workorders)
+#     workorder_list=[]
+#     if workorders:
+#         for workorder in workorders:
+#             workorder_list.append(frappe.get_doc("work_order",workorder.name))
+#     return workorder_list
 
 @frappe.whitelist()
 def delete_issue(name):
@@ -94,7 +119,8 @@ def update_issue(item):
                 location.save()
             return issue
         else:
-            frappe.throw(frappe._("No issue with given name exists"))
+            #frappe.throw(frappe._("No issue with given name exists"))
+            create_issue(item)
     except KeyError as e:
         frappe.throw(frappe._("Key passed in JSON does not exist in doctype. Check to make sure you included a name!"))
     except frappe.DoesNotExistError as e:

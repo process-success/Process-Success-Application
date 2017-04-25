@@ -84,6 +84,27 @@
 				obj.addUpdateQue(item);
 			}
 		};
+		// obj.create=function(item,success,after){
+		// 	var args={};
+		// 	args.cmd=obj.create_function;
+		// 	args.item=item;
+		// 	if (ps.online){
+		// 		ps.call(args,function(data){
+		// 			if (typeof(after)!='undefined' && after==1){
+		// 				var index=obj.get_index_of_item(item.name);
+		// 				console.log(data);
+		// 				ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:data.message});
+		// 			}else{
+		// 				ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
+		// 			}
+
+		// 			if (typeof(success)!="undefined"){
+		// 				success(data.message);
+		// 			}
+		// 		});
+		// 	}
+
+		// };
 		obj.changed=function(item){
 			ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
 		};
