@@ -77,13 +77,12 @@ def create_employee(email, first_name, last_name, user):
 			"email": email,
 			"first_name": first_name,
 			"last_name": last_name,
-			"user": user.name 
+			"user": user.name,
+			"status": "Pending"
 		})
 		employee.flags.ignore_permissions = True
 		employee.insert()
-		user = frappe.get_doc("User", employee.user)
-		user.set('roles', [{"role": "Employee"}])
-		user.save(ignore_permissions=True)
+		insert_into_approval_manager(employee, "Employee")
 	return employee
 
 def create_customer(email, first_name, last_name, user):
@@ -98,13 +97,12 @@ def create_customer(email, first_name, last_name, user):
 			"email": email,
 			"first_name": first_name,
 			"last_name": last_name,
-			"user": user.name 
+			"user": user.name,
+			"status": "Pending"
 		})
 		customer.flags.ignore_permissions = True
 		customer.insert()
-		user = frappe.get_doc("User", customer.user)
-		user.set('roles', [{"role": "Customer"}])
-		user.save(ignore_permissions=True)
+		insert_into_approval_manager(customer, "Customer")
 	return customer
 
 def create_user(email, first_name, last_name, password=0):
@@ -149,7 +147,6 @@ def get_crews_employees(crew_name):
 	return all_members
 
 
-
 def get_employees_crew(employee_name):
 	#Returns an array of crews.  Could be in more than one
 	#print("--------get_employees_crew---------")
@@ -169,11 +166,22 @@ def get_employees_crew(employee_name):
 		return crews_return[0]
 	#  there should be a better way to handel errors!!
 	elif len(crews_return)>1:
-		frappe.throw( "You are in more than one crew! This shouldent happen.")
+		frappe.throw( "You are in more than one crew! This shouldn't happen.")
 		return 1
 	else:
 		return 0
-		
+
+def insert_into_approval_manager(doc, type):
+	approval_manager_list = frappe.get_all("approval_manager")
+	if len(approval_manager_list) > 0:
+		approval_manager = frappe.get_doc("approval_manager", approval_manager_list[0])
+		if type == "Customer":
+			approval_manager.add_customer(doc)
+		if type == "Employee":
+			approval_manager.add_employee(doc)
+	else:
+		frappe.throw(_("No approval manager exists. Please contact Process Success for support."))
+
 @frappe.whitelist()
 def get_all_employees():
 	employees=frappe.get_all("Employee",fields =["name","full_name"])
