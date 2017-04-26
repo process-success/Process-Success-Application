@@ -227,10 +227,10 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-04-20 11:45:03.130463", 
+ "modified": "2017-04-25 15:17:45.450726", 
  "modified_by": "Administrator", 
  "module": "ps_core", 
- "name": "approval_manager", 
+ "name": "approval_manager",
  "name_case": "", 
  "owner": "Administrator", 
  "permissions": [
