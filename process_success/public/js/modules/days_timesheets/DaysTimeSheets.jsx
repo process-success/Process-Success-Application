@@ -62,7 +62,6 @@ export default class DaysTimeSheets extends React.Component{
 	// helper Function
 	//------------------
 	updateFromServer(){
-		console.log("UPDATE");
 		this.setState({items:this.objTool.items});
 	}
 	updateFromServerParam(data,index){
@@ -198,7 +197,7 @@ export default class DaysTimeSheets extends React.Component{
 				var container = item.employees[x];
 				if (container.employee==employee){
 					this.objTool.items[ts_index].employees.splice(x, 1);
-					console.log(this.objTool.items[ts_index]);
+					//ƒconsole.log(this.objTool.items[ts_index]);
 					this.objTool.update(this.objTool.items[ts_index]);
 					this.setState({items:this.objTool.items});
 					done=0;
@@ -260,7 +259,6 @@ export default class DaysTimeSheets extends React.Component{
 	//-----------------------
 	render(){
 		//handel empty return
-		console.log("in renders",this.state.items);
 		if (this.state.items.length===0||this.state.items===undefined){
 			return (<div>No Time Sheets, start by <a href="/desk">creating some crews!</a></div>);
 		}
@@ -274,7 +272,6 @@ export default class DaysTimeSheets extends React.Component{
 		}.bind(this));
 
 		var ts_index=this.crewsTimesheetIndex(this.props.crew);
-		console.log("TS INDEX!!!", ts_index);
 		var status='';
 		if (ts_index==undefined){var status=false;}
 		else{status =this.state.items[ts_index].status}

@@ -245,6 +245,13 @@ def get_all_full_doc(doctype, filters):
             doc_list.append(frappe.get_doc(doctype,docname.name))
     return doc_list
 
+@frappe.whitelist()
+def create_doc(doctype,item):
+	pass
+
+@frappe.whitelist()
+def remove_doc(doctype,item_name):
+	pass
 
 
 

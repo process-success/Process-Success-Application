@@ -17,11 +17,11 @@ export default class ClockIn extends React.Component{
 		e.preventDefault();
 		if(this.state.specifyTime==false){
 			var time=this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false})
-			console.log(time);
+			//console.log(time);
 			ps.successAlert("Clocked in at " + this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
 			this.props.clockIn(time, this.props.crew)
 		}else{
-			console.log(this.state.time)
+			//console.log(this.state.time)
 			if(this.state.time!=undefined){
 				this.props.clockIn(this.state.time, this.props.crew);
 				ps.successAlert("Clocked in");
@@ -35,11 +35,11 @@ export default class ClockIn extends React.Component{
 		e.preventDefault();
 		if(this.state.specifyTime==false){
 			var time=this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false})
-			console.log(time);
+			//console.log(time);
 			ps.successAlert("Clocked out at " + this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})+" Have a great night!")
 			this.props.clockOut(time, this.props.crew)
 		}else{
-			console.log(this.state.time)
+			//console.log(this.state.time)
 			if(this.state.time!=undefined){
 				this.props.clockOut(this.state.time, this.props.crew);
 				ps.successAlert("Clocked Out!  Have a great night!");
@@ -50,7 +50,7 @@ export default class ClockIn extends React.Component{
 		}
 	}
 	toggleTimeInput(e){
-		console.log(this.state.specifyTime);
+		//console.log(this.state.specifyTime);
 		if(this.state.specifyTime){
 			this.setState({specifyTime:false});
 		}
