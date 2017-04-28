@@ -26,7 +26,7 @@ class WorkPage extends React.Component{
 				window.location = "/login";
 			}else{
 				$(document).trigger("userLoaded");
-				console.log("after Load",this.currentUser.items);
+				//console.log("after Load",this.currentUser.items);
 			}
 		}.bind(this));
 		this.state={items:this.currentUser.items};
@@ -80,8 +80,6 @@ class WorkPage extends React.Component{
 	}
 	//<AffixWrapper className="sticky_subnav text-center"  offset={140} height="40px"></AffixWrapper>
 	render(){
-		console.log(this.state);
-
 		var output='';
 		if (this.state.items.username=="Guest"||this.state.items.username=="Administrator"){
 			output=(<h3>Geust Or Admin</h3>);

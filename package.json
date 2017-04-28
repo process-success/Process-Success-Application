@@ -4,7 +4,7 @@
   "description": "Core application to be used in the Frappe framework.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
