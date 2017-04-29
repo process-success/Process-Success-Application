@@ -1,7 +1,8 @@
 
 /*jshint ignore:start */
-import TaskCheck from './TaskCheck'
+import TaskCheck from './taskCheck'
 import CreateIssue from './createIssue'
+
 
 export default class WorkorderTask extends React.Component{
 	constructor(props){

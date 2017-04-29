@@ -97,7 +97,7 @@
    "read_only": 0, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 1, 
+   "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 0
@@ -142,7 +142,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-03-28 15:26:02.340485", 
+ "modified": "2017-04-21 12:06:44.403516", 
  "modified_by": "Administrator", 
  "module": "Vineyards", 
  "name": "Vineyard Field", 

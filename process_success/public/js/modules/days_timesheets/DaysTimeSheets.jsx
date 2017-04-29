@@ -1,7 +1,7 @@
 /*jshint ignore:start */
 import EmployeeTime from './employeeTime';
 import TimeSheet from './timeSheet';
-import ClockIn from './clockin';
+import ClockIn from './clockIn';
 
 export default class DaysTimeSheets extends React.Component{
 	constructor(props){

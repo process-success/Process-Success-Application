@@ -1,0 +1,20 @@
+[
+ {
+  "desk_access": 0,
+  "disabled": 0, 
+  "docstatus": 0, 
+  "doctype": "Role", 
+  "modified": "2017-04-19 22:42:25.980249", 
+  "name": "Employee", 
+  "role_name": "Employee"
+ }, 
+ {
+  "desk_access": 0,
+  "disabled": 0, 
+  "docstatus": 0, 
+  "doctype": "Role", 
+  "modified": "2017-04-19 22:42:26.425304", 
+  "name": "Customer", 
+  "role_name": "Customer"
+ }
+]
