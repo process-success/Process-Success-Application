@@ -258,7 +258,7 @@
 		}
 
 		ps.socket.socket.on("reconnect",function(){
-			location.reload();
+			//location.reload();
 		});
 
 		return obj;

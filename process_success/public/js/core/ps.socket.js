@@ -83,10 +83,11 @@ ps.socket = {
 		ps.socket.socket.on('reconnect', function(message) {
 			frappe.msgprint("reconnected");
 			ps.online=true;
-
+			$(document).trigger("connected");
 		});
 		ps.socket.socket.on('connect', function(message) {
 			ps.online=true;
+			$(document).trigger("connected");
 		});
 		ps.socket.socket.on('disconnect', function(message) {
 			frappe.msgprint("disconnect");

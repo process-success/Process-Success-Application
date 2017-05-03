@@ -13,7 +13,7 @@ var testdoc4= {name:"jim", last:"joe",team:"blue", class:"expert"};
 var testdoc5= {name:"randy", last:"recked",team:"blue", class:"novice"};
 var allDoc = [testdoc1, testdoc2,testdoc3,testdoc4,testdoc5];
 var doctype= "testing";
-var storage= ps.storage2;
+var storage= ps.store;
 
 
 
@@ -169,11 +169,19 @@ describe('ps.storage', function() {
 			console.log( "storage :"+ storage.lastCallSpeed + " Milliseconds");
 		});
 
-		it("delete an object",function(){
+		it("Storage.clear, clears all entry for doctype",function(){
 			storage.clear(doctype);
 			var item=storage.get(doctype);
 			expect(item).to.equal(null);
 		});
+		it("storage.remove remove derek,  get should be null and 4 items length",function(){
+			storage.remove(doctype,"derek");
+			var item=storage.get(doctype);
+			expect(item).to.have.lengthOf(4);
+			var item2=storage.get(doctype,{name:"derek"});
+			expect(item2).to.equal(null);
+		});
+
 
 	});
 
