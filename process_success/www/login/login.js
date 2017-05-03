@@ -207,6 +207,7 @@ login.login_handlers = (function() {
 			}
 		},
 		401: get_error_handler(__("Invalid Login")),
+		403: get_error_handler(__("You are an unapproved user.")),
 		417: get_error_handler(__("Oops! Something went wrong"))
 	};
 

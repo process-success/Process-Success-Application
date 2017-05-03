@@ -133,9 +133,7 @@ class Vineyard(WebsiteGenerator):
         self.route = self.parent_page + "/" + self.page_name
 
     def validate(self):
-        print("######################################################")
         print(self.get_unresolved_issues())
-        print("######################################################")
         self.set_path()
 
     def get_unresolved_issues(self):

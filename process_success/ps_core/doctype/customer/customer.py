@@ -9,6 +9,7 @@ from frappe.model.document import Document
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
 from process_success.ps_core.api import create_user
+from process_success.utils.utilities import ModuleBlocker
 
 class Customer(WebsiteGenerator):
     website = frappe._dict(
@@ -16,7 +17,6 @@ class Customer(WebsiteGenerator):
         template = "templates/generators/customer/customer_profile.html",
         page_title_field = "full_name",
         condition_field = "published"
-
     )
 
     def autoname(self):
@@ -53,11 +53,9 @@ class Customer(WebsiteGenerator):
                 frappe.throw("User already exists")
             self.user=user.name
 
-        
     def validate(self):
         print("-------------validate-----------------")
-        print(self.workflow_state)
-        if self.status=="aproved":
+        if self.status=="Approved":
             self.published= 1
 
         formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
@@ -81,7 +79,20 @@ class Customer(WebsiteGenerator):
         else:
             frappe.throw(_("Customer cannot have duplicate Vineyards"))
         self.delete_customer_from_vineyards()
+
+    def on_update(self):
+        self.update_module_access()
         
+    def update_module_access(self, additional_modules=None):
+        print("###################################### UPDATE MODULE ACCESS CUSTOMER #####################################")
+        module_blocker = ModuleBlocker()
+        user = frappe.get_doc("User", self.user)
+        roles = [user_role.role for user_role in user.get("roles")]
+        # block frappe module access
+        if not (("Administrator" in roles) or ("System Manager" in roles) or ("Manager" in roles)):
+            module_blocker.block_modules(user, module_names=["Core", "Desk", "Email", "File Manager",
+                                                       "Setup", "website_options"])
+
     def duplicate_vineyard_test(self):
         if not frappe.db.exists("Customer", self.name):
             return True
@@ -102,16 +113,17 @@ class Customer(WebsiteGenerator):
     def add_customer_to_vineyards(self):
         # Add self to customer list for each vineyard.
         for vineyard_container in self.vineyards:
+            print(vineyard_container.as_dict())
             if frappe.db.exists("Vineyard", vineyard_container.vineyard):
                 vineyard = frappe.get_doc("Vineyard", vineyard_container.vineyard)
                 if len(vineyard.customers) == 0:
                     self.add_self_to_vineyard_customers_container(vineyard)
-                for cust_container in vineyard.customers:
-                    if(cust_container.customer != self.name):
-                        self.add_self_to_vineyard_customers_container(vineyard)
+                customer_names = [container.customer for container in vineyard.customers]
+                if self.name not in customer_names:
+                    self.add_self_to_vineyard_customers_container(vineyard)
 
     def delete_customer_from_vineyards(self):
-        # NOTE: annot be called in on_update as save() method updates child tables with the deletion event in the UI (for desk UI forms)
+        # NOTE: cannot be called in on_update as save() method updates child tables with the deletion event in the UI (for desk UI forms)
         if frappe.db.exists("Customer", self.name):
             self_copy = frappe.get_doc("Customer", self.name)
             current_vineyards_containers = self_copy.vineyards
