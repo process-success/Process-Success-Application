@@ -8,8 +8,8 @@ class ModuleBlocker:
     def __init__(self, application_names=["frappe", "process_success"]):
         self.application_names = application_names
 
-    def restore_module_access(self, user, module_exceptions):
-        frappe.db.sql("""DELETE FROM `tabBlock Module` WHERE parent = %(user_name)'""", {"user_name", user.name})
+    def restore_module_access(self, user, module_exceptions=[]):
+        frappe.db.sql("""DELETE FROM `tabBlock Module` WHERE parent = '{}'""".format(user.name))
         user.save()
         self.block_modules(user, module_exceptions)
 

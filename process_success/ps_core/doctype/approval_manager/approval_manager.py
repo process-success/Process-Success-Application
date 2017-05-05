@@ -16,11 +16,11 @@ class approval_manager(Document):
             frappe.throw(_("Only one approval manager is allowed.").format())
 
     def on_update(self):
-        self.update_employees()
-        self.update_customers()
+        pass
 
     def validate(self):
-        pass
+        self.update_employees()
+        self.update_customers()
 
     def update_employees(self):
         if frappe.has_permission("approval_manager"):
