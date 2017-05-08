@@ -25,7 +25,7 @@
 	};
 	ps.successAlert=function(msg){
 		$(".success-text").html(" "+msg);
-		var alert=$("#alerts .alert-success");
+		var alert=$("#alerts #alert-success");
 		alert.fadeIn(ps.alert.config.fadeIn);
 		setTimeout(function(){
 		  alert.fadeOut(ps.alert.config.fadeOut);
@@ -34,11 +34,21 @@
 	};
 	ps.failAlert=function(msg){
 		$(".fail-text").html(" "+msg);
-		var alert=$("#alerts .alert-danger");
+		var alert=$("#alerts #alert-fail");
 		alert.fadeIn(ps.alert.config.fadeIn);
 		setTimeout(function(){
 		  alert.fadeOut(ps.alert.config.fadeOut);
 		}, ps.alert.config.showFor);
+	};
+	ps.offlineAlert=function(msg){
+		$(".fail-text").html(" You are now in offline mode.");
+		var alert=$("#alerts #alert-offline");
+		alert.fadeIn(ps.alert.config.fadeIn);
+	};
+	ps.onlineAlert=function(msg){
+		$(".fail-text").html(" "+msg);
+		var alert=$("#alerts #alert-offline");
+		alert.fadeOut(ps.alert.config.fadeOut);
 	};
 	ps.set_handlers = function(success,fail) {
 		var get_error_handler = function(default_message,fail) {

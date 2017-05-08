@@ -14,6 +14,10 @@ var babel        = require('gulp-babel');
 var tap          = require('gulp-tap');
 var reactify     = require('reactify');
 var babelify     = require ('babelify');
+var path = require('path');
+ 
+
+
 var plugins     = require("gulp-load-plugins")({
   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
   replaceString: /\bgulp[\-.]/
@@ -35,64 +39,40 @@ var assign = require('lodash.assign');
 //--------------------------
 //     TEST STUFFFF
 //--------------------------
-var customOpts = {
-  entries: ['./src/index.js'],
-  debug: true
-};
+// var customOpts = {
+//   entries: ['./src/index.js'],
+//   debug: true
+// };
 
-var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts)); 
+// var opts = assign({}, watchify.args, customOpts);
+// var b = watchify(browserify(opts)); 
 
-gulp.task('jsb', bundle); // so you can run `gulp js` to build the file
-b.on('update', bundle); // on any dep update, runs the bundler
-b.on('log', gutil.log);
+// gulp.task('jsb', bundle); // so you can run `gulp js` to build the file
+// b.on('update', bundle); // on any dep update, runs the bundler
+// b.on('log', gutil.log);
 
-function bundle() {
-  return b.bundle()
-    // log errors if they happen
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(gulp.dest('./dist'));
-}
+// function bundle() {
+//   return b.bundle()
+//     // log errors if they happen
+//     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+//     .pipe(source('bundle.js'))
+//     .pipe(buffer())
+//     .pipe(gulp.dest('./dist'));
+// }
 
 
 
-gulp.task('browserify2', function() {
-    console.log("________browserify______");
-    return browserify('process_success/public/js/modules')
-        .bundle()
-        //Pass desired output filename to vinyl-source-stream
-        .pipe(source('bundle.js'))
-        // Start piping stream to tasks!
-        .pipe(gulp.dest('/process_success/public/dist/build/'));
-});
+// gulp.task('browserify2', function() {
+//     console.log("________browserify______");
+//     return browserify('process_success/public/js/modules')
+//         .bundle()
+//         //Pass desired output filename to vinyl-source-stream
+//         .pipe(source('bundle.js'))
+//         // Start piping stream to tasks!
+//         .pipe(gulp.dest('/process_success/public/dist/build/'));
+// });
 
-gulp.task('browserify', function () {
-  console.log("________browserify 2______");
-  //https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-multiple-destination.md
-  return gulp.src('process_success/www/**/*.jsx', {read: false}) // no need of reading file because browserify does.
-    // transform file objects using gulp-tap plugin
-    .pipe(tap(function (file) {
-      gutil.log('bundling ' + file.path);
-      console.log('bundling ' + file.path);
-      // replace file contents with browserify's bundle stream
-      file.contents = browserify({
-        extensions: ['.jsx'],
-        entries: file.path,
-        debug: true
-      })
-      .transform(babelify.configure({
-          presets: ['es2015', 'react']
-      }))
-      .bundle();
-    }))
-    .pipe(rename(function (path) {
-      console.log(path);
-      path.extname = ".js";
-    }))
-    .pipe(gulp.dest('process_success/www/'));
-});
+
 
 // gulp.task('browserify', function () {
 //   console.log("________browserify 2______");
@@ -125,7 +105,6 @@ gulp.task('browserify', function () {
 
 var dev = true;
 
-
 var dest='process_success/public/dist/';
 var bowerpaths={
     paths: {
@@ -134,6 +113,99 @@ var bowerpaths={
         bowerJson: 'bower.json'
     }
 };
+//---------------------
+//     Manifest
+//---------------------
+var manifest={
+  lib:[
+    'process_success/public/js/lib/react.js',
+    'process_success/public/js/lib/react-dom.js'
+  ],
+  modules:[
+    'process_success/public//js/modules/**/*.jsx'
+  ],
+  jsx:[
+    'process_success/www/**/*.jsx',
+    'process_success/templates/**/*.jsx'
+  ],
+  less:{
+      source:[
+        'process_success/public/less/**/*.less'
+      ],
+      'dest':'process_success/public/css'
+  },
+  main:[
+    'process_success/public/js/core/ps.js',
+    'process_success/public/js/core/ps.socket.js',
+    'process_success/public/js/core/ps.storage.js',
+    'process_success/public/js/core/ps.obj.js',
+    'process_success/public/js/core/ps.init_obj.js'
+  ]
+};
+
+//---------------------
+//     LESS
+//---------------------
+
+
+gulp.task('less', function () {
+  return gulp.src(manifest.less.source)
+    .pipe(concat('ps.css'))
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .pipe(gulp.dest(manifest.less.dest));
+});
+
+//---------------------
+//     js scripts
+//---------------------
+
+
+gulp.task('scripts', function() {
+    return gulp.src(manifest.main)
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('process_success/public/dist'))
+        .pipe(rename('main.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('process_success/public/dist'));
+});
+
+//---------------------
+//     Browserfy
+//---------------------
+
+
+gulp.task('browserify', function () {
+  console.log("________browserify 2______");
+  //https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-multiple-destination.md
+  return gulp.src('process_success/www/**/*.jsx', {read: false}) // no need of reading file because browserify does.
+    // transform file objects using gulp-tap plugin
+    .pipe(tap(function (file) {
+      gutil.log('bundling ' + file.path);
+      console.log('bundling ' + file.path);
+      // replace file contents with browserify's bundle stream
+      file.contents = browserify({
+        extensions: ['.jsx'],
+        entries: file.path,
+        debug: true
+      })
+      .transform(babelify.configure({
+          presets: ['es2015', 'react']
+      }))
+      .bundle();
+    }))
+    .pipe(rename(function (path) {
+      console.log(path);
+      path.extname = ".js";
+    }))
+    .pipe(gulp.dest('process_success/www/'));
+});
+
+
+//---------------------
+//     Bower
+//---------------------
 
 console.log(plugins.mainBowerFiles(bowerpaths));
 gulp.task('js', function() {
@@ -145,36 +217,20 @@ gulp.task('js', function() {
   .pipe(gulp.dest('process_success/public/js/lib'));
 });
 
-//---------------------
-//     Manifest
-//---------------------
-var jsFiles={
-  lib:[
-    'process_success/public/js/lib/react.js',
-    'process_success/public/js/lib/react-dom.js'
-  ],
-  modules:[
-    'process_success/public//js/modules/**/*.jsx'
-  ],
-  main:[
-    'process_success/public/js/core/ps.js',
-    'process_success/public/js/core/ps.socket.js',
-    'process_success/public/js/core/ps.storage.js',
-    'process_success/public/js/core/ps.obj.js',
-    'process_success/public/js/core/ps.init_obj.js'
-  ]
-};
+
 //---------------------
 //     Lint Task
 //---------------------
+
 gulp.task('lint', function() {
     console.log('HINT');
-    return gulp.src(jsFiles.main)
+    return gulp.src(manifest.main)
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
+
 gulp.task('eslint', function() {
-  return gulp.src(jsFiles.modules)
+  return gulp.src(manifest.modules)
     .pipe(eslint({
         "plugins": [
           "react"
@@ -191,13 +247,15 @@ gulp.task('eslint', function() {
 
 
 //---------------------
-//     Lint Task
+//     LIB FIles
 //---------------------
+
 gulp.task('copy-react', function() {
   return gulp.src('node_modules/react/dist/react.js')
     .pipe(newer('process_success/public/js/lib/react.js'))
     .pipe(gulp.dest('process_success/public/js/lib/'));
 });
+
 gulp.task('copy-react-dom', function() {
   return gulp.src('node_modules/react-dom/dist/react-dom.js')
     .pipe(newer('process_success/public/js/lib/react-dom.js'))
@@ -205,17 +263,9 @@ gulp.task('copy-react-dom', function() {
 });
 
 
-// gulp.task('modules', function() {
-//   return gulp.src(jsFiles.modules)
-//     .pipe(babel({
-//       plugins: ['transform-react-jsx'],
-//       compact: false
-//     }))
-//     .pipe(concat('modules.js'))
-//     .pipe(gulp.dest('process_success/public/dist'));
-// });
+
 gulp.task('lib', ['copy-react', 'copy-react-dom'], function() {
-  return gulp.src(jsFiles.lib)
+  return gulp.src(manifest.lib)
     //.pipe(sourcemaps.init())
     // .pipe(babel({
     //   plugins: ['transform-react-jsx'],
@@ -227,15 +277,6 @@ gulp.task('lib', ['copy-react', 'copy-react-dom'], function() {
     .pipe(concat('lib.js'))
     //.pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('process_success/public/dist'));
-});
-
-gulp.task('scripts', function() {
-    return gulp.src(jsFiles.main)
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest('process_success/public/dist'))
-        .pipe(rename('main.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('process_success/public/dist'));
 });
 
 
@@ -263,13 +304,15 @@ gulp.task('watch', function() {
     'process_success/**/*.template',
     'process_success/template/**/*.css',
     'process_success/**/*.css',
-    'process_success/**/*.py' ], ['clearCache']);
+    'process_success/**/*.py' ], ['clearCache']
+  );
   gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
-  gulp.watch(['process_success/www/**/*.jsx',jsFiles.modules],['browserify']);
+  gulp.watch([manifest.less.source], ['less']);
+  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify']);
 });
 
 // Default Task
-gulp.task('default', ['browserify','lib','lint','scripts','js','clearCache','watch']);
+gulp.task('default', ['browserify','lib','lint','scripts','js','less','clearCache','watch']);
 
 
 //https://travismaynard.com/writing/getting-started-with-gulp

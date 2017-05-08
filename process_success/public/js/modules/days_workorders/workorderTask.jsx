@@ -2,14 +2,39 @@
 /*jshint ignore:start */
 import TaskCheck from './taskCheck'
 import CreateIssue from './createIssue'
+import Modal from '../utils/modal'
 
 
 export default class WorkorderTask extends React.Component{
 	constructor(props){
 		super(props);
-		this.state ={title:"derek"};
+		this.state={
+			issues:[],
+			title:'',
+			modal:'new',
+			modalPriority:'low',
+			modalTitle:'',
+			modalDescription:'',
+			modalName:''
+		};
 		this.taskChecked=this.taskChecked.bind(this);
 		this.statusChange=this.statusChange.bind(this);
+		this.activateModalNew=this.activateModalNew.bind(this);
+		this.activateModalEdit=this.activateModalEdit.bind(this);
+		
+		this.submitIssue=this.submitIssue.bind(this);
+		this.modalTitleChange=this.modalTitleChange.bind(this);
+		this.modalDescriptionChange=this.modalDescriptionChange.bind(this);
+		this.modalPriorityChange=this.modalPriorityChange.bind(this);
+		this.issueChanged=this.issueChanged.bind(this);
+
+
+		this.modalId="issue-form-"+this.props.workorder;
+
+		
+		this.issueTool = new ps.apiTool({"work_order":this.props.workorder},{doctype:'Issue'},this.issueChanged);
+
+
 	}
 	taskChecked(e){
 		this.setState({title:"CHECKED"});
@@ -25,6 +50,66 @@ export default class WorkorderTask extends React.Component{
   		this.props.onStatusChanged(e.target.value,this.props.index);
 
   	}
+  	/*---------------------------------------
+				ISSUE FUNCTIONS
+  	-----------------------------------------*/
+  	modalTitleChange(e){
+		this.setState({modalTitle:e.target.value});
+  	}
+	modalPriorityChange(e){
+		this.setState({modalPriority:e.target.value});
+	}
+	modalDescriptionChange(e){
+		this.setState({modalDescription:e.target.value});
+	}
+  	activateModalNew(){
+  		this.setState({modal:"new"});
+		this.setState({modalPriority:''});
+		this.setState({modalDescription:''});
+		this.setState({modalTitle:''});
+  		$('#'+this.modalId).modal();
+  	}
+  	activateModalEdit(issue){
+		this.setState({modal:issue});
+		this.setState({modalPriority:issue.priority});
+		this.setState({modalDescription:issue.issue});
+		this.setState({modalTitle:issue.title});
+		this.setState({modalName:issue.name});
+  		$('#'+this.modalId).modal();
+  	}
+  	issueChanged(){
+		console.log("issue tool alert -----------  ");
+		console.log(this.issueTool.items);
+		this.setState({issues:this.issueTool.items});
+	}
+  	submitIssue(e){
+  		e.preventDefault();
+		console.log("save");
+		console.log(this.state.modal);
+		var newItem={
+			title:this.state.modalTitle,
+			issue:this.state.modalDescription,
+			priority:this.state.modalPriority,
+			vineyard:this.props.location,
+			work_order:this.props.workorder
+		}
+		if(this.state.modal=="new"){
+			this.issueTool.create(newItem,function(item){
+				console.log("MEOW");
+				ps.successAlert("Issue " +item.title+ " created.")
+			});
+		}else{
+			newItem.name=this.state.modalName;
+			this.issueTool.update(newItem,function(item){
+				console.log("MEOW");
+				ps.successAlert("Issue " +item.title+" updated.")
+			});
+		}
+		//close modal
+		$('#'+this.modalId).modal('toggle');
+	}
+
+
 	render(){
 		const title="welcome";
 		var mainClass={
@@ -36,6 +121,44 @@ export default class WorkorderTask extends React.Component{
 		mainClass = mainClass + " panel workorder";
 		return(
 			<div className='col-md-4 col-sm-4'>
+				<Modal 
+					id={this.modalId} 
+					submitText="Submit" 
+					title="Create Issue For"
+					submit={this.submitIssue}>
+
+						<fieldset>
+							<div className="form-group">
+								<label>Issue Title</label>
+								<input 
+									type="text" 
+									className="form-control" 
+									placeholder="Issue Title" 
+									value={this.state.modalTitle} 
+									onChange={this.modalTitleChange}
+								/>
+							</div>
+							<div className="form-group">
+								<label>Priority</label>
+								<select className="form-control" value={this.state.modalPriority} onChange={this.modalPriorityChange.bind(this)}>
+									<option>Low</option>
+									<option>Medium</option>
+									<option>High</option>
+									<option>Critical</option>
+								</select>
+							</div>
+							<div className="form-group">
+							  	<label>Issue Details:</label>
+							  	<textarea 
+							  		className="form-control" 
+							  		rows="3" 
+							  		placeholder="Issue Details" 
+							  		value={this.state.modalDescription}
+							  		onChange={this.modalDescriptionChange}
+							  	></textarea>
+							</div>
+						</fieldset>
+				</Modal>
 			<div id="" className={mainClass}>
 				<div className="panel-heading">
 					<div className="row">
@@ -43,9 +166,17 @@ export default class WorkorderTask extends React.Component{
 							<a className="float-left" href={this.props.location_route}>{this.props.location}</a>
 						</h3>
 						<div className="col-xs-2 create-issue-header-button-container" >
+
+
 							<CreateIssue
+								issues={this.state.issues}
+								activateModalNew={this.activateModalNew}
+								activateModalEdit={this.activateModalEdit}
 								workorder={this.props.workorder}
+
 							/>
+
+
 						</div>
 					</div>
 						
@@ -61,10 +192,12 @@ export default class WorkorderTask extends React.Component{
 					</select>
 
 					<div className="check_boxes">
-						{this.props.tasks.map(function(item, index){
-							var checked=item.status?true:false;
-							return (<TaskCheck key={index} index={index} lable={item.task} checked={checked} taskChecked={this.taskChecked}/>);
-						}.bind(this))}
+						{
+							this.props.tasks.map(function(item, index){
+								var checked=item.status?true:false;
+								return (<TaskCheck key={index} index={index} lable={item.task} checked={checked} taskChecked={this.taskChecked}/>);
+							}.bind(this))
+						}
 
 					</div>
 					<div>

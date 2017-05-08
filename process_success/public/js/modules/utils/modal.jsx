@@ -8,7 +8,7 @@ export default class Modal extends React.Component{
 	}
 	submit(e){
 		e.preventDefault();
-		this.props.submit();
+		this.props.submit(e);
 	}
 	render(){
 		return(

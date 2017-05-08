@@ -18,7 +18,7 @@ def get_context(context):
 	if frappe.session.user != "Guest" and frappe.session.data.user_type=="System User":
 		frappe.local.flags.redirect_location = "/desk"
 		raise frappe.Redirect
-	context.manifest="http://localhost:8000/assets/process_success/app.appcache"
+	# context.manifest="http://localhost:8000/assets/process_success/app.appcache"
 	# get settings from site config
 	context.no_header = True
 	context.for_test = 'login.html'

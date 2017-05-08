@@ -81,16 +81,19 @@ ps.socket = {
 			frappe.msgprint(message);
 		});
 		ps.socket.socket.on('reconnect', function(message) {
-			frappe.msgprint("reconnected");
+			//frappe.msgprint("reconnected");
+			ps.onlineAlert();
 			ps.online=true;
 			$(document).trigger("connected");
 		});
 		ps.socket.socket.on('connect', function(message) {
+			ps.onlineAlert();
 			ps.online=true;
 			$(document).trigger("connected");
 		});
 		ps.socket.socket.on('disconnect', function(message) {
-			frappe.msgprint("disconnect");
+			//frappe.msgprint("disconnect");
+			ps.offlineAlert();
 			ps.online=false;
 		});
 		//ps.socket.socket.emit('msgprint','load');

@@ -1,70 +1,70 @@
 /*jshint ignore:start */
-import Modal from '../utils/modal'
+
 
 export default class CreateIssue extends React.Component{
 	constructor(props){
 		super(props)
-		this.popUp=this.popUp.bind(this);
-		this.popUpId="create-issue-form-"+this.props.workorder;
+		this.modalNewIssue=this.modalNewIssue.bind(this);
+		this.modalEditIssue=this.modalEditIssue.bind(this);
 	}
 	toolTip(){
 		$(function () {
 		 	$('[data-toggle="tooltip"]').tooltip();
 		})
-		
 	}
-	popUp(){
-		$('#'+this.popUpId).modal();
+	modalNewIssue(e){
+		e.preventDefault();
+		this.props.activateModalNew();
 	}
-	submit(){
-		this.objTool=ps.initIssue();
-		ps.initIssue.update();
-		console.log("save");
+	modalEditIssue(item,e){
+		e.preventDefault();
+		console.log(item)
+		this.props.activateModalEdit(item);
 	}
 	render(){
+					// 		data-toggle="modal" 
+					// data-target={"#"+this.popUpId}
+				 // 	aria-label="Create Issue" 
+				 // 	data-toggle="tooltip" 
+				 // 	data-placement="top" 
+				 // 	title="Issue" 
+					// ref={this.toolTip}					// onClick={ this.popUp} >
+		var dropdownItems=[];
+		if(this.props.issues!==null){
+			this.props.issues.map(function(item, index){
+				if (item.status =='Submitted' || item.status=='Assigned'){
+					dropdownItems.push(
+						<li key={index}> 
+							<a className="dropdown-item" 
+								href="#" 
+								onClick={this.modalEditIssue.bind(this,item)} 
+							>{item.title}</a>
+						</li>);
+				}
+			}.bind(this));
+		}
 		return(
 			<div className="text-right">
-				<button 
-					data-toggle="modal" 
-					data-target={"#"+this.popUpId}
-				 	type="button" 
-				 	className="btn btn-default btn-xs create-issue" 
-				 	aria-label="Create Issue" 
-				 	data-toggle="tooltip" 
-				 	data-placement="top" 
-				 	title="Issue" 
-					ref={this.toolTip} 
-					onClick={ this.popUp} >
+
+				<button
+					className="btn btn-default btn-xs dropdown-toggle create-issue" 
+					type="button" 
+					data-toggle="dropdown" 
+					aria-haspopup="true" 
+					aria-expanded="false" >
 
 				 	<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				</button>
-				<Modal 
-					id={this.popUpId} 
-					submitText="Submit" 
-					title="Create Issue For Vineyard"
-					submit={this.submit}>
+				<ul className="dropdown-menu">
+				    <li className="dropdown-header">Issues</li>
+				    {dropdownItems}
+				    <li role="separator" className="divider"></li>
+				    <li><a 
+				    	className="dropdown-item"
+				    	onClick={this.modalNewIssue}
+				    	href="#" > + New Issue</a></li>
+				</ul>
 
-						<fieldset>
-							<div className="form-group">
-								<label>Issue Title</label>
-								<input type="text" className="form-control" placeholder="Issue Title" />
-							</div>
-							<div className="form-group">
-								<label>Priority</label>
-								<select className="form-control" >
-									<option>Low</option>
-									<option>Medium</option>
-									<option>High</option>
-									<option>Critical</option>
-								</select>
-							</div>
-							<div className="form-group">
-							  	<label>Issue Details:</label>
-							  	<textarea className="form-control" rows="3" placeholder="Issue Details"></textarea>
-							</div>
-						</fieldset>
-
-				</Modal>
 			</div>
 		);
 	}

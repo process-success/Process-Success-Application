@@ -171,7 +171,8 @@ export default class DaysTimeSheets extends React.Component{
 
 		return(
 
-			<TimeSheet 
+			<TimeSheet
+				key={index} 
 				name={item.name}
 				date={item.date}
 				crew={item.crew}

@@ -5,6 +5,8 @@ from frappe import throw, msgprint, _
 from frappe.model.document import Document
 from frappe.utils import cint, nowdate, nowtime, cstr, add_days, flt, today
 from frappe.sessions import get_csrf_token
+import json
+import unicodedata
 
 
 
@@ -249,12 +251,18 @@ def check_table_changed(newItem, tableName):
 # 	return get_csrf_token()
 
 #-------------------------------------
-#   Get all but with full Doctype 
+#   DEFAULT GET CREATE REMOVE
+#   used from front end as default
 #-------------------------------------
 
 @frappe.whitelist()
 def get_all_full_doc(doctype, filters):
+    print ("____________________________ get_all_full_doc _______________________")
+    print ("filters: " +filters)
+    print ("doctype: " +doctype)
     docnames=frappe.get_all(doctype,filters=filters)
+    print ("returns: \/ ")
+    print (docnames)
     doc_list=[]
     if docnames:
         for docname in docnames:
@@ -263,11 +271,50 @@ def get_all_full_doc(doctype, filters):
 
 @frappe.whitelist()
 def create_doc(doctype,item):
-	pass
+	print ("---------------- create_doc -------------------")
+	j=json.loads(item)
+	obj={"doctype":doctype}
+	for key in j:
+		obj[key]=j[key]
+	new_doc = frappe.get_doc(obj)
+	new_doc.insert();
+	return new_doc
 
 @frappe.whitelist()
-def remove_doc(doctype,item_name):
-	pass
+def update_doc(doctype,item):
+	print ("---------------- UPDATE DOC -------------------")
+	j=json.loads(item)
+	print (j["name"])
+	check=frappe.get_all(doctype,filters={"name":j["name"]})
+	if check:
+		doc=frappe.get_doc(doctype,j["name"])
+		print (type(doc))
+		for key in j:
+			setattr(doc,key,j[key])
+		doc.save()
+		return doc
+	return "Fail"
+
+@frappe.whitelist()
+def remove_doc(doctype,name):
+	print ("---------------- REMOVE DOC -------------------")
+	check=frappe.get_all(doctype,filters={"name":name})
+	if check:
+		doc=frappe.get_doc(doctype,name)
+		doc.delete()
+		return "Success"
+	return "Fail"
+
+@frappe.whitelist()
+def clear_test_db():
+	names=check=frappe.get_all("Testing",fields =["name"])
+	for name in names:
+		doc=frappe.get_doc("Testing",name)
+		doc.delete()
+	return "success"
+
+
+
 
 
 
