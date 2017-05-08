@@ -126,11 +126,12 @@ def create_user(email, first_name, last_name, password=0):
 			"last_name": last_name,
 			"enabled": 1,
 			"new_password": password,
-			"user_type": "Website User"
+			"user_type": "Website User",
+			"send_welcome_email": False
 		})
 		if not password:
 			user.password=password
-
+		user.send_welcome_email = False
 		user.flags.ignore_permissions = True
 		user.insert()
 		return user
