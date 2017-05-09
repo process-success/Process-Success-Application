@@ -50,7 +50,7 @@ class work_order(WebsiteGenerator):
         context.status = self.status if self.status else "Unknown"
         context.date = self.date if self.date else "Not provided"
         context.location = self.location if self.location else "Not provivded"
-        context.customer = self.customer if self.customer else "Unknown"
+        #context.customer = self.customer if self.customer else "Unknown"
         context.crew = self.crew if self.crew else "Unassigned"
         context.crewlead = self.crewlead if self.crewlead else "Unassigned"
         context.subtasks = [task for task in self.get("subtask")]
