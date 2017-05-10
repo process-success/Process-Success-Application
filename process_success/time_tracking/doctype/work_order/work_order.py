@@ -47,12 +47,11 @@ class work_order(WebsiteGenerator):
         print("############## CONTEXT ###############")
         context.parents = [{"name": "work_orders", "title": "Work Orders", "route": "/work_orders"}]
         context.name = self.name
-        context.status = self.status if self.status else "Unknown"
-        context.date = self.date if self.date else "Not provided"
-        context.location = self.location if self.location else "Not provivded"
-        context.customer = self.customer if self.customer else "Unknown"
-        context.crew = self.crew if self.crew else "Unassigned"
-        context.crewlead = self.crewlead if self.crewlead else "Unassigned"
+        context.status = self.status if ("status" in self.as_dict().keys() and self.status) else "Unknown"
+        context.date = self.date if ("date" in self.as_dict().keys() and self.date) else "Not provided"
+        context.location = self.location if ("location" in self.as_dict().keys() and self.location) else "Not provivded"
+        context.crew = self.crew if ("crew" in self.as_dict().keys() and self.crew) else "Unassigned"
+        context.crewlead = self.crewlead if ("crewlead" in self.as_dict().keys() and self.crewlead) else "Unassigned"
         context.subtasks = [task for task in self.get("subtask")]
         context.issues = frappe.get_all("Issue", fields=["*"], filters=[["work_order", "=", self.name]])
         context.geojson = json.dumps(geojson, separators=(',', ': '))
