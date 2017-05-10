@@ -22,7 +22,6 @@ class Customer(WebsiteGenerator):
     def get_context(self, context):
         context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
         context.user_object = frappe.get_doc("User", self.user)
-        print(context.user_object.first_name)
 
     def set_path(self):
         formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
