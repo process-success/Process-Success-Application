@@ -207,6 +207,17 @@ def get_current_users_info():
 	#return get_csrf_token()
 	return user
 
+@frappe.whitelist(allow_guest=True)
+def get_users_info(name):
+	user = frappe.db.get("User",{"name":name})
+	crew = get_employees_crew(name)
+	if not crew:
+		user['crew'] = 'none'
+	else:
+		user['crew'] = crew.name
+	#return get_csrf_token()
+	return user
+
 
 # to be called in validate or insertion
 def check_field_changed(self):

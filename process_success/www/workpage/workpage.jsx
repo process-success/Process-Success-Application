@@ -28,7 +28,7 @@ class WorkPage extends React.Component{
 				$(document).trigger("userLoaded");
 				//console.log("after Load",this.currentUser.items);
 			}
-		}.bind(this));
+		}.bind(this)); 
 		this.state={items:this.currentUser.items};
 		$(document).bind('userLoaded',this.stateUpdate);
 

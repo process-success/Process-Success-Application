@@ -139,7 +139,8 @@ var manifest={
     'process_success/public/js/core/ps.socket.js',
     'process_success/public/js/core/ps.storage.js',
     'process_success/public/js/core/ps.obj.js',
-    'process_success/public/js/core/ps.init_obj.js'
+    'process_success/public/js/core/ps.init_obj.js',
+    'process_success/public/js/core/ps.user.js'
   ]
 };
 
