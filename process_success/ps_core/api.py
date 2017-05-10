@@ -133,6 +133,7 @@ def create_user(email, first_name, last_name, password=0):
 			user.password=password
 		user.send_welcome_email = False
 		user.flags.ignore_permissions = True
+		user.set("send_welcome_email", 0)
 		user.insert()
 		return user
 
