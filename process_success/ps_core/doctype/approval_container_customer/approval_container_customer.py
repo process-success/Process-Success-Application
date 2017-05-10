@@ -25,8 +25,6 @@ class approval_container_customer(Document):
                 vineyard_container.vineyard = self.vineyard
                 customer.append("vineyards", vineyard_container)
             customer.status = self.status
-            user.set("roles", [{"role": "Customer"}])
-            user.save()
             customer.save()
         elif self.status == "Disabled":
             customer.status = self.status

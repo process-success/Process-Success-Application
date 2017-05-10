@@ -19,13 +19,7 @@ class approval_container_employee(Document):
             employee.compensation_type = self.compensation_type
             employee.compensation = self.compensation
             employee.status = self.status
-            if self.role == "Employee":
-                print("just employee")
-                user.set("roles", [{"role": "Employee"}])
-                user.save()
-            else:
-                user.set("roles", [{"role": "Employee"}, {"role": self.role}])
-                user.save()
+            employee.user_type = self.role
             employee.save()
         elif self.status == "Disabled":
             employee.status = self.status

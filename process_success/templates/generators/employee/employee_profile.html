@@ -25,7 +25,11 @@
 	//$(frappe.avatar(frappe.user.name, 'avatar-large')).appendTo($('.user-image-account'))
 
 	frappe.ready(function() {
-		$(frappe.avatar(frappe.user, 'avatar-large')).appendTo($('.user-image-account'))
+		//$(frappe.avatar("{{user}}", 'avatar-large')).appendTo($('.user-image-account'));
+		var user={};
+		user.name="{{user}}";
+		user.full_name="{{doc.first_name}}";
+		$(ps.user.avatar(user, 'avatar-large')).appendTo($('.user-image-account'));
 		//$('.user-image-account').html(frappe.avatar( frappe.user , 'avatar-large'));
 	});
 </script>

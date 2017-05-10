@@ -133,6 +133,7 @@ def create_user(email, first_name, last_name, password=0):
 			user.password=password
 		user.send_welcome_email = False
 		user.flags.ignore_permissions = True
+		user.set("send_welcome_email", 0)
 		user.insert()
 		return user
 
@@ -204,6 +205,17 @@ def get_current_users_info():
 	user['today'] = today()
 	users=[]
 	users.append(user)
+	#return get_csrf_token()
+	return user
+
+@frappe.whitelist(allow_guest=True)
+def get_users_info(name):
+	user = frappe.db.get("User",{"name":name})
+	crew = get_employees_crew(name)
+	if not crew:
+		user['crew'] = 'none'
+	else:
+		user['crew'] = crew.name
 	#return get_csrf_token()
 	return user
 
