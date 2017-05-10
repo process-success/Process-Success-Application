@@ -1,0 +1,54 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/crew_location.css" %}
+</style>
+
+{% endblock %}
+
+	
+
+{% block page_content %}
+  <h1>Crew location</h1>
+  <br><br>
+  <input type="text" id="find">
+  <button onclick="find()">Find</button>
+  <br><br>
+	<table id="tablepaging">
+    <thead>
+	  <tr>
+	    <th>Crew name</th>
+	    <th>Location</th>
+      <th>Address</th>
+      <th>Attendance date</th>
+      <th>Work order</th>
+      <th>Task</th>
+      <th>Customer</th>
+	  </tr>
+    </thead>
+    <tbody id="body1">
+      {% for cont in rowContent: %}
+    	  <tr>
+    	    <td>{{cont['employee_name']}}</td>
+          <td>{{cont['vineyard name']}}</td>
+          <td>{{cont['address']}}</td>
+          <td>{{cont['att_date']}}</td>
+          <td>{{cont['work_order']}}</td>
+          <td>{{cont['description']}}</td>
+          <td>{{cont['customer']}}</td>
+    	  </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div id="pageNavPosition" style="padding-top: 20px" align="center">
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/crew_location.js" %}
+</script>
+{% endblock %}

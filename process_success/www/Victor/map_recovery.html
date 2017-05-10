@@ -1,0 +1,42 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Recover map</h1>
+
+	<label for="person">Client:</label>
+		<select id="person">
+			{% for cont in rowContent: %}
+				<option value={{cont['name']}}>{{cont['customer_name']}}</option>
+			{% endfor %} 
+		</select>
+
+	<label for="date">Date:</label>
+	<input type="date" id="date">
+	<button onclick="search()">Search</button>
+
+
+	<div id="map" style="width:1000px;height:500px;background:yellow">
+	</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+	
+
+	<script>
+		{% include "www/js/map_recovery.js" %}
+	</script>
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrstMxtS9ddgvbfY5oiDB8seRKDskMbA8&callback=myMap"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %} 
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/crew_names_assigned.css" %}
+</style>
+
+{% endblock %}
+
+	
+
+{% block page_content %}
+  <h1>Crew names assigned to each work order</h1>
+	<br><br>
+  <input type="text" id="find">
+  <button onclick="find()">Find</button>
+  <br><br>
+  <table id="tablepaging">
+    <thead>
+	  <tr>
+	    <th>Work order</th>
+      <th>Task</th>
+      <th>Status</th>
+      <th>Vineyard</th>
+	    <th>Crew names assigned</th>
+	  </tr>
+    </thead>
+    <tbody id="body1">
+      {% for cont in rowContent: %}
+        
+        <tr>
+          <td>{{cont['work_order']}}</td>
+          <td>{{cont['description']}}</td>
+          <td>{{cont['status']}}</td>
+          <td>{{cont['vineyard name']}}</td>
+          <td>{{cont['employee_name']}}</td>
+        </tr>
+         
+      {% endfor %}  
+    </tbody>
+  </table>
+   <div id="pageNavPosition" style="padding-top: 20px" align="center">
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/crew_names_assigned.js" %}
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+CACHE MANIFEST
+# process Success 1
+/assets/css/frappe-web.css
+/assets/process_success/dist/lib.js
+/assets/js/frappe-web.min.js
+/assets/frappe/js/lib/awesomplete/awesomplete.min.js
+/assets/frappe/js/lib/awesomplete/awesomplete.css
+/assets/frappe/css/bootstrap.css
+/website_script.js
+/assets/frappe/js/lib/socket.io.min.js
+/assets/frappe/js/lib/jquery/jquery.min.js
+/assets/process_success/dist/main.js
+/workpage/workPageOffline
+
+NETWORK:
+*
+
+FALLBACK:
+/workpage /workpage/workPageOffline 

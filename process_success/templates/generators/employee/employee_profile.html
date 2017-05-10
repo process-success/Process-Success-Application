@@ -1,0 +1,37 @@
+{% extends "templates/web.html" %}
+ 
+{% block breadcrumbs %}
+	{% include "templates/includes/breadcrumbs.html" %}
+{% endblock %}
+
+{% block header %}
+<h1>{{doc.first_name}} {{doc.last_name}}</h1>
+{% endblock %}
+
+{% block page_content %}
+
+<span class="user-image-account"></span>
+ 
+{#% frappe.avatar( doc.user_object.name) %#}
+<h2>Info</h2>
+<ul>
+	<li>Email: {{user}}</li>
+</ul>
+{% endblock %}
+
+{%- block script %}
+
+<script>
+	//$(frappe.avatar(frappe.user.name, 'avatar-large')).appendTo($('.user-image-account'))
+
+	frappe.ready(function() {
+		$(frappe.avatar(frappe.user, 'avatar-large')).appendTo($('.user-image-account'))
+		//$('.user-image-account').html(frappe.avatar( frappe.user , 'avatar-large'));
+	});
+</script>
+{%- endblock %}
+
+
+
+
+

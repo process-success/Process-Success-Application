@@ -1,0 +1,171 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+	{% include "/www/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<!-- {{ for_test }} -->
+
+
+<section class='for-login'>
+
+	<!--   LOG IN    -->
+
+	<div class="login-content ps_login_form" style="margin-top: 20px;">
+		<form class="form-signin form-login" role="form">
+			<div class="page-card-head login_header">
+				{{ _("Sign In Now") }}
+			</div>
+
+			<input type="text" id="login_email"
+				class="form-control" placeholder="{{ _('Email address') }}" required autofocus>
+
+			<input type="password" id="login_password"
+				class="form-control" placeholder="{{ _('Password') }}" required>
+
+			<button class="btn btn-sm btn-primary btn-block btn-login" type="submit">
+				{{ _("Sign in") }}</button>
+
+			{% if ldap_settings.enabled %}
+			<button class="btn btn-sm btn-default btn-block btn-login btn-ldap-login">
+				{{ _("Login with LDAP") }}</button>
+			{% endif %}
+
+			{%- if not disable_signup -%}
+			<p class="text-center form-group" style="margin-top: 25px">
+				<a href="#signup" style="margin-top: -2px;" class="btn btn-default">{{ _("Don't have an account? Sign up") }}</a><a href="#forgot" style="margin-top: 5px;" class="btn btn-default">{{ _("Forgot Password?") }}</a>
+			</p>
+			{%- endif -%}
+		</form>
+
+
+	</div>
+
+	<!-- SELECT A USER TYPE -->
+	<div class="login-content ps_select_user_form hide"  style="margin-top: 20px;">
+		<form class="form-signin form-signup-customer" role="form">
+			<div class="login_header">
+				{{ _("User Type?") }}
+			</div>
+			<div class='form-footer' style="margin-top: 25px"><p class="text-center">
+				<a href="#customer" class="btn btn-info" >{{ _("Customer") }}</a>
+				<a href="#employee" class="btn btn-info" >{{ _("Employee") }}</a>
+			</div>
+			<div class='form-footer' style="margin-top: 25px"><p class="text-center">
+				<a href="#login" class="btn btn-default" >{{ _("Back to Login") }}</a>
+			</div>
+		</form>
+	</div>
+
+	<!--   SIGN UP CUSTOMER   -->
+
+	<div class="login-content ps_customer_form hide" style="margin-top: 20px;">
+		<form class="form-signin customer_signup" role="form">
+			<div class="page-card-head login_header">
+				{{ _("Customer") }}
+			</div>
+			<input type="text" id="signup_firstname_customer"
+				class="form-control" placeholder="{{ _('First Name') }}" required autofocus>
+			<input type="text" id="signup_lastname_customer"
+				class="form-control" placeholder="{{ _('Last Name') }}" required autofocus>
+			<input type="email" id="signup_email_customer"
+				class="form-control" placeholder="{{ _('Email address') }}" required>
+			<input type="password" id="signup_password_customer"
+				class="form-control" placeholder="{{ _('Password') }}" required autofocus>
+			<button class="btn btn-lg btn-default btn-block btn-login" type="submit">{{ _("Sign up") }}</button>
+			<div style="margin-top: 25px"><p class="text-center">
+				<a href="#login" class="btn btn-default">{{ _("Have an account? Login") }}</a>
+			</div>
+		</form>
+	</div>
+
+	<!--   SIGN UP employee   -->
+	
+	<div class="login-content ps_employee_form hide" style="margin-top: 20px;">
+		<form class="form-signin employee_signup" role="form">
+			<div class="page-card-head login_header">
+				{{ _("Employee") }}
+			</div>
+			<input type="text" id="signup_firstname_employee"
+				class="form-control" placeholder="{{ _('First Name') }}" required autofocus>
+			<input type="text" id="signup_lastname_employee"
+				class="form-control" placeholder="{{ _('Last Name') }}" required autofocus>
+			<input type="email" id="signup_email_employee"
+				class="form-control" placeholder="{{ _('Email address') }}" required>
+			<input type="password" id="signup_password_employee"
+				class="form-control" placeholder="{{ _('Password') }}" required autofocus>
+			<button class="btn btn-lg btn-default btn-block btn-login" type="submit">{{ _("Sign up") }}</button>
+			<div style="margin-top: 25px"><p class="text-center">
+				<a href="#login" class="btn btn-default">{{ _("Have an account? Login") }}</a>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!--       Forgot Pass   -->
+
+	<div class="login-content ps_forgot_password_form hide" style="margin-top: 20px;">
+		<form class="form-signin form-forgot" role="form">
+			<div class="login_header">
+				{{ _("Forgot Password") }}
+			</div>
+			<input type="email" id="forgot_email"
+				class="form-control" placeholder="{{ _('Email address') }}" required autofocus>
+			<button class="btn btn-sm btn-primary btn-block btn-forgot" type="submit">{{ _("Send Password") }}</button>
+			<div class='form-footer' style="margin-top: 25px"><p class="text-center">
+				<a href="#login" class="btn btn-default" >{{ _("Back to Login") }}</a>
+			</div>
+		</form>
+	</div>
+
+
+
+	<div class='form-footer'>
+
+			<div class='social-logins'>
+			{%- if social_login -%}
+				
+				<br>
+				<h3 class="text-center">{{ _("Signup or Login With") }}</h3>
+				<p class="text-center" style="margin-top: 15px">
+
+				{%- if facebook_login is defined %}
+				<a href="{{ facebook_login }}"
+					class="btn btn-default btn-xs btn-social btn-facebook">
+					<i class="fa fa-facebook-official"></i> {{ _("Facebook") }}</a>
+				{%- endif -%}
+
+				{%- if google_login is defined %}
+				<a href="{{ google_login }}" class="btn btn-default btn-xs btn-social btn-google">
+					<i class="fa fa-google-plus"></i> {{ _("Google") }}</a>
+				{%- endif -%}
+
+				{%- if github_login is defined %}
+				<a href="{{ github_login }}" class="btn btn-default btn-xs btn-social btn-github">
+					<i class="fa fa-github"></i> {{ _("GitHub") }}</a>
+				{%- endif -%}
+
+				{%- if frappe_login is defined %}
+				<a href="{{ frappe_login }}" class="btn btn-default btn-xs btn-social">
+					<img style='width: 16px; height: 16px;'
+						src="/assets/frappe/images/favicon.png"> {{ _("Frappe") }}</a>
+				{%- endif -%}
+				</p>
+			{%- endif -%}
+			</div>
+	</div>
+
+
+</section>
+
+{% endblock %}
+
+{% block script %}
+	<script>{% include "/www/login/login.js" %}</script>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

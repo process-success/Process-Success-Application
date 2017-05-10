@@ -1,0 +1,52 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/work_order_list.css" %}
+</style>
+
+{% endblock %}
+
+	
+
+{% block page_content %}
+  <h1>List of active work orders</h1>
+  <br><br>
+  <input type="text" id="find">
+  <button onclick="find()">Find</button>
+  <br><br>
+  <table id="tablepaging">
+    <thead>
+    <tr>
+      <th>Work order</th>
+      <th>Client name</th>
+      <th>Vineyard</th>
+      <th>Location</th>
+      <th>Job description</th>
+    </tr>
+    </thead>
+    <tbody id="body1">
+      {% for cont in rowContent: %}
+        
+        <tr>
+          <td>{{cont['name']}}</td>
+          <td>{{cont['customer_name']}}</td>
+          <td>{{cont['vineyard name']}}</td>
+          <td>{{cont['location']}}</td>
+          <td>{{cont['description']}}</td>
+        </tr>
+         
+      {% endfor %}  
+     </tbody>
+  </table>
+  <div id="pageNavPosition" style="padding-top: 20px" align="center">
+</div>
+
+	
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/work_order_list.js" %}
+</script>
+{% endblock %}

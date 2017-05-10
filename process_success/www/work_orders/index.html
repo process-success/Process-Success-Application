@@ -1,0 +1,19 @@
+
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Work Orders</h1>
+<ul>
+
+{% for key, value in work_orders.items() %}
+<h3>Status: {{ key }}</h3>
+    {% for work_order in value %}
+
+    <ul>
+        <a href="{{work_order.route}}"><li> {{ work_order.name }} - {{ work_order.location }} </li></a>
+    </ul>
+    {% endfor %}
+<br>
+{% endfor %}
+</ul>
+{% endblock %}

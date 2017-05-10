@@ -1,0 +1,97 @@
+{% extends "templates/base.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "www/css/bootstrap.css" %}
+    {% include "www/css/attendance.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<!--
+<form class="form-signin form-test" role="form">
+	<input type=hidden name=employee id="employee" value="{{employee}}">
+	<input type=hidden name=employee_name id="employee_name" value="{{employee_name}}">
+	<input type=hidden name=att_date id="att_date" value="{{att_date}}">
+	<input type=hidden name=status id="status" value="Present">
+	<input type=hidden name=company id="company" value="{{company}}">
+    
+	<div class="col-md-offset-3 col-md-9">
+		<div class="row">
+			<button type="button" class="btn clockon btn-lg" id="ClockOn">Clock On </button>
+		</div>
+		<div class="row">
+			<button type="button" class="btn break btn-lg">Go on Break </button>
+		</div>
+		<div class="row">
+			<button type="button" class="btn clockout btn-lg">Clock Out </button>
+		</div>			
+		<div class="row">
+			<button type="button" class="btn jobcode btn-lg">Change Job Code </button>
+		</div>
+	</div>
+</form>
+-->
+<form class="form-signin form-test" role="form">
+	<input type=hidden name=att_date id="att_date" value="{{att_date}}">
+	<input type=hidden name=status id="status" value="Present">
+	<!--<input type=hidden name=series id="series" value="ATT-">-->
+	<input type=hidden name=company id="company" value="{{company}}">
+    
+	<div class="col-md-offset-3 col-md-9">
+		<div class="row">
+			<h1>Attendance</h1>
+		</div>	
+		<div class="row">
+			<label for="employee_name">Employee name</label>
+			<select name="employee_name" id="employee_name">
+				{% for cont in Semployees: %}
+					<option value="{{cont['name']}}">{{cont['employee_name']}}</option>
+      			{% endfor %}
+			</select>
+		</div>
+		<div class="row">
+			<button type="button" class="btn clockon btn-lg" id="ClockOn">Clock On </button>
+		</div>
+		<div class="row">
+			<label for="customer_account">Customer Account</label>
+			<select name=customer_account id="customer_account">
+				{% for cont2 in Scustomers: %}
+					<option value="{{cont2['customer_name']}}">{{cont2['customer_name']}}</option>
+      			{% endfor %}
+			</select>
+		</div>
+		<div class="row">
+			<label for="customer_account">Vineyard</label>
+			<input name=customer_account id="customer_account">
+		</div>
+		<div class="row">
+			<label for="work_order">Work Order</label>
+			<input name=work_order id="work_order">
+		</div>
+		<div class="row">
+			<label for="task">Task</label>
+			 <select name="task" id="task">
+				<option value="pruning">Pruning</option>
+				<option value="canopy_management">Canopy Management</option>
+				<option value="bird_nets">Bird Nets</option>
+				<option value="praying">Spraying</option>
+			 	<option value="watering">Watering</option>
+				<option value="weeding">Weeding</option>
+			 	<option value="latice">Latice</option>
+			 	<option value="fertilizer">Fertilizer</option>
+				<option value="harvest">Harvest</option>
+			</select> 
+		</div>
+		<div class="row">
+			<button type="button" class="btn clockout btn-lg" id="ClockOut">Clock Out </button>
+		</div>	
+	</div>
+</form>
+
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/attendance.js" %}
+</script>
+{% endblock %}

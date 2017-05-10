@@ -1,0 +1,13 @@
+
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Employee List</h1>
+<ul>
+	{% for employee in employees %}
+
+	<a href="{{employee.route}}"><li> {{ employee.first_name }} {{ employee.last_name}} </li></a>
+	{% endfor %}
+
+</ul>
+{% endblock %}

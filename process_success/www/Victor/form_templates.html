@@ -1,0 +1,28 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Create an email template</h1>
+	<form id="myForm" method="POST">
+		<label for="title">Template title:</label>
+		<input id="title" required>
+		<br><br>
+		<label for="message">Message:</label>
+		<br>
+		<textarea id="message" style="width:50%"></textarea>
+		<br><br>
+		<input type="button" value="Add" onclick="send()">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/form_templates.js" %}
+	</script>
+{% endblock %}

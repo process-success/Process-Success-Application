@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<link rel="stylesheet" href="bootstrap.css" />
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "templates/css/bootstrap.css" %}
+	{% include "www/css/client_database.css" %}
+	/* prosadata code generation begin */
+	/* prosadata.com code generation end */
+</style>
+{% endblock %}
+
+{% block page_content %}
+<!-- prosadata code generation begin -->
+<div class="container-fluid" id="everything">
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 formframe">
+			<div class="col-md-5">	
+				<img src="{{"/assets/process_success/images/client_database.jpg" }}" id="imgtop">
+				<p style="font-family: DosisBold; font-size: 18px; text-align: center; font-weight: bold;"> Client Database </p>
+			</div>
+			
+			<div class="col-md-7" style="top:100px;">
+				<label for="client">Client</label>
+				<select name="client" id="client">
+					{% for cont in SClient: %}
+						<option value="{{cont['name']}}">{{cont['customer_name']}}</option>
+					{% endfor %}
+				</select>	
+				<button onclick="findClient()">Find</button>	 
+			</div>	
+		</div>
+	</div>
+	<div id="body1"></div>	
+</div>
+<!-- prosadata.com code generation end -->
+{% endblock %}
+{% block script %}
+<script>
+<!-- prosadata code generation begin -->
+	{% include "www/js/client_database.js" %}
+<!-- prosadata.com code generation end -->
+</script>
+{% endblock %}
