@@ -20,8 +20,6 @@ class Employee(WebsiteGenerator):
 
     def get_context(self, context):
         context.parents = [{"name": "employees", "title": "Employees", "route": "/employees"}]
-        # context.user_object = frappe.get_doc("User", self.user)
-        # print(context.user_object.first_name)
 
     def set_path(self):
         formatted_full_name = self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
@@ -55,7 +53,7 @@ class Employee(WebsiteGenerator):
         full_name = self.first_name + " " + self.last_name
 
         if not self.user:
-            user = create_user(self.email, self.first_name, self.last_name)
+            user = create_user(self.email, self.first_name, self.last_name, )
             if user == 0:
                 frappe.throw("User already exists")
             self.user = user.name
