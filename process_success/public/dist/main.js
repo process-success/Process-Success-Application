@@ -1177,6 +1177,13 @@ ps.initWorkorder=function(){
 	return workorders;
 };
 
+
+ps.apiSetup={};
+ps.apiSetup.workOrders={
+	doctype:'work_order',
+	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
+};
+
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();
 	userinfo.doctype="Employee";
@@ -1194,15 +1201,6 @@ ps.initTimeSheets=function(){
 	return obj;
 };
 
-ps.initIssue =function(){
-	var obj=ps.obj.init();
-	obj.doctype="Issue";
-	obj.get_function='process_success.core.doctype.issue.issue.get_issues';
-	obj.update_function="process_success.core.doctype.issue.issue.update_issue";
-	obj.create_function="process_success.core.doctype.issue.issue.create_issue";
-	obj.add_employee_to_sheet="";
-	return obj;
-};
 
 	// ps.timesheet.remove_employee_from_sheet=function(time_sheet,employee){
 	// 	args={};
