@@ -307,9 +307,9 @@ gulp.task('watch', function() {
     'process_success/**/*.css',
     'process_success/**/*.py' ], ['clearCache']
   );
-  gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
+  gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts'],['clearCache']);
   gulp.watch([manifest.less.source], ['less']);
-  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify']);
+  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify'],['clearCache']);
 });
 
 // Default Task

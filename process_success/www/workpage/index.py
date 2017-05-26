@@ -5,7 +5,7 @@ no_cache = 1
 no_sitemap = 1
 
 def get_context(context):
-	context.manifest="/assets/process_success/app.appcache"
+	#context.manifest="/assets/process_success/app.appcache"
 	username=frappe.session.user
 	#if not username=="Geust":
-	context.manifest="/assets/process_success/app.appcache"
+	#context.manifest="/assets/process_success/app.appcache"

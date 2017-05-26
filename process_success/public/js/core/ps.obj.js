@@ -234,7 +234,7 @@
 				if(typeof(callback)!='undefined'){callback(data.message);}
 			},function(){ 
 				console.log("call fail callback");
-				if(typeof(callback)!='undefined'){fail();}
+				if(typeof(fail)!='undefined'){fail();}
 			});
 		}
 
@@ -600,7 +600,6 @@ ps.apiTool=function(filters, options, onChange){
 		});
 	};
 	this.setItems=function(items){
-		console.log("LOG ITEMS!!!!!!!!",items);
 		if (items!==null){
 			this.items=items;
 			this.storage.store(this.doctype,items);

@@ -20,6 +20,12 @@ class WorkPage extends React.Component{
 		
 
 		//Handel User lOad
+		// if ( frappe.user_id == "Administrator" ){
+		// 	window.location = "/desk";
+		// }
+		// if ( frappe.user_id == "Geust"){
+		// 	window.location = "/login";
+		// }
 		this.currentUser=ps.initCurrentUser();
 		this.currentUser.get({},function(items){
 			if(this.currentUser.items.username=="Guest"){

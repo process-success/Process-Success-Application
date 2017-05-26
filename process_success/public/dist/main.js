@@ -763,7 +763,7 @@ ps.store={
 				if(typeof(callback)!='undefined'){callback(data.message);}
 			},function(){ 
 				console.log("call fail callback");
-				if(typeof(callback)!='undefined'){fail();}
+				if(typeof(fail)!='undefined'){fail();}
 			});
 		}
 
@@ -1129,7 +1129,6 @@ ps.apiTool=function(filters, options, onChange){
 		});
 	};
 	this.setItems=function(items){
-		console.log("LOG ITEMS!!!!!!!!",items);
 		if (items!==null){
 			this.items=items;
 			this.storage.store(this.doctype,items);
@@ -1176,14 +1175,11 @@ ps.initWorkorder=function(){
 	workorders.update_function="process_success.time_tracking.doctype.work_order.work_order.update_workorder";
 	return workorders;
 };
-
-
 ps.apiSetup={};
 ps.apiSetup.workOrders={
 	doctype:'work_order',
 	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
 };
-
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();
 	userinfo.doctype="Employee";
@@ -1201,6 +1197,15 @@ ps.initTimeSheets=function(){
 	return obj;
 };
 
+ps.initIssue =function(){
+	var obj=ps.obj.init();
+	obj.doctype="Issue";
+	obj.get_function='process_success.core.doctype.issue.issue.get_issues';
+	obj.update_function="process_success.core.doctype.issue.issue.update_issue";
+	obj.create_function="process_success.core.doctype.issue.issue.create_issue";
+	obj.add_employee_to_sheet="";
+	return obj;
+};
 
 	// ps.timesheet.remove_employee_from_sheet=function(time_sheet,employee){
 	// 	args={};

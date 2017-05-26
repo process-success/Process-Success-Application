@@ -183,6 +183,7 @@ export default class WorkorderTask extends React.Component{
 
 				</div>
 				<div className="panel-body">
+					<div>{this.props.type}</div>
 					<label className="control-label">Status</label>
 					<select className="form-control status" value={this.props.status} onChange={this.statusChange}>
 						<option value="Pending">Pending</option>
