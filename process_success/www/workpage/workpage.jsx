@@ -1,5 +1,5 @@
 /*jshint ignore:start */
-import DaysWorkorders from '../../public/js/modules/days_workorders/DaysWorkorders'
+//import DaysWorkorders from '../../public/js/modules/days_workorders/DaysWorkorders'
 import DaysTimesheets from '../../public/js/modules/days_timesheets/DaysTimeSheets'
 
 //const app= document.getElementById('app');
@@ -20,6 +20,12 @@ class WorkPage extends React.Component{
 		
 
 		//Handel User lOad
+		// if ( frappe.user_id == "Administrator" ){
+		// 	window.location = "/desk";
+		// }
+		// if ( frappe.user_id == "Geust"){
+		// 	window.location = "/login";
+		// }
 		this.currentUser=ps.initCurrentUser();
 		this.currentUser.get({},function(items){
 			if(this.currentUser.items.username=="Guest"){
@@ -89,30 +95,26 @@ class WorkPage extends React.Component{
 		}
 		else{
 			output=(
-				<div>
-					<ul className="nav nav-pills center-pills">
-						<li onClick={this.mainClicked} role="presentation" className={this.state.page=='main'?'active':''}><a href="#main">Main</a></li>
-						<li onClick={this.workordersClicked} role="presentation" className={this.state.page=='workorders'?'active':''}><a href="#workorders">Workorders</a></li>
-						<li onClick={this.timesheetClicked} role="presentation" className={this.state.page=='timesheet'?'active':''}><a href="#timesheet">Time Sheets</a></li>
-					</ul>
-					<br/>
-					<div className={this.state.page=='timesheet' || this.state.page=='main'?'':'hidden'}>
-						<DaysTimesheets 
+				<div className="panel with-nav-tabs panel-primary">
+                <div className="panel-heading">
+                        <ul className="nav nav-tabs">
+                            <li className="active"><a href="#clockInTab" data-toggle="tab">Main</a></li>
+                            <li><a href="#workOrderTab" data-toggle="tab">Work Orders</a></li>
+                            <li><a href="#timeSheetTab" data-toggle="tab">Time Sheets</a></li>
+
+                        </ul>
+                </div>
+                <div className="panel-body">
+                    <div className="tab-content">				
+                        <DaysTimesheets 
 							date={this.state.items.today}
 							full_name={this.state.items.current_user.full_name}
 							page={this.state.page}
 							crew={this.state.items.crew}
 						/>
-					</div>
-					<div className={this.state.page=='workorders'?'':'hidden'}>
-						<DaysWorkorders 
-							crew={this.state.items.crew} 
-							date={this.state.items.today}
-							//completed={this.state.completed}
-							//inprogress={this.state.inprogress}
-						/>
-					</div>
-				</div>
+                    </div>
+                </div>
+            </div>
 			);
 		}
 

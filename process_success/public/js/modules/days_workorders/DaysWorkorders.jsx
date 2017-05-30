@@ -12,18 +12,19 @@ export default class DaysWorkorders extends React.Component{
 		/*   Do the bind thing  */
 		this.onTaskChecked=this.onTaskChecked.bind(this);
 		this.onStatusChanged=this.onStatusChanged.bind(this);
-		this.updateFromServer=this.updateFromServer.bind(this);
+		this.workOrderChanged=this.workOrderChanged.bind(this);
 		this.socketUpdate=this.socketUpdate.bind(this);
 		//this.workorderObj=this.onStatusChanged.bind(this);
 		/*          end          */
 
 		this.state={workorders:[]};
-		this.workorderTool=ps.initWorkorder();
-		this.workorderTool.get(args,function(){
-			this.updateFromServer();
-			this.workorderTool.reactSetup(this.updateFromServer);
-		}.bind(this));
-		if (this.workorderTool.items===undefined ||this.workorderTool.items=== 0 ){
+
+		var args={};
+		 args.crew=this.props.crew;
+		args.date=this.props.date;
+		this.workorderTool = new ps.apiTool(args,ps.apiSetup.workOrders,this.workOrderChanged);
+
+		if (this.workorderTool.items===undefined ||this.workorderTool.items=== 0 ||this.workorderTool.items===null ){
 
 		}else{this.state.workorders=this.workorderTool.items;}
 	}
@@ -45,8 +46,10 @@ export default class DaysWorkorders extends React.Component{
 			ps.successAlert("Workorder completed!");
 		}
 	}
-	updateFromServer(){
-		this.setState({workorders:this.workorderTool.items});
+	workOrderChanged(){
+		if (this.workorderTool.items!==null){
+			this.setState({workorders:this.workorderTool.items});
+		}
 	}
 	workorderObj(item,index){
 		return(
@@ -57,6 +60,7 @@ export default class DaysWorkorders extends React.Component{
 				location={item.location}
 				tasks={item.subtask}
 				status={item.status}
+				type={item.type}
 				workorder={item.name}
 				onTaskChecked={this.onTaskChecked}
 				onStatusChanged={this.onStatusChanged}

@@ -8,7 +8,11 @@ ps.initWorkorder=function(){
 	workorders.update_function="process_success.time_tracking.doctype.work_order.work_order.update_workorder";
 	return workorders;
 };
-
+ps.apiSetup={};
+ps.apiSetup.workOrders={
+	doctype:'work_order',
+	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
+};
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();
 	userinfo.doctype="Employee";

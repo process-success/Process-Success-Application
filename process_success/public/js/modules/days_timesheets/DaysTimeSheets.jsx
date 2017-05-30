@@ -1,4 +1,5 @@
 /*jshint ignore:start */
+import DaysWorkorders from '../days_workorders/DaysWorkorders'
 import EmployeeTime from './employeeTime';
 import TimeSheet from './timeSheet';
 import ClockIn from './clockIn';
@@ -281,7 +282,7 @@ export default class DaysTimeSheets extends React.Component{
 		//MAIN RENDER
 		return(
 			<div>
-				<div className={this.props.page=='main'?'':'hidden'}>
+				<div className="tab-pane fade in active" id="clockInTab">
 					<ClockIn
 						clockIn={this.clockIn}
 						clockOut={this.clockOut}
@@ -291,9 +292,15 @@ export default class DaysTimeSheets extends React.Component{
 						crew={this.props.crew}
 					/>
 				</div>
-				<div className={this.props.page=='timesheet'?'':'hidden'}>
+				<div className="tab-pane fade" id="timeSheetTab">
 					<br/>
 					{output}
+				</div>
+				<div className="tab-pane fade" id="workOrderTab">
+						<DaysWorkorders 
+							date={this.props.date}
+							crew={this.props.crew}
+						/>
 				</div>
 			</div>
 
