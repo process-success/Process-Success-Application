@@ -85,6 +85,8 @@ class CreateWorkorder extends React.Component{
 	}
 }
 
+
+
 (function(){
 	frappe.ready(function(){
 		ReactDOM.render( 
@@ -92,6 +94,26 @@ class CreateWorkorder extends React.Component{
 	})
 
 })();
+
+
+$(document).ready(function() {
+    $(".table").DataTable({
+        "scrollY": 300,
+        "data": dataSet,
+        "scrollX": true,
+        "paging":   false,
+        "stateSave": true,
+        "info":     false,
+              columns: [
+            { title: "Name" },
+            { title: "Position" },
+            { title: "Office" },
+            { title: "Extn." },
+            { title: "Start date" },
+            { title: "Salary" }
+        ]
+    });
+} );
 
 
 

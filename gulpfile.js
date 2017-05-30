@@ -119,10 +119,13 @@ var bowerpaths={
 var manifest={
   lib:[
     'process_success/public/js/lib/react.js',
-    'process_success/public/js/lib/react-dom.js'
+    'process_success/public/js/lib/react-dom.js',
+    'process_success/public/js/lib/jquery.dataTables.js',
+    'process_success/public/js/lib/dataTables.fixedColumns.js',
+    'process_success/public/js/lib/dataTables.bootstrap.js'
   ],
   modules:[
-    'process_success/public//js/modules/**/*.jsx'
+    'process_success/public/js/modules/**/*.jsx'
   ],
   jsx:[
     'process_success/www/**/*.jsx',
@@ -209,13 +212,28 @@ gulp.task('browserify', function () {
 //---------------------
 
 console.log(plugins.mainBowerFiles(bowerpaths));
-gulp.task('js', function() {
+gulp.task('bowerjs', function() {
   var jsFilter = filter('**/*.js', {restore: true});
   gulp.src(plugins.mainBowerFiles(bowerpaths))
   .pipe(jsFilter)
   .pipe(gulp.dest('process_success/public/js/lib'))
   .pipe(concat('all.js'))
   .pipe(gulp.dest('process_success/public/js/lib'));
+});
+gulp.task('bowercss', function() {
+  var cssfilter = filter(['**/*.css','!**/jquery.dataTables.css'], {restore: true});
+  //var filter = gulpFilter(['*', '!wcui/app/js/vendor']);
+  gulp.src(plugins.mainBowerFiles(bowerpaths))
+  .pipe(cssfilter)
+  .pipe(gulp.dest('process_success/public/css/lib'))
+  .pipe(concat('all.css'))
+  .pipe(gulp.dest('process_success/public/css/lib'));
+});
+gulp.task('bowerimgs', function() {
+  var imgfilter = filter('**/*.png');
+  gulp.src(plugins.mainBowerFiles(bowerpaths))
+  .pipe(imgfilter)
+  .pipe(gulp.dest('process_success/public/css/images'));
 });
 
 
@@ -307,13 +325,14 @@ gulp.task('watch', function() {
     'process_success/**/*.css',
     'process_success/**/*.py' ], ['clearCache']
   );
+  gulp.watch(['bower.json'],['bowercss'],['bowerjs'] );
   gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts'],['clearCache']);
   gulp.watch([manifest.less.source], ['less']);
   gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify'],['clearCache']);
 });
 
 // Default Task
-gulp.task('default', ['browserify','lib','lint','scripts','js','less','clearCache','watch']);
+gulp.task('default', ['browserify','lib','lint','scripts','bowerjs','bowercss','less','clearCache','watch']);
 
 
 //https://travismaynard.com/writing/getting-started-with-gulp

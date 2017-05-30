@@ -73,6 +73,7 @@
     "lodash.assign": "^4.2.0",
     "main-bower-files": "^2.13.1",
     "react": "^15.4.2",
+    "react-datepicker": "^0.46.0",
     "react-dom": "^15.4.2",
     "reactify": "^1.1.1",
     "redux": "^3.6.0",
