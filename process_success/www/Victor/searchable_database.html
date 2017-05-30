@@ -1,0 +1,46 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+	{% include "templates/includes/login/login.css" %}
+	{% include "www/css/bootstrap.css" %}
+	{% include "www/css/searchable_database.css" %}
+</style>
+
+{% endblock %}
+
+	
+
+{% block page_content %}
+  <h1>Searchable database of vineyards</h1>
+  <br><br>
+  <input type="text" id="find">
+  <button onclick="find()">Find</button>
+  <br><br>
+  <table id="tablepaging">
+    <thead>
+    <tr>
+      <th>Vineyard name</th>
+      <th>Address</th>
+    </tr>
+    </thead>
+    <tbody id="body1">
+      {% for cont in rowContent: %}
+        
+        <tr>
+          <td>{{cont['vineyard name']}}</td>
+          <td>{{cont['address']}}</td>
+        </tr>
+         
+      {% endfor %}  
+     </tbody>
+  </table>
+  <div id="pageNavPosition" style="padding-top: 20px" align="center">
+</div>
+
+	
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/searchable_database.js" %}
+</script>
+{% endblock %}

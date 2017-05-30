@@ -1,0 +1,30 @@
+{% if top_bar_items -%}
+<ul class="nav navbar-nav navbar-left">
+	<!-- 
+	{{prosadataTest}}
+	-->
+	{%- for page in top_bar_items -%}
+		{% if not page.parent_label and not page.right -%}
+			{% include "templates/includes/navbar/navbar_link.html" %}
+		{%- endif -%}
+	{%- endfor %}
+	{%- for top_bar_item_role in top_bar_items_roles -%}
+		{%- for page in top_bar_item_role -%}
+			{% if not page.parent_label and not page.right -%}
+				{% include "templates/includes/navbar/navbar_link.html" %}
+			{%- endif -%}
+		{%- endfor %}
+	{%- endfor %}
+</ul>
+{%- endif %}
+<ul class="nav navbar-nav navbar-right">
+	{%- for page in top_bar_items -%}
+		{% if not page.parent_label and page.right -%}
+			{% include "templates/includes/navbar/navbar_link.html" %}
+		{%- endif -%}
+	{%- endfor %}
+	{% if not only_static %}
+		{% block navbar_right_extension %}{% endblock %}
+	{% endif %}
+	{% include "templates/includes/navbar/navbar_login.html" %}
+</ul>

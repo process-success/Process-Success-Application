@@ -1,0 +1,61 @@
+
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+
+
+<div class="panel panel-default panel-buffer">
+	<div class="panel-heading">
+	    <h1 class="panel-title">Vineyards List</h3>
+	</div>
+	<div class="panel-body">
+		<table id="vineyards" class="stripe table table-bordered ps-list-table" cellspacing="0" width="100%">
+
+			<thead class="thead-inverse" >
+				<tr>
+				  <th>Vineyard Name</th>	
+				  <th>Customer</th>	
+				  <th>Status</th>	
+				  <th>Appellation</th>	
+				  <th>Address line 1</th>	
+				  <th>Zip Code</th>	
+				</tr>
+			</thead>
+			<tbody>
+			  {% for vineyard in vineyards %}
+				<tr>
+					<td><a href="{{vineyard.route}}">{{vineyard.vineyard_name}} Abd is the most</a></td>
+					<td><a href="{{vineyard.customer_route}}">{{vineyard.customer_name}}</a></td>
+					<td> {{vineyard.status}}</td>
+					<td> {{vineyard.appellation}}</td>
+					<td> {{vineyard.address_1}}</td>
+					<td> {{vineyard.zip_code}}</td>
+				</tr>
+			  {% endfor %}  
+			 </tbody>
+		</table>
+	</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+	
+	<script> 
+	$(document).ready(function() {
+	    $("#vineyards").DataTable({
+	    	"scrollY": '70vh',
+        	"scrollCollapse": true,
+	        "scrollX": true,
+	        "paging":   false,
+	        "stateSave": true,
+	        //"fixedColumns":true,
+	        "info":     false
+	    });
+	} ); 
+</script>
+
+{% endblock %}

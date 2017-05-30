@@ -1,0 +1,24 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Google Earth and Google Maps</h1>
+	<div id="map" style="width:100%;height:500px;background:yellow"></div>
+
+
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/mapping.js" %}
+	</script>
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrstMxtS9ddgvbfY5oiDB8seRKDskMbA8&callback=myMap"></script>
+
+{% endblock %}

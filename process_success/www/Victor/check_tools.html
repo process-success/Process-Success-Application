@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Check in and check out of equipment</h1>
+	<form id="myForm" method="POST">
+		<label for="operation">Operation:</label>
+		<select id="operation">
+			<option value="in">Check in</option>
+			<option value="out">Check out</option>
+		</select>
+		<br><br>
+		<label for="code">Item code:</label>
+		<select id="code">
+			{% for cont2 in rowContent2: %}
+				<option value={{cont2['name']}}>{{cont2['item_name']}}</option>
+			{% endfor %} 
+		</select>
+		<br><br>
+		<label for="person">Crew member:</label>
+		<select id="person">
+			{% for cont in rowContent: %}
+				<option value={{cont['email']}}>{{cont['full_name']}}</option>
+			{% endfor %} 
+		</select>
+		<br><br>
+		<label for="date">Date:</label>
+		<input type="date" id="date" name="date">
+		<br><br>
+		<input type="button" value="Add" onclick="send()">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/check_tools.js" %}
+	</script>
+{% endblock %}

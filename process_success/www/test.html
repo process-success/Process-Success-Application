@@ -1,0 +1,29 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_content %}
+<div id="mocha"></div>
+{% endblock %}
+
+
+{% block script %}
+    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+    <script src="http://chaijs.com/chai.js"></script>
+    <script>
+
+        mocha.setup({
+            ui: 'bdd',
+            ignoreLeaks: true,
+        });
+
+        //mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+    </script>
+    <script src="/assets/process_success/js/tests/ps.storage.js"></script>
+    <script src="/assets/process_success/js/tests/test.js"></script>
+    <script>mocha.run();</script>
+{% endblock %}

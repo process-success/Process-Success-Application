@@ -1,0 +1,115 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+/* prosadata style code includes begin */
+	{% include "www/login/login.css" %}
+	{% include "www/css/vineyard_List.css" %}
+/* prosadata style code includes end */
+/* prosadata style code generation begin */
+/* prosadata.com style code generation end */
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<div class="row">
+		<img src="{{"/assets/process_success/images/vineyard_operations.jpg" }}" id="imgtop">
+		<p style="font-family: DosisBold; font-size: 18px; text-align: center; font-weight: bold;"> Vineyard Operations </p>	
+	</div>	
+	<label for="vineyard">Vineyard</label>
+		<select name="vineyard" id="vineyard" onchange="find()">
+			{% for cont in Svineyards: %}
+				<option value="{{cont['name']}}">{{cont['vineyard_name']}}</option>
+			{% endfor %}
+		</select>
+	<div id="selects"></div>
+	<button onclick="findMonthly()">Find by Month</button>
+	<button onclick="findSeason()">Find by Season</button>
+	<!--<label for="monthly">Month</label>
+		<select name="monthly" id="monthly" onchange="findMonthly()">
+				<option value="01">January</option>
+				<option value="02">February</option> 
+				<option value="03">March</option>
+				<option value="04">April</option> 
+				<option value="05">May</option> 
+				<option value="06">June</option> 
+				<option value="07">July</option> 
+				<option value="08">August</option>
+				<option value="09">September</option> 
+				<option value="10">October</option>
+				<option value="11">November</option>
+				<option value="12">December</option>
+		</select>-->
+	<br><br>
+	<section class="row">
+		<table id="tablepaging">
+			<thead class="thead-inverse">
+				<tr>
+				  <th>Vineyard id</th>	
+				  <th>Vineyard</th>
+				  <th>Address</th>
+				  <th>Work order</th>
+				  <th>Subject</th>
+				  <th>Project</th>
+				  <th>Status</th>
+				  <th>Priority</th>
+				  <th>Expected start date</th>
+				  <th>Expected time</th>
+				  <th>Weight</th>
+				  <th>Expected end date</th>
+				  <th>Progress</th>
+				  <th>Description</th>
+				  <th>Depends on tasks</th>
+				  <th>Actual start date</th>
+				  <th>Actual time</th>
+				  <th>Actual end date</th>
+				  <th>Total costing amount</th>
+				  <th>Total expense claim</th>
+				  <th>Total billing amount</th>
+				  <th>Review date</th>
+				  <th>Closing date</th>
+				  <th>Company</th>
+				</tr>
+			</thead>
+			<tbody id="body1">
+			  {% for cont in Sjoined : %}
+				<tr>
+					<td>{{cont['vineyard']}}</td>
+					<td>{{cont['vineyard_name']}}</td>
+					<td>{{cont['address']}}</td>
+					<td>{{cont['name']}}</td>
+					<td>{{cont['subject']}}</td>
+					<td>{{cont['project']}}</td>
+					<td>{{cont['status']}}</td>
+					<td>{{cont['priority']}}</td>
+					<td>{{cont['exp_start_date']}}</td>
+					<td>{{cont['expected_time']}}</td>
+					<td>{{cont['task_weight']}}</td>
+					<td>{{cont['exp_end_date']}}</td>
+					<td>{{cont['progress']}}</td>
+					<td>{{cont['description']}}</td>
+					<td>{{cont['depends_on_tasks']}}</td>
+					<td>{{cont['act_start_date']}}</td>
+					<td>{{cont['actual_time']}}</td>
+					<td>{{cont['act_end_date']}}</td>
+					<td>{{cont['total_costing_amount']}}</td>
+					<td>{{cont['total_expense_claim']}}</td>
+					<td>{{cont['total_billing_amount']}}</td>
+					<td>{{cont['review_date']}}</td>
+					<td>{{cont['closing_date']}}</td>
+					<td>{{cont['company']}}</td>
+				</tr>
+			  {% endfor %}  
+			 </tbody>
+		</table>
+	</section>
+<div id="pageNavPosition" style="padding-top: 20px" align="center"></div>
+<br/>
+<button onclick="newVineyard()">Create New Vineyard</button>
+<br/>
+<button onclick="newWorkOrder()">Create New Work Order</button>
+{% endblock %}
+{% block script %}
+<script>
+	{% include "www/js/vineyard_List.js" %}
+</script>
+{% endblock %}

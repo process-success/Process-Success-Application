@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappe.io/ -->
+<html lang="en" manifest="{{ manifest or '' }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {{ title | striptags }} {% endblock %}</title>
+    <meta name="generator" content="frappe">
+
+    {% block favicon %}
+    <link rel="shortcut icon"
+        href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+        type="image/x-icon">
+    <link rel="icon"
+        href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+        type="image/x-icon">
+
+    {% endblock %}
+    {%- block head -%}
+        {% if meta_block is defined -%}
+        {{ meta_block }}
+        {%- endif %}
+
+        {% if head_html is defined -%}
+        {{ head_html or "" }}
+        {%- endif %}
+
+        {%- for link in web_include_css %}
+        <link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
+        
+
+        <!--  START PS CSS ADDITIONS SHOULD BE COMPLILED-->
+
+        <link type="text/css" rel="stylesheet" href="/assets/frappe/js/lib/awesomplete/awesomplete.css">
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/timesheet.css">
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/ps.css">
+        <link type="text/css" rel="stylesheet" href="/assets/process_success/css/lib/all.css">
+
+        <!-- DEV ONLY -->
+
+
+        {%- endfor -%}
+
+        {%- block head_include %}{{ head_include or "" }}{% endblock -%}
+
+        {%- block style %}{%- endblock -%}
+    {%- endblock -%}
+    <script>
+
+        window.frappe = {};
+        frappe.ready_events = [];
+        frappe.ready = function(fn) {
+            frappe.ready_events.push(fn);
+        }
+        window.dev_server = {{ dev_server }};
+    </script>
+</head>
+<body data-path="{{ path }}">
+    <div id="alerts">
+        <div hidden display="none" id="alert-success"class="alert alert-success" role="alert">
+        <strong>Success:</strong><span class="success-text"></span>
+        </div>
+        <div hidden display="none" id="alert-fail" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <strong>Fail:</strong><span class="fail-text"></span>
+        </div>
+        <div hidden display="none" id="alert-offline" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <strong>Notice:</strong><span class="fail-text"></span>
+        </div>
+    </div>
+    <div class="main-section">
+        <div>
+            {%- block banner -%}
+            {% include "templates/includes/banner_extension.html" ignore missing %}
+                {% if banner_html -%}
+                <header class="container">{{ banner_html or "" }} </header>
+                {%- endif %}
+            {%- endblock -%}
+
+            {%- block navbar -%}
+                {% include "templates/includes/navbar/navbar.html" %}
+            {%- endblock -%}
+            <div class="hero-and-content">
+                <div data-html-block="hero">
+
+                {%- block hero -%}{%- endblock -%}
+                </div>
+                <div class="container" data-html-block="content">
+                {% block content %}{% endblock %}
+                </div>
+            </div>
+            {%- if footer is defined -%}
+            <footer class="page-footer">
+                <div class="container"> HELLOOOOO 
+                    {{ footer }}
+                </div>
+            </footer>
+            {%- endif -%}
+        </div>
+        <div>
+            {%- block footer -%}{% include "templates/includes/footer/footer.html" %}{%- endblock -%}
+        </div>
+        
+    </div>
+    {% block base_scripts %}
+    <!-- js should be loaded in body! -->
+        <script type="text/javascript"
+        src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="/assets/js/frappe-web.min.js"></script>
+
+
+        <!-- !!! PS JS should be compiled and minimized     -->
+        <!--     PS JS should be compiled and minimized     -->
+        <!--     PS JS should be compiled and minimized !!!!-->
+        <script type="text/javascript"
+        src="/assets/frappe/js/lib/socket.io.min.js"></script>
+         <script type="text/javascript"
+        src="/assets/process_success/dist/lib.js"></script>
+
+
+
+        <!--     Dev should be diffrent from prod
+                min vs regular  dev:main.js   prod:main.min.js
+           -->
+         <script type="text/javascript" src="/assets/process_success/dist/main.js"></script>
+
+        <script type="text/javascript"
+        src="/assets/frappe/js/lib/awesomplete/awesomplete.min.js"></script>
+
+    {% endblock %}
+    {%- if js_globals is defined %}
+    <script>
+    {%- for key, value in js_globals.iteritems() %}
+    window.{{ key }} = "{{ value[0] }}";
+    {%- endfor -%}
+    </script>
+    {% endif -%}
+
+    {%- for link in web_include_js %}
+    <script type="text/javascript" src="{{ link|abs_url }}"></script>
+    {%- endfor -%}
+
+    {%- block script %}{%- endblock %}
+
+    <!-- csrf_token -->
+
+    {%- block body_include %}{{ body_include or "" }}{% endblock -%}
+</body>
+</html>

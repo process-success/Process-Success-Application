@@ -1,0 +1,37 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>Consumables</h1>
+	<form id="myForm" method="POST" >
+		
+		<label for="code">Consumable code:</label>
+		<input id="code" required>
+		<br><br>
+		<label for="name">Consumable name:</label>
+		<input id="name" required>
+		<br><br>
+		<label for="amount">Amount:</label>
+		<input id="amount" type="number" min="0" step="0.0001" name="amount" required>
+		<br><br>
+		<label for="unit">Unit:</label>
+		<input id="unit">
+		<br><br>
+		<label for="desc">Description:</label>
+		<input id="desc">
+		<br><br>
+		<input type="button" value="Add" onclick="send()">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/consumables.js" %}
+	</script>
+{% endblock %}

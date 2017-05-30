@@ -1,0 +1,41 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+{% include "templates/includes/login/login.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	<h1>To do list entry and crew member output</h1>
+	<form id="myForm" method="POST">
+		<label for="desc">New task:</label>
+		<input id="desc" type="text" name="desc">
+		<br><br>
+		<label for="person">Crew member:</label>
+		<select id="person">
+			{% for cont in rowContent: %}
+				<option value={{cont['email']}}>{{cont['full_name']}}</option>
+			{% endfor %} 
+		</select>
+		<br><br>
+		<label for="prio">Priority:</label>
+		<select id="prio">
+			<option value="Low">Low</option>
+			<option value="Medium">Medium</option>
+			<option value="High">High</option>
+		</select>
+		<br><br>
+		<label for="due_date">Due date:</label>
+		<input type="date" id="due_date" name="due_date">
+		<br><br>
+		<input type="button" value="Add" onclick="send()">
+
+	</form>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/to_do.js" %}
+	</script>
+{% endblock %}

@@ -11,6 +11,14 @@ app_color = "grey"
 app_email = "cmuell89@gmail.com"
 app_license = "Process Success"
 
+home_page = "index"
+
+update_website_context = "process_success.website_options.util.update_website_context"
+
+website_context = {
+	"disable_website_theme": True,
+}
+
 # Includes in <head>
 # ------------------
 
@@ -34,12 +42,19 @@ app_license = "Process Success"
 # ----------
 
 # application home page (will override Website Settings)
-# home_page = "login"
+
+#home_page = "workpage"
 
 # website user home page (by Role)
 # role_home_page = {
-#	"Role": "home_page"
+# 	"administrator": "admin_index",
+# 	"customer": "customer_index",
+# 	"employee": "employee_index",
+# 	"crew_lead": "crew_index",
+# 	"ps_manager": "ps_manager_index"
 # }
+
+# fixtures = ["Role"]
 
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
@@ -48,13 +63,17 @@ app_license = "Process Success"
 # ----------
 
 # automatically create page for each record of this doctype
-# website_generators = ["Web Page"]
+
+website_generators = ["Customer", "Employee", "Vineyard", "work_order"]
+
 
 # Installation
 # ------------
 
 # before_install = "process_success.install.before_install"
-# after_install = "process_success.install.after_install"
+
+after_install = "process_success.utils.install.after_install"
+
 
 # Desk Notifications
 # ------------------
@@ -79,11 +98,13 @@ app_license = "Process Success"
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
+
+# 	"User": {
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
-#	}
+# 	}
+
 # }
 
 # Scheduled Tasks

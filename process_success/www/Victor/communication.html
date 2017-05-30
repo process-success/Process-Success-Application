@@ -1,0 +1,47 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+<style>
+  {% include "templates/includes/login/login.css" %}
+  {% include "www/css/bootstrap.css" %}
+  {% include "www/css/communication.css" %}
+</style>
+{% endblock %}
+
+{% block page_content %}
+	  <h1>Comments from clients</h1>
+	  <br><br>
+	  <input type="text" id="find">
+	  <button onclick="find()">Find</button>
+	  <br><br>
+	  <table style="width:100%;" id="tablepaging">
+	    <thead>
+	    <tr>
+	      <th style="width:20%;">From</th>
+	      <th style="width:20%;">Date</th>
+        <th style="width:10%;">Type</th>
+	      <th style="width:50%;">Message</th>
+	    </tr>
+	    </thead>
+	    <tbody id="body1">
+	      {% for cont in rowContent: %}
+	        
+	        <tr>
+	          <td>{{cont['email']}}</td>
+	          <td>{{cont['date']}}</td>
+            <td>{{cont['type']}}</td>
+	          <td>{{cont['content']}}</td>
+	        </tr>
+	         
+	      {% endfor %}  
+	     </tbody>
+	  </table>
+	  <div id="pageNavPosition" style="padding-top: 20px" align="center">
+	</div>
+
+{% endblock %}
+{% block script %}
+	<script>
+		{% include "www/js/communication.js" %}
+	</script>
+{% endblock %}

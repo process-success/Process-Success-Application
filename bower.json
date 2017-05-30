@@ -1,0 +1,25 @@
+{
+  "name": "process_success",
+  "description": "Application process success",
+  "private": true,
+  "main": "ps_main.js",
+  "authors": [
+    "Derek Brenner <derekbrenner@gmail.com>"
+  ],
+  "homepage": "https://github.com/process-success/Process-Success-Application",
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6",
+    "modernizr": "~2.8.1",
+    "datatables.net": "^1.10.15",
+    "datatables.net-dt": "^3.2.2",
+    "datatables.net-fixedcolumns": "^3.2.2",
+    "datatables.net-fixedcolumns-dt": "^3.2.2",
+    "datatables.net-bs": "^2.1.1",
+    "datatables.net-fixedcolumns-bs": "^3.2.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "directory": "process_success/public/vendor"
+}

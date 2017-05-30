@@ -1,0 +1,68 @@
+{% extends "templates/web.html" %}
+{% block style %}
+<style>
+/* prosadata style code includes begin */	
+	{% include "templates/includes/login/login.css" %}
+	{% include "templates/css/bootstrap.css" %}
+	{% include "www/css/crew_manager_menu.css" %}
+/* prosadata style code includes end */
+/* prosadata style code generation begin */
+/* prosadata.com style code generation end */
+</style>
+{% endblock %}
+{% block page_content %}
+<!-- prosadata page content generation begin -->
+	<!--<form class="form-signin form-login" role="form">-->
+<form role="form">
+	<div class="row"></div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-2">
+			<img src="{{"/assets/process_success/images/work_orders.jpg" }}" class="tamano" id="work_orders">
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;" > Work Orders </p>
+		</div>
+		<div class="col-md-2">
+			<img src="{{"/assets/process_success/images/crew_attendance.jpg" }}" class="tamano" id="crew_attendance" />
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Crew Attendance</p>
+		</div>
+		<div class="col-md-2">
+			<img src="{{"/assets/process_success/images/tool_shed.jpg" }}" class="tamano" id="tool_shed"/>
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Tool Shed </p>
+		</div> 
+		<div class="col-md-2">
+			<img src="{{"/assets/process_success/images/client_database.jpg" }}" class="tamano" id="client_database"/>
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Client Database </p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-2">
+			<img src="{{"/assets/process_success/images/client_portal.jpg" }}" class="tamano" id="client_portal"/>
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Client Portal </p>
+		</div>
+		<div class="col-md-2">
+			<img src="{{"/assets/process_success/images/vineyard_operations.jpg" }}" class="tamano" id="vineyard_operations"/>
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Vineyard Operations </p>
+		</div>
+		<div class="col-md-2">
+			<img src="{{"/assets/process_success/images/mapping.jpg" }}" class="tamano" id="mapping"/>
+			<p style="font-family: DosisBold; font-size: 18px; text-align: center;"> Mapping </p>
+		</div>				
+	</div>  	
+</form> 
+
+<footer style="background:#333;">
+	<div class="container">
+		<div class="row">
+			<p style="font-family:CrimsonRoman; color:#fff; text-align: center; padding-top: 10px;">© 2017 COASTAL RANGE VINEYARDS. All rights reserved.</p>
+			<img src="{{ "/assets/process_success/images/processsuccess.jpg" }}" width="15%" style="display: block;margin-left: auto;margin-right:auto;" />
+		</div>
+	</div> 
+</footer> 
+<!-- prosadata.com page content generation end -->
+{% endblock %}
+{% block script %}
+<!-- prosadata script code generation begin -->
+<script>
+	{% include "www/js/crew_manager_menu.js" %}
+</script>
+<!-- prosadata.com script code generation end -->
+{% endblock %}
