@@ -43,6 +43,14 @@ website_context = {
 
 # application home page (will override Website Settings)
 
+
+# home_page = "login"
+
+# website user home page (by Role)
+# role_home_page = {
+#	"Role": "home_page"
+# }
+
 #home_page = "workpage"
 
 # website user home page (by Role)
@@ -63,15 +71,23 @@ website_context = {
 # ----------
 
 # automatically create page for each record of this doctype
+<<<<<<< HEAD
 
 website_generators = ["Customer", "Employee", "Vineyard", "work_order"]
 
 
+=======
+website_generators = ["Customer", "Employee", "Vineyard", "work_order"]
+
+>>>>>>> e7c067e3ea0a5bf5b84acd24518dfe4100ed7291
 # Installation
 # ------------
 
 # before_install = "process_success.install.before_install"
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7c067e3ea0a5bf5b84acd24518dfe4100ed7291
 after_install = "process_success.utils.install.after_install"
 
 
@@ -104,7 +120,10 @@ after_install = "process_success.utils.install.after_install"
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 # 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7c067e3ea0a5bf5b84acd24518dfe4100ed7291
 # }
 
 # Scheduled Tasks
