@@ -62,7 +62,7 @@ website_context = {
 # 	"ps_manager": "ps_manager_index"
 # }
 
-# fixtures = ["Role"]
+fixtures = ["Custom Field"]
 
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
