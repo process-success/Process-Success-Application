@@ -78,22 +78,26 @@
                 <header class="container">{{ banner_html or "" }} </header>
                 {%- endif %}
             {%- endblock -%}
-
             {%- block navbar -%}
                 {% include "templates/includes/navbar/navbar.html" %}
             {%- endblock -%}
-            <div class="hero-and-content">
-                <div data-html-block="hero">
-
-                {%- block hero -%}{%- endblock -%}
+            <div class="row container-fluid">
+                <div class='ps-sidebar col-sm-1 hidden-xs'>
+                    {% include "templates/includes/navbar/side_nav.html" %}
                 </div>
-                <div class="container" data-html-block="content">
-                {% block content %}{% endblock %}
+                <div class="hero-and-content col-sm-11">
+                    <div data-html-block="hero">
+
+                    {%- block hero -%}{%- endblock -%}
+                    </div>
+                    <div class="" data-html-block="content">
+                    {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
             {%- if footer is defined -%}
             <footer class="page-footer">
-                <div class="container"> HELLOOOOO 
+                <div class="container">
                     {{ footer }}
                 </div>
             </footer>
