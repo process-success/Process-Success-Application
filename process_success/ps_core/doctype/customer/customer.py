@@ -30,6 +30,7 @@ class Customer(WebsiteGenerator):
         #if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
 
     def autoname(self):
+        self.name = self.user
         self.set_path()
 
     def validate(self):

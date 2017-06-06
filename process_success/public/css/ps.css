@@ -2,7 +2,7 @@
   border: solid red thin;
 }
 .main-section {
-  background-color: #e1e1e1  !important;
+  background-color: #f5f7fa  !important;
 }
 .colors {
   background-color: blue;
@@ -51,9 +51,14 @@ nav.sidebar,
   z-index: 1000;
 }
 .ps-sidebar .navbar {
-  -webkit-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.3);
-  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+}
+.main-nav.navbar {
+  -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 765px) {
   .main {
@@ -422,7 +427,7 @@ td {
   white-space: nowrap;
 }
 tbody tr:nth-child(even) td {
-  background: #e1e1e1;
+  background: #eee;
 }
 tbody td:nth-child(1) {
   border-right: #666666 1px solid;

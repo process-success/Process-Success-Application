@@ -2,12 +2,60 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h1>Customer List</h1>
-<ul>
-	{% for customer in customers %}
 
-	<a href="{{customer.route}}"><li> {{ customer.first_name }} {{ customer.last_name}} </li></a>
-	{% endfor %}
 
-</ul>
+<div class="panel panel-default panel-buffer">
+	<div class="panel-heading">
+	    <h1 class="panel-title">Customer List</h3>
+	</div>
+	<div class="panel-body">
+		<table id="customers" class="stripe table table-bordered ps-list-table" cellspacing="0" width="100%">
+
+			<thead class="thead-inverse" >
+				<tr>
+				  <th>Customer</th>	
+				  <th>Email</th>
+				  <th>Phone</th>
+				  <th>Status</th>	
+				  <th>gender</th>	
+				  <th>location</th>	
+				</tr>
+			</thead>
+			<tbody>
+			  {% for customer in customers %}
+				<tr>
+					<td><a href="{{customer.route}}"> {{ customer.first_name }} {{ customer.last_name}}</a></td>
+					<td> {{customer.name}}</td>
+					<td> {{customer.phone}}</td>
+					<td> {{customer.status}}</td>
+					<td> {{customer.gender}}</td>
+					<td> {{customer.location}}</td>
+				</tr>
+			  {% endfor %}  
+			 </tbody>
+		</table>
+	</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+	
+	<script> 
+	$(document).ready(function() {
+	    $("#customers").DataTable({
+	    	"scrollY": '70vh',
+        	"scrollCollapse": true,
+	        "scrollX": true,
+	        "paging":   false,
+	        "stateSave": true,
+	        //"fixedColumns":true,
+	        "info":     false
+	    });
+	} ); 
+</script>
+
 {% endblock %}

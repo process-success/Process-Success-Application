@@ -2,12 +2,62 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h1>Employee List</h1>
-<ul>
-	{% for employee in employees %}
 
-	<a href="{{employee.route}}"><li> {{ employee.first_name }} {{ employee.last_name}} </li></a>
-	{% endfor %}
 
-</ul>
+<div class="panel panel-default panel-buffer">
+	<div class="panel-heading">
+	    <h1 class="panel-title">Employee List</h3>
+	</div>
+	<div class="panel-body">
+		<table id="employees" class="stripe table table-bordered ps-list-table" cellspacing="0" width="100%">
+
+			<thead class="thead-inverse" >
+				<tr>
+				  <th>Employee</th>	
+				  <th>Email</th>
+				  <th>Phone</th>
+				  <th>User Type</th>
+				  <th>Birth Date</th>	
+				  <th>gender</th>	
+				  <th>location</th>	
+				</tr>
+			</thead>
+			<tbody>
+			  {% for employee in employees %}
+				<tr>
+					<td><a href="{{employee.route}}"> {{ employee.first_name }} {{ employee.last_name}}</a></td>
+					<td> {{employee.name}}</td>
+					<td> {{employee.phone}}</td>
+					<td> {{employee.user_type}}</td>
+					<td> {{employee.birth_date}}</td>
+					<td> {{employee.gender}}</td>
+					<td> {{employee.location}}</td>
+				</tr>
+			  {% endfor %}  
+			 </tbody>
+		</table>
+	</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+	
+	<script> 
+	$(document).ready(function() {
+	    $("#employees").DataTable({
+	    	"scrollY": '70vh',
+        	"scrollCollapse": true,
+	        "scrollX": true,
+	        "paging":   false,
+	        "stateSave": true,
+	        //"fixedColumns":true,
+	        "info":     false
+	    });
+	} ); 
+</script>
+
 {% endblock %}

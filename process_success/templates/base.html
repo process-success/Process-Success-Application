@@ -148,9 +148,8 @@
     {%- endfor -%}
 
     {%- block script %}{%- endblock %}
-
-    <!-- csrf_token -->
-
+<script type="text/javascript" src="/csrf.js"></script>
+<div id="CSRF"></div>
     {%- block body_include %}{{ body_include or "" }}{% endblock -%}
 </body>
 </html>
