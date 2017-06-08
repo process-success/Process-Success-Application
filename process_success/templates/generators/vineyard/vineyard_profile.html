@@ -10,9 +10,9 @@
 
 {% block page_content %}
     {#    <script type="text/javascript">{% include "templates/includes/issues/issues.js" %}</script>#}
-    <div class="container">
         <div class="row-fluid">
-            <div class="col-md-4">
+            <div class="col-md-3 panel panel-default">
+            <div class="">
                 <h4>Address</h4>
                 <p>
                     {{ address_1 }}<br>
@@ -43,7 +43,10 @@
                     </p>
                 {% endif %}
             </div>
-            <div class="col-md-6">
+            </div>
+            <div class="col-md-9 panel panel-default pull-right">
+            <div class="">
+
                 <h4>Map:</h4>
                 {% include "templates/includes/mapping/map.html" %}
             </div>
