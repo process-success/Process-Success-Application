@@ -62,7 +62,6 @@
 				if (data._server_messages) {
 					message = ($.map(JSON.parse(data._server_messages || '[]'), function(v) {
 						// temp fix for messages sent as dict
-						console.log(v);
 						try {
 							return JSON.parse(v).message;
 						} catch (e) {
@@ -72,7 +71,6 @@
 				}
 
 				//frappe.msgprint(message);
-				console.log(message);
 				if(typeof(fail)!="undefined"){
 					fail();
 				}
@@ -598,7 +596,6 @@ ps.store={
 				ps.call(args,function(data){
 					if (typeof(after)!='undefined' && after==1){
 						var index=obj.get_index_of_item(item.name);
-						console.log(data);
 						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:data.message});
 					}else{
 						ps.socket.socket.emit('update_item', {doctype:obj.doctype, item:item});
@@ -689,7 +686,6 @@ ps.store={
 			else{
 				for(var i = 0; i < obj.items.length; i++){ 
 					var item=obj.items[i];
-					console.log(obj.doctype+'_'+item.name);
 					ps.socket.socket.on('update_'+obj.doctype+'_'+item.name, return_react_emit());
 				}
 			}
@@ -757,9 +753,9 @@ ps.store={
 		function get_from_server(args,callback,fail){
 			ps.call(obj.args,function(data){
 				set_items(obj.args,data.message);
-				console.log("_________ps.obj From Server call_______________");
-				console.log(obj.args,data.message);
-				console.log("-----------------------------------------------");
+				// console.log("_________ps.obj From Server call_______________");
+				// console.log(obj.args,data.message);
+				// console.log("-----------------------------------------------");
 				if(typeof(callback)!='undefined'){callback(data.message);}
 			},function(){ 
 				console.log("call fail callback");

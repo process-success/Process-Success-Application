@@ -74,17 +74,9 @@
 .day_time_form_row{
 
 }
-.awesomplete > ul > li[aria-selected="true"] {
-    background: hsl(205, 40%, 40%);
-    color: white;
-}
-.awesomplete > ul > li[aria-selected="true"] a{
-    color: white;
-}
+
 .panel-default > .panel-heading, .panel-footer{background:#f0f4f7;}
 
-.awesomplete > ul {top: 35px;}
-.awesomplete{z-index: 10;}
 .day_time_form_row li{ }
 
 .update_div_element{padding:15px 15px 15px 15px;}
@@ -95,10 +87,7 @@
 	.btn-danger{padding-left:20px;padding-right:20px;}
 	
 }
-.awesomplete > ul > li[aria-selected="true"] {
-    background: hsl(205, 40%, 40%);
-    color: white;
-}
+
 
 /*-------------------
    WORK ORDER create Issue

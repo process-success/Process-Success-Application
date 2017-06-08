@@ -78,14 +78,12 @@ export default class WorkorderTask extends React.Component{
   		$('#'+this.modalId).modal();
   	}
   	issueChanged(){
-		console.log("issue tool alert -----------  ");
-		console.log(this.issueTool.items);
+
 		this.setState({issues:this.issueTool.items});
 	}
   	submitIssue(e){
   		e.preventDefault();
-		console.log("save");
-		console.log(this.state.modal);
+
 		var newItem={
 			title:this.state.modalTitle,
 			issue:this.state.modalDescription,
@@ -95,13 +93,11 @@ export default class WorkorderTask extends React.Component{
 		}
 		if(this.state.modal=="new"){
 			this.issueTool.create(newItem,function(item){
-				console.log("MEOW");
 				ps.successAlert("Issue " +item.title+ " created.")
 			});
 		}else{
 			newItem.name=this.state.modalName;
 			this.issueTool.update(newItem,function(item){
-				console.log("MEOW");
 				ps.successAlert("Issue " +item.title+" updated.")
 			});
 		}

@@ -62,7 +62,6 @@
 				if (data._server_messages) {
 					message = ($.map(JSON.parse(data._server_messages || '[]'), function(v) {
 						// temp fix for messages sent as dict
-						console.log(v);
 						try {
 							return JSON.parse(v).message;
 						} catch (e) {
@@ -72,7 +71,6 @@
 				}
 
 				//frappe.msgprint(message);
-				console.log(message);
 				if(typeof(fail)!="undefined"){
 					fail();
 				}

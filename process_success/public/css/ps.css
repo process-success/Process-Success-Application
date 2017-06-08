@@ -1,6 +1,29 @@
 .thing {
   border: solid red thin;
 }
+.awesomplete > ul > li[aria-selected="true"] {
+  background: #3d6d8f;
+  color: white;
+}
+.awesomplete > ul > li[aria-selected="true"] a {
+  color: white;
+}
+.awesomplete > ul {
+  top: 35px;
+}
+.awesomplete ul {
+  z-index: 10;
+}
+.awesomplete .input {
+  z-index: 5;
+}
+.update_div_element {
+  padding: 15px 15px 15px 15px;
+}
+.awesomplete > ul > li[aria-selected="true"] {
+  background: #3d6d8f;
+  color: white;
+}
 .main-section {
   background-color: #f5f7fa  !important;
 }

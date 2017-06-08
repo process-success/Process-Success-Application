@@ -14,16 +14,9 @@ export default class TimeSheet extends React.Component{
 			minChars: 0,
 			maxItems: 99,
 			autoFirst: true,
-			filter: function(item, input) {
-				var value = item.value.toLowerCase();
-				if(value.indexOf('is_action') !== -1 ||
-					value.indexOf(input) !== -1) {
-					return true;
-				}
-			},
 			item: function(item, input) {
 				var d = item;
-				var html = "<span>" + __(item.label || item.value) + "</span>";
+				var html = "<span>" + __(item.label)+ "</span><br><span><small>"+item.value+"</small></span>";
 				return $('<li></li>')
 					.data('item.autocomplete', item)
 					.html('<a><p>' + html + '</p></a>')

@@ -9,16 +9,27 @@
 
 {% block page_content %}
 
-
+<div class="input-group date">
+  <input type="text" id="datepick1" class="form-control datepick input-lg" value="06/08/2017"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+<br/>
 
 <div id="app"></div>
+
 
 
 
 {% endblock %}
 
 {% block script %}
-	
+	<script>
+$('.input-group.date .datepick').datepicker({
+    todayBtn: "linked",
+    orientation: "bottom right",
+    autoclose: true,
+    todayHighlight: true
+});
+	</script>
 	<script>{% include "/www/dashboard/dash.js" %}</script>
 
 {% endblock %}

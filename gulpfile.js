@@ -122,7 +122,8 @@ var manifest={
     'process_success/public/js/lib/react-dom.js',
     'process_success/public/js/lib/jquery.dataTables.js',
     'process_success/public/js/lib/dataTables.fixedColumns.js',
-    'process_success/public/js/lib/dataTables.bootstrap.js'
+    'process_success/public/js/lib/dataTables.bootstrap.js',
+    'process_success/public/js/lib/bootstrap-datepicker.min.js'
   ],
   modules:[
     'process_success/public/js/modules/**/*.jsx'
