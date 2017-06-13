@@ -39,6 +39,12 @@ class CreateWorkorder extends React.Component{
 				key:"other"
 			},
 			{
+				field:"date",
+				onChange: this.someFunction,
+				lable:"Date",
+				key:"other3"
+			},
+			{
 				field:"select",
 				onChange: this.someFunction,
 				lable:"test2",
@@ -72,6 +78,23 @@ class CreateWorkorder extends React.Component{
 					"two",
 					"three"
 				]
+			},
+			{
+				field:"autoComplete",
+				onChange: this.someFunction,
+				lable:"Vineyard",
+				doctype:"Vineyard",
+				docvalue:"name",
+				key:"autoComplete"
+			},
+			{
+				field:"autoComplete",
+				onChange: this.someFunction,
+				lable:"Customer",
+				doctype:"Customer",
+				doclable:"full_name",
+				docvalue:"name",
+				key:"customer"
 			}
 		]
 		return(

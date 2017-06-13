@@ -21,7 +21,7 @@ export default class Modal extends React.Component{
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form>
+
 							<div className="modal-body">
 								{ this.props.children }
 							</div>
@@ -34,7 +34,6 @@ export default class Modal extends React.Component{
 										{this.props.submitText}
 								</button>
 							</div>
-						</form>
 					</div>
 				</div>
 			</div>

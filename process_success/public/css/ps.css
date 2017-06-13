@@ -44,6 +44,12 @@
 footer {
   background-color: #fff;
 }
+.react-form div.awesomplete {
+  width: 100%;
+}
+.react-form.short {
+  max-width: 200px;
+}
 /* --------   nav ----------- */
 nav.navbar-default ul.navbar-nav.navbar-toggle.login {
   border-color: #ddd;
