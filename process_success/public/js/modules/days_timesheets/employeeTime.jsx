@@ -54,7 +54,7 @@ export default class DaysTimeSheets extends React.Component{
 				<form  className="form-inline row day_time_form_row">
 					<label className="control-label col-md-3 col-sm-3 col-xs-12 text-center day_time_form_row_element"><strong>{ this.props.employee_name}</strong></label>
 
-					<div className="col-md-3 col-sm-3 col-xs-12 day_time_form_row_element">
+					<div className="col-md-3 col-sm-3 col-xs-6 day_time_form_row_element">
 						<div className="input-group">
 							<div className="input-group-addon">Start</div>
 							<input 
@@ -69,7 +69,7 @@ export default class DaysTimeSheets extends React.Component{
 						</div>
 					</div>
 					
-					<div className="col-md-3 col-sm-3 col-xs-12 day_time_form_row_element">
+					<div className="col-md-3 col-sm-3 col-xs-6 day_time_form_row_element">
 						<div className="input-group">
 							<div className="input-group-addon">End</div>
 							<input 

@@ -53,7 +53,7 @@ export default class CreateIssue extends React.Component{
 					aria-haspopup="true" 
 					aria-expanded="false" >
 
-				 	<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				 	{(this.props.issues.length===0)?"":this.props.issues.length+" "}<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				</button>
 				<ul className="dropdown-menu">
 				    <li className="dropdown-header">Issues</li>

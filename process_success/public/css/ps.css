@@ -44,6 +44,12 @@
 body {
   font-size: 16px;
 }
+.dropdown-menu {
+  font-size: 16px;
+}
+.dropdown-menu .dropdown-header {
+  font-size: 14px;
+}
 footer {
   background-color: #fff;
 }
@@ -201,7 +207,7 @@ section {
   z-index: 1050;
 }
 .full-header-button {
-  padding: 10px 15px 10px 15px;
+  padding: 10px 5px 5px 5px;
   /*border-bottom:none;
   border-top:none; */
   margin-top: -10px;
@@ -224,6 +230,9 @@ section {
   float: left;
   top: 30px;
   left: -113px;
+}
+.panel-group .ps-panel .panel-heading {
+  border-bottom: 1px solid transparent;
 }
 .tab-content .tab-pane {
   display: none;
@@ -512,4 +521,94 @@ div table.dataTable.no-footer {
 }
 .dataTables_scrollBody table.ps-list-table {
   padding-bottom: 10px;
+}
+.sticky_subnav {
+  background: white;
+  z-index: 9998;
+  padding-top: 5px;
+  height: 50px;
+  width: 100%;
+}
+.affix {
+  top: 0px;
+  margin-left: -30px;
+}
+@media screen and (max-width: 480px) {
+  .affix {
+    top: 0px;
+    margin-left: -15px;
+  }
+}
+.small-time {
+  margin: auto;
+  width: 120px;
+}
+.center-pills {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+#alerts {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
+  border-radius: 0px;
+}
+.line-through {
+  text-decoration: line-through;
+}
+.check_boxes {
+  padding: 10px 20px;
+}
+.form-checkin {
+  max-width: 360px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 50px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.panel-danger {
+  border-color: #ebccd1;
+}
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+/*.btn-success{width: 50%;}*/
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.btn-danger {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.day_time_form_row_element {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.panel-default > .panel-heading,
+.panel-footer {
+  background: #f0f4f7;
+}
+.update_div_element {
+  padding: 15px 15px 15px 15px;
+}
+@media (min-width: 768px) {
+  /*.btn-success{width: 100%;}*/
+  .update_div_element {
+    padding: 0px 15px 0px 15px;
+  }
+  .btn-danger {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }

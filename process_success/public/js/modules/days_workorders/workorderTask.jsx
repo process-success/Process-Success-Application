@@ -80,6 +80,7 @@ export default class WorkorderTask extends React.Component{
   	issueChanged(){
 
 		this.setState({issues:this.issueTool.items});
+		console.log(this.issueTool.items);
 	}
   	submitIssue(e){
   		e.preventDefault();
@@ -114,7 +115,7 @@ export default class WorkorderTask extends React.Component{
 			'Pending':'panel-default',
 			'Started':'panel-warning'
 		}[this.props.status];
-		mainClass = mainClass + " panel workorder";
+		mainClass = mainClass + " panel workorder ps-panel";
 		return(
 			<div className='col-md-4 col-sm-4'>
 				<Modal 
