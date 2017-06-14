@@ -41,6 +41,9 @@
 .ps-page-content {
   padding-bottom: 20px;
 }
+body {
+  font-size: 16px;
+}
 footer {
   background-color: #fff;
 }
@@ -49,6 +52,12 @@ footer {
 }
 .react-form.short {
   max-width: 200px;
+}
+.form-control {
+  font-size: 16px;
+}
+.btn {
+  font-size: 16px;
 }
 /* --------   nav ----------- */
 nav.navbar-default ul.navbar-nav.navbar-toggle.login {
