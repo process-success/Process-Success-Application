@@ -158,10 +158,10 @@ export default class WorkorderTask extends React.Component{
 			<div id="" className={mainClass}>
 				<div className="panel-heading">
 					<div className="row">
-						<h3 className="panel-title col-xs-10">
+						<h3 className="panel-title col-xs-8">
 							<a className="float-left" href={this.props.location_route}>{this.props.location}</a>
 						</h3>
-						<div className="col-xs-2 create-issue-header-button-container" >
+
 
 
 							<CreateIssue
@@ -171,9 +171,8 @@ export default class WorkorderTask extends React.Component{
 								workorder={this.props.workorder}
 
 							/>
+							<div className="clearfix"></div>
 
-
-						</div>
 					</div>
 						
 

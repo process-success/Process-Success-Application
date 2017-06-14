@@ -134,6 +134,8 @@ export default class DaysWorkorders extends React.Component{
 				<br/>
 				<WorkorderFormModal
 					id={"create-wo-"+this.props.crew.replace(" ","-")}
+					crew={this.props.crew}
+					date={this.props.date}
 				/>
 
 			</div>

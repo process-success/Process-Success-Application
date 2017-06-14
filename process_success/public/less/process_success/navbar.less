@@ -16,12 +16,7 @@ body,html{
     height: 100%;
   }
 
-  nav.sidebar, .main,.forAnimate{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-  }
+
 
   .main{
     padding: 10px 10px 0 10px;
@@ -40,7 +35,12 @@ box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
 box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
 }
  @media (min-width: 765px) {
-
+  nav.sidebar, .main,.forAnimate{
+    -webkit-transition: margin 200ms ease-out;
+      -moz-transition: margin 200ms ease-out;
+      -o-transition: margin 200ms ease-out;
+      transition: margin 200ms ease-out;
+  }
     .main{
       position: absolute;
       width: calc(100% - 40px); 

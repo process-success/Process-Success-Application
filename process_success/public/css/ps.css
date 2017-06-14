@@ -65,14 +65,6 @@ body,
 html {
   height: 100%;
 }
-nav.sidebar,
-.main,
-.forAnimate {
-  -webkit-transition: margin 200ms ease-out;
-  -moz-transition: margin 200ms ease-out;
-  -o-transition: margin 200ms ease-out;
-  transition: margin 200ms ease-out;
-}
 .main {
   padding: 10px 10px 0 10px;
 }
@@ -90,6 +82,14 @@ nav.sidebar,
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 765px) {
+  nav.sidebar,
+  .main,
+  .forAnimate {
+    -webkit-transition: margin 200ms ease-out;
+    -moz-transition: margin 200ms ease-out;
+    -o-transition: margin 200ms ease-out;
+    transition: margin 200ms ease-out;
+  }
   .main {
     position: absolute;
     width: calc(60%);
@@ -182,13 +182,47 @@ section {
   background-color: #fff;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
 }
+/*-------------------
+   WORK ORDER create Issue
+---------------------*/
+.create-issue-header-button-container {
+  padding: 0px 10px 0px 0px;
+}
+.modal-dialog {
+  z-index: 1050;
+}
+.full-header-button {
+  padding: 10px 15px 10px 15px;
+  /*border-bottom:none;
+  border-top:none; */
+  margin-top: -10px;
+  margin-bottom: -11px;
+  margin-right: -5px;
+  float: right;
+  border-radius: 0px 0px 0px 0px;
+}
+.full-header-button.corner {
+  /*border-right:none;*/
+  margin-top: -11px;
+  margin-right: -1px;
+  float: right;
+  border-radius: 0px 4px 0px 0px;
+}
+.dropdown-panel-right {
+  float: right;
+}
+.dropdown-panel-right .dropdown-menu {
+  float: left;
+  top: 30px;
+  left: -113px;
+}
 .tab-content .tab-pane {
   display: none;
 }
 .tab-content .active {
   display: block;
 }
-.panel.with-nav-tabs .panel-heading {
+.panel.with-nav-tabs > .panel-heading {
   padding: 5px 5px 0 5px;
 }
 .panel.with-nav-tabs .nav-tabs {

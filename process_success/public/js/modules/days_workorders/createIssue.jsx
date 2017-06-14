@@ -44,10 +44,10 @@ export default class CreateIssue extends React.Component{
 			}.bind(this));
 		}
 		return(
-			<div className="text-right">
+			<div className="dropdown dropdown-panel-right">
 
 				<button
-					className="btn btn-default btn-xs dropdown-toggle create-issue" 
+					className="btn btn-default btn-xs dropdown-toggle full-header-button corner" 
 					type="button" 
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
