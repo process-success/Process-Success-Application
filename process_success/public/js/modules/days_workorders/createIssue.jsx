@@ -43,6 +43,10 @@ export default class CreateIssue extends React.Component{
 				}
 			}.bind(this));
 		}
+		var issueCount=" ";
+		if(this.props.issues!==null){
+			issueCount=(this.props.issues.length===0)?"":this.props.issues.length+" ";
+		}
 		return(
 			<div className="dropdown dropdown-panel-right">
 
@@ -53,7 +57,7 @@ export default class CreateIssue extends React.Component{
 					aria-haspopup="true" 
 					aria-expanded="false" >
 
-				 	{(this.props.issues.length===0)?"":this.props.issues.length+" "}<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				 	{issueCount}<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				</button>
 				<ul className="dropdown-menu">
 				    <li className="dropdown-header">Issues</li>

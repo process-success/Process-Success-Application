@@ -181,6 +181,13 @@ describe('ps.storage', function() {
 			var item2=storage.get(doctype,{name:"derek"});
 			expect(item2).to.equal(null);
 		});
+		it("storage.removeWithFilter remove brenner,  get should be null and 4 items length",function(){
+			storage.removeWithFilter(doctype,"last","brenner");
+			var item=storage.get(doctype);
+			expect(item).to.have.lengthOf(4);
+			var item2=storage.get(doctype,{name:"derek"});
+			expect(item2).to.equal(null);
+		});
 
 
 	});

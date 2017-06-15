@@ -161,6 +161,7 @@
 					team: "yellow",
 					skill:"Expert"
 				},function(){
+
 					try {
 						expect(tool.items.length).to.equal(2);
 					}catch(e){
@@ -182,6 +183,32 @@
 					        done( e ); 
 					   	}
 					}
+				}
+
+			});
+			it("when an object is created the temp local storage item should be removed on complete",function(done){
+				var tool = new ps.apiTool({}, setup, onChange);
+				
+				tool.create({
+					first_name:"newguy",
+					last_name: "gantz",
+					team: "yellow",
+					skill:"Expert"
+				},function(){
+					var tool2 = new ps.apiTool({}, setup, onChange2);
+					console.log(tool.items);
+					try {
+						expect(tool2.items.length).to.equal(2);
+					}catch(e){
+						done(e);
+					}
+					done();
+				});
+
+				var timesCalled=1;
+				function onChange(){
+				}
+				function onChange2(){
 				}
 
 			});
@@ -259,7 +286,6 @@
 				function onChange(){
 					called++;
 					if(called <= 1){
-						console.log("update");
 						tool.update({
 							name:permName,
 							first_name:"newguy",
@@ -289,7 +315,7 @@
 				function onChange(){
 					called++;
 					if(called <= 1){
-						console.log("update");
+
 						tool.update({
 							name:permName,
 							first_name:"newguy",

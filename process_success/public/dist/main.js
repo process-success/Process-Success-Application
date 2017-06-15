@@ -146,6 +146,15 @@
 
 	ps.frappe.isready=0;
 
+	ps.clone=function(obj) {
+	    if (null == obj || "object" != typeof obj) return obj;
+	    var copy = obj.constructor();
+	    for (var attr in obj) {
+	        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+	    }
+	    return copy;
+	};
+
 })();
 
 //Init bit
@@ -505,6 +514,35 @@ ps.store={
 				var item= allItems[i];
 				//if expired delete it
 				if(item.expire < currentDate || item.data.name==name){
+					allItems.splice(i,1);
+					i--;
+				}
+			}
+			localStorage.setItem(storageKey,JSON.stringify(allItems));
+			var t2= ps.performance.now();
+			this.lastCallSpeed=t2 - t1;
+			return null;
+
+		}else{
+			var t2= ps.performance.now();
+			this.lastCallSpeed=t2 - t1;
+			return null;
+		}
+	},
+	//filter={tempId:"1000000"}
+	removeWithFilter:function(doctype,key,value){
+		var t1 = ps.performance.now();
+		var storageKey =this.ident+"?"+doctype;
+		var allItems=localStorage.getItem(storageKey);
+
+		if(allItems !== null){
+			allItems=JSON.parse(allItems);
+			var currentDate=new Date().getTime();
+			var returnItems=[];
+			for (var i = 0; i < allItems.length; i++){
+				var item= allItems[i];
+				//if expired delete it
+				if(item.expire < currentDate || item.data[key]==value){
 					allItems.splice(i,1);
 					i--;
 				}
@@ -982,10 +1020,12 @@ ps.apiTool=function(filters, options, onChange){
 				this.setItems(this.items);
 			}else{
 				//valid and cant find it in array
-				if(item.hasOwnProperty("tempid")||item.hasOwnProperty("name")){
+				if(item.hasOwnProperty("tempid") && item.hasOwnProperty("name")){
 					//has a temp id and a name
 					var indexOfTemp=this.get_temp_id_index(item.tempid);
 					//localstorage
+					//delete the temp from local
+					this.storage.removeWithFilter(this.doctype,"tempid",item.tempid);
 					this.storage.store(this.doctype,item);
 					delete item.tempid;
 					if (indexOfTemp!= -1){
@@ -1017,7 +1057,7 @@ ps.apiTool=function(filters, options, onChange){
 		//check if its already been added
 		//Create a temp ID so that when a real object is returned you replace the temp id
 		item.tempid=Math.random()*(10000000000000000);
-		this.filterItem(item);
+		//this.filterItem(item);
 		var args={};
 		args.cmd=this.api.create;
 		args.doctype=this.doctype;

@@ -455,10 +455,12 @@ ps.apiTool=function(filters, options, onChange){
 				this.setItems(this.items);
 			}else{
 				//valid and cant find it in array
-				if(item.hasOwnProperty("tempid")||item.hasOwnProperty("name")){
+				if(item.hasOwnProperty("tempid") && item.hasOwnProperty("name")){
 					//has a temp id and a name
 					var indexOfTemp=this.get_temp_id_index(item.tempid);
 					//localstorage
+					//delete the temp from local
+					this.storage.removeWithFilter(this.doctype,"tempid",item.tempid);
 					this.storage.store(this.doctype,item);
 					delete item.tempid;
 					if (indexOfTemp!= -1){
@@ -490,7 +492,7 @@ ps.apiTool=function(filters, options, onChange){
 		//check if its already been added
 		//Create a temp ID so that when a real object is returned you replace the temp id
 		item.tempid=Math.random()*(10000000000000000);
-		this.filterItem(item);
+		//this.filterItem(item);
 		var args={};
 		args.cmd=this.api.create;
 		args.doctype=this.doctype;

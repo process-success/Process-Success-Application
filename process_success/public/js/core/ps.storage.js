@@ -239,6 +239,35 @@ ps.store={
 			return null;
 		}
 	},
+	//filter={tempId:"1000000"}
+	removeWithFilter:function(doctype,key,value){
+		var t1 = ps.performance.now();
+		var storageKey =this.ident+"?"+doctype;
+		var allItems=localStorage.getItem(storageKey);
+
+		if(allItems !== null){
+			allItems=JSON.parse(allItems);
+			var currentDate=new Date().getTime();
+			var returnItems=[];
+			for (var i = 0; i < allItems.length; i++){
+				var item= allItems[i];
+				//if expired delete it
+				if(item.expire < currentDate || item.data[key]==value){
+					allItems.splice(i,1);
+					i--;
+				}
+			}
+			localStorage.setItem(storageKey,JSON.stringify(allItems));
+			var t2= ps.performance.now();
+			this.lastCallSpeed=t2 - t1;
+			return null;
+
+		}else{
+			var t2= ps.performance.now();
+			this.lastCallSpeed=t2 - t1;
+			return null;
+		}
+	},
 	clear:function(doctype){
 		var storageKey =this.ident+"?"+doctype;
 		localStorage.removeItem(storageKey);

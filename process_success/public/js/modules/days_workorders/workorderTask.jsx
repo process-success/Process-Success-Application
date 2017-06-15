@@ -80,7 +80,6 @@ export default class WorkorderTask extends React.Component{
   	issueChanged(){
 
 		this.setState({issues:this.issueTool.items});
-		console.log(this.issueTool.items);
 	}
   	submitIssue(e){
   		e.preventDefault();
@@ -116,6 +115,15 @@ export default class WorkorderTask extends React.Component{
 			'Started':'panel-warning'
 		}[this.props.status];
 		mainClass = mainClass + " panel workorder ps-panel";
+		var route=(this.props.route===undefined)?"Not Created":(<a className="" href={this.props.route}>More Information</a>);
+		var tasks="";
+		if(this.props.tasks!==undefined){
+			tasks=[];
+			this.props.tasks.map(function(item, index){
+				var checked=item.status?true:false;
+				tasks.push(<TaskCheck key={index} index={index} lable={item.task} checked={checked} taskChecked={this.taskChecked}/>);
+			}.bind(this))
+		}
 		return(
 			<div className='col-md-4 col-sm-4'>
 				<Modal 
@@ -189,16 +197,11 @@ export default class WorkorderTask extends React.Component{
 					</select>
 
 					<div className="check_boxes">
-						{
-							this.props.tasks.map(function(item, index){
-								var checked=item.status?true:false;
-								return (<TaskCheck key={index} index={index} lable={item.task} checked={checked} taskChecked={this.taskChecked}/>);
-							}.bind(this))
-						}
 
+						{tasks}
 					</div>
 					<div>
-						<a className="" href={this.props.route}>More Information</a>
+						{route}
 					</div>
 				</div>
 			</div>

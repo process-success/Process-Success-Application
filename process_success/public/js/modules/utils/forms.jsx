@@ -18,12 +18,20 @@ export default class Form extends React.Component{
 				var lable = (item.lable === undefined) ? "": item.lable;
 				var options = (item.options === undefined) ? "": item.options;
 				var className = (item.className === undefined) ? "": item.className;
+				var readonly = (item.readonly === undefined) ? "": item.readonly;
+				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				var required = (item.required === undefined) ? "": item.required;
 				return (
 					<Select
-						key={this.props.id+index} 
+						key={this.props.id+index}
+						value={value}
 						className={className}
 						lable={lable}
 						options={options}
+						readonly={readonly}
+						disabled={disabled}
+						required={required}
+						inputChanged={function(e){item.onChange(e);}}
 					/>
 				);
 			}.bind(this),
@@ -33,6 +41,10 @@ export default class Form extends React.Component{
 				var placeholder = (item.placeholder === undefined) ? "": item.placeholder;
 				var lable = (item.lable === undefined) ? "": item.lable;
 				var className = (item.className === undefined) ? "": item.className;
+				var readonly = (item.readonly === undefined) ? "": item.readonly;
+				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				var required = (item.required === undefined) ? "": item.required;
+				
 				return (
 					<Input
 						key={this.props.id+index} 
@@ -41,7 +53,10 @@ export default class Form extends React.Component{
 						placeholder={placeholder}
 						lable={lable}
 						className={className}
-						inputChanged={function(e){var test;}}
+						readonly={readonly}
+						disabled={disabled}
+						required={required}
+						inputChanged={function(e){item.onChange(e)}}
 					/>
 				);
 			}.bind(this),
@@ -65,6 +80,9 @@ export default class Form extends React.Component{
 				var lable = (item.lable === undefined) ? "": item.lable;
 				var placeholder = (item.placeholder === undefined) ? "": item.placeholder;
 				var className = (item.className === undefined) ? "": item.className;
+				var readonly = (item.readonly === undefined) ? "": item.readonly;
+				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				var required = (item.required === undefined) ? "": item.required;
 				return(
 					<DateInput
 						key={this.props.id+index} 
@@ -73,6 +91,9 @@ export default class Form extends React.Component{
 						lable={lable}
 						className={className}
 						inputChanged={function(e){item.onChange(e)}}
+						readonly={readonly}
+						disabled={disabled}
+						required={required}
 					/>
 				);
 			}.bind(this),
@@ -81,6 +102,10 @@ export default class Form extends React.Component{
 				var lable = (item.lable === undefined) ? "": item.lable;
 				var placeholder = (item.placeholder === undefined) ? "": item.placeholder;
 				var className = (item.className === undefined) ? "": item.className;
+				var readonly = (item.readonly === undefined) ? "": item.readonly;
+				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				var required = (item.required === undefined) ? "": item.required;
+
 				return(
 					<AwesompleteInput
 						key={this.props.id+index}
@@ -91,7 +116,24 @@ export default class Form extends React.Component{
 						placeholder={placeholder}
 						lable={lable}
 						className={className}
+						readonly={readonly}
+						disabled={disabled}
+						required={required}
 						inputChanged={function(e){item.onChange(e)}}
+					/>
+				);
+			}.bind(this),
+			button: function(item,index){
+				var value = (item.value === undefined) ? "": item.value;
+				var className = (item.className === undefined) ? "": item.className;
+				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				return(
+					<Button
+						key={this.props.id+index}
+						value={value}
+						className={className}
+						disabled={disabled}
+						onClick={function(e){item.onClick(e)}}
 					/>
 				);
 			}.bind(this)
@@ -129,6 +171,9 @@ export class Select extends React.Component{
 		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
 		this.options = (this.props.options === undefined) ? "": this.props.options;
 		this.className= (this.props.className === undefined) ? "form-control": "form-control" +this.props.className;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
 		var options=[];
 		var output="";
 
@@ -148,10 +193,16 @@ export class Select extends React.Component{
 
 			
 		}.bind(this));
-		
 
 		var select=(
-			<select className={this.className} value={this.value}>
+			<select 
+				className={this.className} 
+				value={this.value} 
+				onChange={this.props.inputChanged}
+				disabled={this.disabled}
+	          	readOnly={this.readonly}
+	          	required={this.required}
+				>
 				{options}
 			</select>
 		);
@@ -188,7 +239,7 @@ export class Input extends React.Component{
 
 	}
 	inputChange(e){
-		this.props.inputChanged();
+		this.props.inputChanged(e);
 	}
 	render(){
 		this.type = (this.props.type === undefined) ? "text": this.props.type;
@@ -197,7 +248,21 @@ export class Input extends React.Component{
 		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
 		var output="";
 		this.className= (this.props.className === undefined) ? "form-control": "form-control " +this.props.className;
-		var input=( <input type={this.type} className={this.className} placeholder={this.placeholder} value={this.value} />);
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
+		var input=( 
+			<input 
+				type={this.type} 
+				className={this.className} 
+				placeholder={this.placeholder} 
+				value={this.value}
+				onChange={this.props.inputChanged}
+				disabled={this.disabled}
+	          	readOnly={this.readonly}
+	          	required={this.required}
+			/>
+		);
 
 		if (this.props.lable !== undefined || this.props.lable ==""){
 			output = (
@@ -226,12 +291,7 @@ export class Input extends React.Component{
 export class DateInput extends React.Component{
 	constructor(props){
 		super(props);
-		this.inputChange=this.inputChange.bind(this);
 		this.dateInit=this.dateInit.bind(this);
-
-	}
-	inputChange(e){
-		this.props.inputChanged();
 	}
 	dateInit(){
 		$('.input-group.date .datepick').datepicker({
@@ -248,6 +308,11 @@ export class DateInput extends React.Component{
 		this.value = (this.props.value === undefined) ? "": this.props.value;
 		this.placeholder = (this.props.placeholder === undefined) ? "": this.props.placeholder;
 		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
+
+
 		var output="";
 		this.className= (this.props.className === undefined) ? "form-control datepick": "form-control datepick " +this.props.className;
 		var input=( 
@@ -258,6 +323,9 @@ export class DateInput extends React.Component{
 				placeholder={this.placeholder}  
 				value={this.value} 
 				onChange={this.props.inputChanged}
+				disabled={this.disabled}
+	          	readOnly={this.readonly}
+	          	required={this.required}
 				/>
 
 		);
@@ -330,21 +398,21 @@ export class AwesompleteInput extends React.Component{
 	}
 	createList(){
 		this.itemlist=[];
-		if (this.props.doclable !== undefined && this.listTool.items !== undefined){
+		//lable and value
+		if (this.props.doclable !== undefined && this.listTool.items !== undefined && this.listTool.items !== null){
 			for(let item of this.listTool.items){
 				var temp =[item[this.props.doclable],item[this.props.docvalue]];
 				this.itemlist.push(temp);
 			}
+			$(document).trigger('listLoad' + this.props.doctype);
 		}
-		else if(this.listTool.items !== undefined){
+		//just lable
+		else if(this.listTool.items !== undefined && this.listTool.items !== null){
 			for(let item of this.listTool.items){
 				this.itemlist.push(item[this.props.docvalue]);
 			}
+			$(document).trigger('listLoad' + this.props.doctype);
 		}
-		if(this._isMounted){
-			//this.setState({itemlist:this.state.itemlist});
-		}
-		$(document).trigger('listLoad' + this.props.doctype);
 	}
 
 	autocomplete(input){
@@ -379,28 +447,6 @@ export class AwesompleteInput extends React.Component{
 			'awesomplete-selectcomplete',
 				this.inputChange
 		);
-		// $('#poo').focus(function(){
-		// 		this.aw.open();
-		// }.bind(this));
-		//console.log()
-		// input.target.onfocus( function() {
-		// 	console.log(focus);
-		// 	if (aw.ul.hasAttribute('hidden')) {
-		// 		aw.open();
-		// 	}
-		// 	else {
-		// 		aw.close();
-		// 	}
-		// });
-		// input.addEventListener("onblur", function() {
-		// 	if (aw.ul.childNodes.length === 0) {
-		// 		aw.minChars = 0;
-		// 		aw.evaluate();
-		// 	}
-		// 	else {
-		// 		aw.close();
-		// 	}
-		// });
 
 		this.aw.list=this.itemList;
 		$(document).bind('listLoad' + this.props.doctype,function(){
@@ -416,14 +462,23 @@ export class AwesompleteInput extends React.Component{
 		this.value = (this.props.value === undefined) ? "": this.props.value;
 		this.placeholder = (this.props.placeholder === undefined) ? "": this.props.placeholder;
 		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
+
 		var output="";
 		this.className= (this.props.className === undefined) ? "form-control awesomplete": "form-control awesomplete " +this.props.className;
-		var input=( <input 
+		var input=( <input
+					value={this.value}
+
 					type={this.type} 
 					className={this.className} 
 					placeholder={this.placeholder} 
 					ref={this.autocomplete}
-		          	onChange={this.inputChange} 
+		          	onChange={this.inputChange}
+		          	disabled={this.disabled}
+		          	readOnly={this.readonly}
+		          	required={this.required}
 		          />);
 
 		if (this.props.lable !== undefined || this.props.lable ==""){
@@ -450,5 +505,40 @@ export class AwesompleteInput extends React.Component{
 		);
 	}
 }
+export class Button extends React.Component{
+	constructor(props){
+		super(props);
 
+	}
+
+	render(){
+		this.type = (this.props.type === undefined) ? "text": this.props.type;
+		this.value = (this.props.value === undefined) ? "": this.props.value;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		var output="";
+		this.className= (this.props.className === undefined) ? "btn": "btn " +this.props.className;
+		var input=( 
+			<button 
+				type={this.type}
+				className={this.className} 
+				value={this.value}
+				onClick={this.props.onClick}
+				disabled={this.disabled}
+			>{this.value}</button>
+		);
+
+
+		output = (
+			<div className="form-group">
+	      		{input}
+	  		</div>
+	  	);
+
+		return(
+			<div>
+				{output}
+			</div>
+		);
+	}
+}
 

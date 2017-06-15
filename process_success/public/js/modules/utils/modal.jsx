@@ -11,6 +11,20 @@ export default class Modal extends React.Component{
 		this.props.submit(e);
 	}
 	render(){
+		var footer="";
+		if(this.props.submit!== false){
+			footer=(		
+				<div className="modal-footer">
+					<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button 
+						type="submit" 
+						onClick={this.submit} 
+						className="btn btn-primary" >
+							{this.props.submitText}
+					</button>
+				</div>
+			)
+		}
 		return(
 			<div className="modal fade text-left panel-default" id={this.props.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div className="modal-dialog" role="document">
@@ -25,15 +39,7 @@ export default class Modal extends React.Component{
 							<div className="modal-body">
 								{ this.props.children }
 							</div>
-							<div className="modal-footer">
-								<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button 
-									type="submit" 
-									onClick={this.submit} 
-									className="btn btn-primary" >
-										{this.props.submitText}
-								</button>
-							</div>
+							{footer}
 					</div>
 				</div>
 			</div>

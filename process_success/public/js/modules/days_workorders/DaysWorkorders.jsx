@@ -18,6 +18,7 @@ export default class DaysWorkorders extends React.Component{
 		this.workOrderChanged=this.workOrderChanged.bind(this);
 		this.socketUpdate=this.socketUpdate.bind(this);
 		this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
+		this.createWorkorder=this.createWorkorder.bind(this);
 		//this.workorderObj=this.onStatusChanged.bind(this);
 		/*          end          */
 
@@ -68,6 +69,7 @@ export default class DaysWorkorders extends React.Component{
 		}
 	}
 	workOrderChanged(){
+
 		if (this.workorderTool.items!==null){
 			this.setState({workorders:this.workorderTool.items});
 			if(this.props.statusUpdate !== undefined){
@@ -78,10 +80,17 @@ export default class DaysWorkorders extends React.Component{
 		}
 
 	}
+	createWorkorder(item){
+		item.date=moment(item.date,"MM/DD/YYYY").format('YYYY-MM-DD');
+		this.workorderTool.create(item,function(item){
+			ps.successAlert("Workorder " +item.name+ " created.")
+		});
+
+	}
 	workorderObj(item,index){
 		return(
 			<WorkorderTask 
-				key={index} 
+				key={index + this.props.crew} 
 				index={index} 
 				location_route={item.location_route}
 				location={item.location}
@@ -108,10 +117,13 @@ export default class DaysWorkorders extends React.Component{
 		this.state.workorders.map(function(item, index){
 			if (item.status!='Complete'&&item.status!='Incomplete'){
 				todo.push(this.workorderObj(item,index));
-				if(todo.length%3===0){todo.push(<div className='clearfix'></div>)}
+				if(todo.length+1%4===0){
+
+					todo.push(<div className='clearfix spacer'></div>)
+				}
 			}else{
 				complete.push(this.workorderObj(item,index));
-				if(complete.length%3===0){complete.push(<div className='clearfix'></div>)}
+				if(complete.length%3===0){complete.push(<div className='clearfix spacer'></div>)}
 			}
 		}.bind(this));
 		var completeHeader=(<h3>Complete Work Orders</h3>);
@@ -119,7 +131,8 @@ export default class DaysWorkorders extends React.Component{
 			completeHeader="";
 		}
 
-
+		// var date=this.props.date;
+		// date=moment(date,'YYYY-MM-DD').format("MM/DD/YYYY");
 		return(
 			<div className="workorder_container">
 				<div><br/>
@@ -135,7 +148,8 @@ export default class DaysWorkorders extends React.Component{
 				<WorkorderFormModal
 					id={"create-wo-"+this.props.crew.replace(" ","-")}
 					crew={this.props.crew}
-					date={this.props.date}
+					date={moment(this.props.date,'YYYY-MM-DD').format("MM/DD/YYYY")}
+					createWorkorder={this.createWorkorder}
 				/>
 
 			</div>
@@ -147,46 +161,108 @@ export default class DaysWorkorders extends React.Component{
 export class WorkorderFormModal extends React.Component{
 	constructor(props){
 		super(props);
+
+		this.submit=this.submit.bind(this);
+		this.state={
+			location:"",
+			priority:1,
+			type:"Pruning",
+			status:"Pending",
+			date:this.props.date,
+			crew:this.props.crew
+		}
+	}
+
+	submit(e){
+		if(this.state.location=="" ||this.state.crew=="" || (moment(this.state.date,"MM/DD/YYYY").isValid())!==true){
+			console.log("not valid");
+		}else{
+			var copy=ps.clone(this.state);
+			$('#'+ this.props.id).modal('hide')
+			this.setState({location:""})
+			this.props.createWorkorder(copy);
+		}
 	}
 	render(){
 		var fields=[		
 			{
 				field:"autoComplete",
-				onChange: this.someFunction,
+				onChange: function(e){
+					this.setState({location:e.target.value})
+				}.bind(this),
+				value:this.state.location,
+				required:true,
 				lable:"Vineyard",
 				doctype:"Vineyard",
 				docvalue:"name"
 			},
 			{
 				field:"input",
+				className:"vineyard-input",
 				type:"number",
-				onChange: this.someFunction,
+				onChange: function(e){
+					this.setState({priority:e.target.value})
+				}.bind(this),
+				value:this.state.priority,
 				lable:"Priority"
 			},
 			{
 				field:"date",
-				onChange: this.someFunction,
+				required:true,
+				onChange: function(e){
+					this.setState({date:e.target.value});
+				}.bind(this),
+				value:this.state.date,
 				lable:"Date"
 			},
 			{
 				field:"select",
-				onChange: this.someFunction,
+				onChange: function(e){
+					this.setState({type:e.target.value})
+				}.bind(this),
+				value:this.state.type,
 				lable:"Type",
 				options:[
 					"Watering",
-					"Prunning",
+					"Pruning",
 					"Repair",
 					"Spraying"
+				]
+			},
+			{
+				field:"select",
+				onChange: function(e){
+					this.setState({status:e.target.value})
+				}.bind(this),
+				value:this.state.status,
+				lable:"Status",
+				disabled:true,
+				options:[
+					"Pending"
 				]
 			},
 			{
 				field:"autoComplete",
 				onChange: this.someFunction,
 				lable:"Crew",
+				required:true,
+				readonly:"ture",
 				doctype:"Crew",
 				docvalue:"name",
-				doclable:"crew_lead_full_name"
+				doclable:"crew_lead_full_name",
+				onChange: function(e){
+					this.setState({crew:e.target.value})
+				}.bind(this),
+				value:this.state.crew,
+			},
+			{
+				field:"button",
+				type:"submit",
+				value:"Create Work Order",
+				className:"btn-primary pull-right",
+				onClick:this.submit
 			}
+
 
 		]
 		return (
@@ -201,12 +277,14 @@ export class WorkorderFormModal extends React.Component{
 					id={this.props.id} 
 					submitText="Submit" 
 					title="Create New Workorder"
-					submit={this.onStatusChanged}>
+					submit={false}
+					>
 
 					<Form
 						id="CreateWorkorderForm"
 						type="horizontal"
 						fields={fields}
+
 					/>
 
 				</Modal>
