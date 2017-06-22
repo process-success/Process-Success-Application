@@ -411,7 +411,7 @@ export class AwesompleteInput extends React.Component{
 			for(let item of this.listTool.items){
 				this.itemlist.push(item[this.props.docvalue]);
 			}
-			$(document).trigger('listLoad' + this.props.doctype);
+			$(document).trigger('listLoad' + this.props.doctype.replace(" ",""));
 		}
 	}
 
@@ -449,7 +449,7 @@ export class AwesompleteInput extends React.Component{
 		);
 
 		this.aw.list=this.itemList;
-		$(document).bind('listLoad' + this.props.doctype,function(){
+		$(document).bind('listLoad' + this.props.doctype.replace(" ",""),function(){
 			this.aw.list=this.itemlist;
 		}.bind(this));
 	}

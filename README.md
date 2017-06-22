@@ -24,7 +24,7 @@ When instantiating a new bench and you want a fresh installation of the applicat
 
 ```
 $ bench init name-of-your-bench ; cd name-of-your-bench
-$ bench get-app https://github.com/process_success/Process-Success-Application.git
+$ bench get-app https://github.com/process-success/Process-Success-Application.git
 $ cd apps/process-success
 
 # This adds the remote 'origin' to your local git configuration:
