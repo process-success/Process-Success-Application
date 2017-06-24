@@ -1,6 +1,10 @@
+
+
+
+
 var gulp         = require('gulp');
 var jshint       = require('gulp-jshint');
-var sass         = require('gulp-sass');
+//var sass         = require('gulp-sass');
 var less         = require('gulp-less');
 var concat       = require('gulp-concat');
 var uglify       = require('gulp-uglify');
@@ -15,13 +19,13 @@ var tap          = require('gulp-tap');
 var reactify     = require('reactify');
 var babelify     = require ('babelify');
 var path = require('path');
- 
+var mainBowerFiles = require ('main-bower-files');
 
 
-var plugins     = require("gulp-load-plugins")({
-  pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
-  replaceString: /\bgulp[\-.]/
-});
+// var plugins     = require("gulp-load-plugins")({
+//   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
+//   replaceString: /\bgulp[\-.]/
+// });
 
 
 //For browserify setup
@@ -212,10 +216,10 @@ gulp.task('browserify', function () {
 //     Bower
 //---------------------
 
-console.log(plugins.mainBowerFiles(bowerpaths));
+console.log(mainBowerFiles(bowerpaths));
 gulp.task('bowerjs', function() {
   var jsFilter = filter('**/*.js', {restore: true});
-  gulp.src(plugins.mainBowerFiles(bowerpaths))
+  gulp.src(mainBowerFiles(bowerpaths))
   .pipe(jsFilter)
   .pipe(gulp.dest('process_success/public/js/lib'))
   .pipe(concat('all.js'))
@@ -224,7 +228,7 @@ gulp.task('bowerjs', function() {
 gulp.task('bowercss', function() {
   var cssfilter = filter(['**/*.css','!**/jquery.dataTables.css'], {restore: true});
   //var filter = gulpFilter(['*', '!wcui/app/js/vendor']);
-  gulp.src(plugins.mainBowerFiles(bowerpaths))
+  gulp.src(mainBowerFiles(bowerpaths))
   .pipe(cssfilter)
   .pipe(gulp.dest('process_success/public/css/lib'))
   .pipe(concat('all.css'))
@@ -232,7 +236,7 @@ gulp.task('bowercss', function() {
 });
 gulp.task('bowerimgs', function() {
   var imgfilter = filter('**/*.png');
-  gulp.src(plugins.mainBowerFiles(bowerpaths))
+  gulp.src(mainBowerFiles(bowerpaths))
   .pipe(imgfilter)
   .pipe(gulp.dest('process_success/public/css/images'));
 });
@@ -313,23 +317,23 @@ gulp.task('clearCache', () => {
 
 gulp.task('watch', function() {
 	livereload.listen();
-  gulp.watch([
-    'process_success/public/js/core/**/*.js',
-    'process_success/template/**/*.js',
-    'process_success/www/**/*.js',
-    'process_success/public/**/*.js',
-    'process_success/public/**/*.css',
-    'process_success/**/*.js',
-    'process_success/**/*.html',
-    'process_success/**/*.template',
-    'process_success/template/**/*.css',
-    'process_success/**/*.css',
-    'process_success/**/*.py' ], ['clearCache']
-  );
+  // gulp.watch([
+  //   'process_success/public/js/core/**/*.js',
+  //   'process_success/template/**/*.js',
+  //   'process_success/www/**/*.js',
+  //   'process_success/public/**/*.js',
+  //   'process_success/public/**/*.css',
+  //   'process_success/**/*.js',
+  //   'process_success/**/*.html',
+  //   'process_success/**/*.template',
+  //   'process_success/template/**/*.css',
+  //   'process_success/**/*.css',
+  //   'process_success/**/*.py' ], ['clearCache']
+  // );
   gulp.watch(['bower.json'],['bowercss'],['bowerjs'] );
-  gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts'],['clearCache']);
+  gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
   gulp.watch([manifest.less.source], ['less']);
-  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify'],['clearCache']);
+  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify']);
 });
 
 // Default Task
