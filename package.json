@@ -29,6 +29,7 @@
     "chai-as-promised": "^7.0.0",
     "del": "^3.0.0",
     "eslint-plugin-react": "^7.1.0",
+    "esprima": "^4.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^6.1.2",
