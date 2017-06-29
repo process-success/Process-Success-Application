@@ -7,6 +7,7 @@ import frappe
 import json
 from frappe.model.naming import make_autoname
 from frappe.website.website_generator import WebsiteGenerator
+from process_success.vineyards.api import get_vineyard_tasks_by_workorder
 import json
 import copy
 
@@ -19,6 +20,10 @@ class work_order(WebsiteGenerator):
     def autoname(self):
         self.name = make_autoname("WO" + "-" + ".######")
         self.set_path()
+
+    def on_trash(self):
+        #get_vineyard_tasks_by_workorder(self.name)
+        frappe.delete_doc("User", self.user)
 
     def get_context(self, context):
         geojson = {}

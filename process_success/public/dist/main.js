@@ -97,7 +97,10 @@
 			statusCode: ps.set_handlers(success,fail)
 		});
 	};
-
+	// args={};
+	// args.cmd="process_success.vineyards.doctype.api.get_vineyard_tasks_by_workorder";
+	// args.workorder="WO-0001";
+	// ps.call(args,function(){console.log("hello")});
 
 	// Turns things like s@gmail.com into escaped version to be used with j query selectors
 	ps.escapeAttr=function ( str ) {
@@ -914,7 +917,12 @@ ps.apiTool=function(filters, options, onChange){
 		return null;
 	}
 	this.onChange=onChange;
+	this.multiDoc=false;
+	if (typeof(options.doctype)=="object"){
+		this.multiDoc=true;
+	}
 	this.doctype=options.doctype;
+
 	this.default={
 		get:"process_success.ps_core.api.get_all_full_doc",
 		update:"process_success.ps_core.api.update_doc",
@@ -945,8 +953,16 @@ ps.apiTool=function(filters, options, onChange){
 			getArgs.doctype=this.doctype;
 		}
 
-		this.items=this.storage.get(this.doctype, filters);
+		if(this.multiDoc){
+			for (var i = 0; i < this.doctype.length; i++) {
+				this.items.push.apply(this.items, this.storage.get(this.doctype[i], filters));
+			}
+		}else{
+			this.items=this.storage.get(this.doctype, filters);
+		}
+
 		//if online make a call to the server
+
 		if(ps.online){
 			//is frappe ready?
 			if(ps.frappe.isready){
@@ -979,10 +995,10 @@ ps.apiTool=function(filters, options, onChange){
 		var args={};
 		args.cmd=this.api.update;
 		args.item=item;
-		args.doctype=this.doctype;
+		args.doctype=item.doctype;
 		if (ps.online){
 			ps.call(args,function(data){
-				ps.socket.socket.emit('update_doc', {doctype:this.doctype, item:data.message});
+				ps.socket.socket.emit('update_doc', {doctype:item.doctype, item:data.message});
 				this.filterItem(data.message);
 				if (typeof(callback)!= "undefined"){
 					callback(data.message);
@@ -1060,7 +1076,11 @@ ps.apiTool=function(filters, options, onChange){
 		//this.filterItem(item);
 		var args={};
 		args.cmd=this.api.create;
-		args.doctype=this.doctype;
+		if(item.doctype){
+			args.doctype=item.doctype;
+		}else{
+			args.doctype=this.doctype;
+		}
 		args.item=item;
 		if (ps.online){
 			ps.call(args,function(data){
@@ -1069,7 +1089,7 @@ ps.apiTool=function(filters, options, onChange){
 				if (typeof(callback)!= "undefined"){
 					callback(data.message);
 				}
-				ps.socket.socket.emit('create_doc', {doctype:this.doctype, item:data.message});
+				ps.socket.socket.emit('create_doc', {doctype:args.doctype, item:data.message});
 			}.bind(this));
 		}
 		else{
@@ -1082,7 +1102,7 @@ ps.apiTool=function(filters, options, onChange){
 		REMOVE FUNCTION
 		with emit for catching changes
 	*/
-	this.remove=function(name,callback){
+	this.remove=function(name,callback,doctype){
 		//check if its already been removed
 		var index=this.get_index_of_item(name);
 
@@ -1095,7 +1115,9 @@ ps.apiTool=function(filters, options, onChange){
 		var args={};
 		args.cmd=this.api.remove;
 		args.name=name;
-		args.doctype=this.doctype;
+		if(doctype){
+			args.doctype=doctype;
+		}else{args.doctype=this.doctype;}
 		if (ps.online){
 			ps.call(args,function(data){
 				ps.socket.socket.emit('remove_doc', {doctype:this.doctype, name:name});
@@ -1215,6 +1237,9 @@ ps.apiSetup={};
 ps.apiSetup.workOrders={
 	doctype:'work_order',
 	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
+};
+ps.apiSetup.vineyardTasks={
+	doctype:['Pruning','Spraying'],
 };
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();

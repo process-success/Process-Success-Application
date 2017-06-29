@@ -270,17 +270,25 @@ def check_table_changed(newItem, tableName):
 
 @frappe.whitelist()
 def get_all_full_doc(doctype, filters):
-    print ("____________________________ get_all_full_doc _______________________")
-    print ("filters: " +filters)
-    print ("doctype: " +doctype)
-    docnames=frappe.get_all(doctype,filters=filters)
-    print ("returns: \/ ")
-    print (docnames)
-    doc_list=[]
-    if docnames:
-        for docname in docnames:
-            doc_list.append(frappe.get_doc(doctype,docname.name))
-    return doc_list
+	print(doctype)
+	return_items=[]
+	try:
+		doctype = json.loads(doctype)
+	except ValueError, e:
+		pass
+	#multi doctype
+	if type(doctype) is list:
+		for doc_type in doctype:
+			docnames=frappe.get_all(doc_type,filters=filters, fields=['name'])
+			for doc_name in docnames:
+	 			return_items.append(frappe.get_doc(doc_type,doc_name))
+	else:
+		docnames=frappe.get_all(doctype,filters=filters)
+		print("test")
+		if docnames:
+			for docname in docnames:
+				return_items.append(frappe.get_doc(doctype,docname.name))
+	return return_items
 
 @frappe.whitelist()
 def create_doc(doctype,item):

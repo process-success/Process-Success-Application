@@ -11,11 +11,26 @@ export default class TaskCheck extends React.Component{
 	render(){
 		const checked = this.props.checked ? "line-through" : "";
 		return(
-			<div className="checkbox">
+			<div className="checkbox row">
+				<div className="col-xs-8">
 				<label className={checked}>
-					<input onChange={this.taskChecked} type="checkbox" checked={this.props.checked} />
+					<input 
+						className="big-checkbox" 
+						onChange={this.taskChecked} 
+						type="checkbox" 
+						checked={this.props.checked} />
 					{this.props.lable}
 				</label>
+				</div>
+				<div className="edit col-xs-4"> 
+					<button 
+						type="button" 
+						className="btn btn-default inline-task"
+						onClick={this.props.editTask}
+						>
+						<span className="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					</button>
+				</div>
 			</div>
 		);
 	}	

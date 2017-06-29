@@ -122,10 +122,3 @@ const app= $('#app')[0];
 	})
 
 })();
-
-/*
-					<DaysWorkorders 
-						date={this.props.date}
-						crew={item.name}
-					/>
-					*/

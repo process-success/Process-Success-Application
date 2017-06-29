@@ -53,6 +53,7 @@ body {
 footer {
   background-color: #fff;
 }
+/* forms.less */
 .react-form div.awesomplete {
   width: 100%;
 }
@@ -64,6 +65,33 @@ footer {
 }
 .btn {
   font-size: 16px;
+}
+.line-through {
+  text-decoration: line-through;
+}
+.check_boxes {
+  padding: 15px 0px 20px 0px;
+}
+.addbutton.checkbox {
+  margin: 10px 10px 0px 15px;
+}
+.checkbox {
+  margin: 10px 0px 10px 0px;
+  padding-left: 0px;
+}
+.checkbox label {
+  padding-left: 30px;
+}
+.checkbox input[type=checkbox] {
+  margin-left: -30px;
+}
+.checkbox .big-checkbox {
+  margin: 0px 5px 0px 5px;
+  width: 25px;
+  height: 25px;
+}
+.checkbox .btn.inline-task {
+  padding: 0px 8px;
 }
 /* --------   nav ----------- */
 .ps-sidebar.col-sm-1 {
@@ -533,6 +561,7 @@ div table.dataTable.no-footer {
 .dataTables_scrollBody table.ps-list-table {
   padding-bottom: 10px;
 }
+/* timesheet.less */
 .sticky_subnav {
   background: white;
   z-index: 9998;
@@ -566,12 +595,6 @@ div table.dataTable.no-footer {
   width: 100%;
   z-index: 9999;
   border-radius: 0px;
-}
-.line-through {
-  text-decoration: line-through;
-}
-.check_boxes {
-  padding: 10px 20px;
 }
 .form-checkin {
   max-width: 360px;

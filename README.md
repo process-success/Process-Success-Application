@@ -27,6 +27,10 @@ $ bench init name-of-your-bench ; cd name-of-your-bench
 $ bench get-app https://github.com/process-success/Process-Success-Application.git
 $ cd apps/process-success
 
+# Change the Frappe Version and build:
+
+# Create a new site and install:
+
 # This adds the remote 'origin' to your local git configuration:
 $ git remote add origin https://github.com/process-success/Process-Success-Application.git
 $ git fetch origin

@@ -3,6 +3,8 @@
 import TaskCheck from './taskCheck'
 import CreateIssue from './createIssue'
 import Modal from '../utils/modal'
+import {Form, Select} from '../utils/forms'
+import {SprayForm,PruningForm} from '../vineyard/sprayForm'
 
 
 export default class WorkorderTask extends React.Component{
@@ -187,8 +189,6 @@ export default class WorkorderTask extends React.Component{
 
 				</div>
 				<div className="panel-body">
-					<div>{this.props.type}</div>
-					<label className="control-label">Status</label>
 					<select className="form-control status" value={this.props.status} onChange={this.statusChange}>
 						<option value="Pending">Pending</option>
 						<option value="Started">Started</option>
@@ -199,6 +199,7 @@ export default class WorkorderTask extends React.Component{
 					<div className="check_boxes">
 
 						{tasks}
+						<VineyardTasks workorder={this.props.workorder} />
 					</div>
 					<div>
 						{route}
@@ -209,6 +210,145 @@ export default class WorkorderTask extends React.Component{
 		);
 	}
 }
+
+
+export class VineyardTasks extends React.Component{
+	constructor(props){
+		super(props);
+
+		this.modalNewTask=this.modalNewTask.bind(this);
+		this.taskChecked=this.taskChecked.bind(this);
+		this.taskChanged=this.taskChanged.bind(this);
+		this.editTask=this.editTask.bind(this);
+		this.modalId="task-form"+this.props.workorder;
+
+		this.tasksTool = new ps.apiTool({"work_order":this.props.workorder},ps.apiSetup.vineyardTasks,this.taskChanged);
+		this.state={
+			tasks:this.tasksTool.items,
+			formState: "taskType"
+		};
+	}
+	modalNewTask(){
+		this.setState({formState: "taskType"});
+		$('#'+this.modalId).modal();
+	}
+	isChecked(value){
+    	//return ((value===this.state.selected) ?'checked line-through':'default');
+  	}
+  	taskChanged(){
+  		this.setState({tasks:this.tasksTool.items});
+  	}
+  	taskChecked(index,checked){
+  		//var wo_index=this.props.index;
+  		//this.props.onTaskChecked(wo_index,index,checked);
+  	}
+  	editTask(){
+
+  	}
+
+  	renderTasks(){
+  		var tasks=[];
+  		if(this.state.tasks!==undefined&&this.state.tasks!==null){
+			tasks=[];
+			console.log(this.state.tasks);
+			this.state.tasks.map(function(item, index){
+				var checked=item.status?true:false;
+				tasks.push(
+					<TaskCheck 
+						key={index} 
+						index={index} 
+						lable={item.doctype} 
+						checked={item.complete} 
+						taskChecked={this.taskChecked}
+						editTask={function(e){ editTask(item.name)}}
+					/>);
+			}.bind(this))
+		}
+		return tasks;
+  	}
+	render(){
+		var fieldsSpray=[		
+			{
+				field:"button",
+				type:"submit",
+				value:"Create Spraying Entry",
+				className:"btn-primary pull-right",
+				onClick:this.submit
+			}
+		]
+		var tasks=this.renderTasks();
+
+
+		var form={};
+		var formsObj={
+			taskType:function(){
+				return(	
+				<Select
+					className=""
+					lable="Task Type"
+					options={[" "].concat(ps.apiSetup.vineyardTasks.doctype)}
+					inputChanged={
+						function(e){this.setState({formState:e.target.value})}.bind(this)
+					}
+				/>
+			)}.bind(this),
+			Spraying:function(item){
+				if(item==undefined){
+					return (						
+						<SprayForm
+							id={this.props.workorder}
+							createSprayEntry={function(){}}
+						/>
+					);
+				}
+
+			}.bind(this),
+			Pruning:function(item){
+
+				if(item===undefined){
+					return (						
+						<PruningForm
+							id="createSprayEntry"
+							createSprayEntry={function(){}}
+						/>
+					);
+				}
+
+			}.bind(this)
+		};
+
+		form=formsObj[this.state.formState]();
+		// console.log(formsObj[this.state.formState]);
+		// console.log(form);
+		var lable="Create New Task";
+		return(
+			<div className=''>
+			{tasks}
+			<div className="checkbox row addbutton">
+				<div className="edit"> 
+					<button 
+						type="button" 
+						className="btn btn-default inline-task"
+						onClick={this.modalNewTask}
+					>
+						<span className="glyphicon glyphicon-plus " aria-hidden="true"></span> Add Task
+					</button>
+				</div>
+			</div>
+				<Modal 
+					id={this.modalId} 
+					submitText="Submit" 
+					title={lable}
+					submit={false}
+					>
+					{form}
+				</Modal>
+			</div>
+		);
+	}
+}
+
+
 
 
 

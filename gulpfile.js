@@ -127,7 +127,8 @@ var manifest={
     'process_success/public/js/lib/jquery.dataTables.js',
     'process_success/public/js/lib/dataTables.fixedColumns.js',
     'process_success/public/js/lib/dataTables.bootstrap.js',
-    'process_success/public/js/lib/bootstrap-datepicker.min.js'
+    'process_success/public/js/lib/bootstrap-datepicker.min.js',
+    'process_success/public/js/lib/awesomplete.js'
   ],
   modules:[
     'process_success/public/js/modules/**/*.jsx'
@@ -317,19 +318,19 @@ gulp.task('clearCache', () => {
 
 gulp.task('watch', function() {
 	livereload.listen();
-  // gulp.watch([
-  //   'process_success/public/js/core/**/*.js',
-  //   'process_success/template/**/*.js',
-  //   'process_success/www/**/*.js',
-  //   'process_success/public/**/*.js',
-  //   'process_success/public/**/*.css',
-  //   'process_success/**/*.js',
-  //   'process_success/**/*.html',
-  //   'process_success/**/*.template',
-  //   'process_success/template/**/*.css',
-  //   'process_success/**/*.css',
-  //   'process_success/**/*.py' ], ['clearCache']
-  // );
+  gulp.watch([
+    'process_success/public/js/core/**/*.js',
+    'process_success/template/**/*.js',
+    'process_success/www/**/*.js',
+    'process_success/public/**/*.js',
+    'process_success/public/**/*.css',
+    'process_success/**/*.js',
+    'process_success/**/*.html',
+    'process_success/**/*.template',
+    'process_success/template/**/*.css',
+    'process_success/**/*.css',
+    'process_success/**/*.py' ], ['clearCache']
+  );
   gulp.watch(['bower.json'],['bowercss'],['bowerjs'] );
   gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
   gulp.watch([manifest.less.source], ['less']);

@@ -147,8 +147,9 @@ export default class Form extends React.Component{
 		return(
 			<form className={className}>
 				<fieldset>
+				{this.props.before}
 				{form}
-				{ this.props.children }
+				{ this.props.children}
 				</fieldset>
 			</form>
 		);
@@ -374,6 +375,9 @@ export class AwesompleteInput extends React.Component{
 		this.componentDidMount=this.componentDidMount.bind(this);
 		this.inputChange=this.inputChange.bind(this);
 		this.autocomplete=this.autocomplete.bind(this);
+		this.componentWillUnmount=this.componentWillUnmount.bind(this);
+		this.refCall=this.refCall.bind(this);
+		
 		//this.workorderObj=this.onStatusChanged.bind(this);
 		/*          end          */
 		this.itemlist=[];
@@ -394,6 +398,7 @@ export class AwesompleteInput extends React.Component{
 	}
 	componentDidMount(){
 		this._isMounted=true;
+		this.autocomplete();
 
 	}
 	createList(){
@@ -414,8 +419,17 @@ export class AwesompleteInput extends React.Component{
 			$(document).trigger('listLoad' + this.props.doctype.replace(" ",""));
 		}
 	}
-
+	componentWillUnmount(){
+		// console.log("HELLO");
+		// this.aw.destroy();
+		// delete this.aw;
+		// console.log("TEST");
+	}
+	refCall(input){
+		this.input=input;
+	}
 	autocomplete(input){
+		input=this.input;
 		var config= {
 				minChars: 0,
 				maxItems: 99,
@@ -474,7 +488,7 @@ export class AwesompleteInput extends React.Component{
 					type={this.type} 
 					className={this.className} 
 					placeholder={this.placeholder} 
-					ref={this.autocomplete}
+					ref={this.refCall}
 		          	onChange={this.inputChange}
 		          	disabled={this.disabled}
 		          	readOnly={this.readonly}

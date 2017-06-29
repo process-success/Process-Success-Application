@@ -97,7 +97,10 @@
 			statusCode: ps.set_handlers(success,fail)
 		});
 	};
-
+	// args={};
+	// args.cmd="process_success.vineyards.doctype.api.get_vineyard_tasks_by_workorder";
+	// args.workorder="WO-0001";
+	// ps.call(args,function(){console.log("hello")});
 
 	// Turns things like s@gmail.com into escaped version to be used with j query selectors
 	ps.escapeAttr=function ( str ) {
