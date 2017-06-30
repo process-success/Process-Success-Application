@@ -1,1 +1,101 @@
-[]
+[
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:35:19.298771", 
+  "name": "Stylet Oil", 
+  "type": "Stylet Oil"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:35:27.826294", 
+  "name": "Admire Pro", 
+  "type": "Admire Pro"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:35:41.608519", 
+  "name": "Quintec", 
+  "type": "Quintec"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:35:50.466538", 
+  "name": "Pristine", 
+  "type": "Pristine"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:35:56.140231", 
+  "name": "Elevate", 
+  "type": "Elevate"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:01.543007", 
+  "name": "Movento", 
+  "type": "Movento"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:06.936112", 
+  "name": "Regalia", 
+  "type": "Regalia"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:21.017563", 
+  "name": "Serenade", 
+  "type": "Serenade"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:27.553374", 
+  "name": "Solubor", 
+  "type": "Solubor"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:33.539672", 
+  "name": "Sonata", 
+  "type": "Sonata"
+ }, 
+ {
+  "cost": 0, 
+  "description": null, 
+  "docstatus": 0, 
+  "doctype": "Spray Type", 
+  "modified": "2017-06-19 14:36:40.460443", 
+  "name": "Maxicrop", 
+  "type": "Maxicrop"
+ }
+]
