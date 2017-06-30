@@ -995,6 +995,7 @@ ps.apiTool=function(filters, options, onChange){
 		var args={};
 		args.cmd=this.api.update;
 		args.item=item;
+		console.log(args.doctype);
 		args.doctype=item.doctype;
 		if (ps.online){
 			ps.call(args,function(data){
@@ -1131,6 +1132,35 @@ ps.apiTool=function(filters, options, onChange){
 		}
 		if(typeof(this.onChange)!='undefined'){this.onChange();}
 	};
+	this.delete=function(item,callback){
+		//check if its already been removed
+		var name=item.name
+		var index=this.get_index_of_item(name);
+
+		if(index!=-1){
+			this.items.splice(index,1);
+		}
+		this.storage.remove(item.doctype,name);
+		this.setItems(this.items);
+
+		var args={};
+		args.cmd=this.api.remove;
+		args.name=name;
+		args.doctype=item.doctype;
+
+		if (ps.online){
+			ps.call(args,function(data){
+				ps.socket.socket.emit('remove_doc', {doctype:this.doctype, name:name});
+				if (typeof(callback)!= "undefined"){
+					callback(data.message);
+				}
+			}.bind(this));
+		}
+		else{
+			this.addToQue("remove", args);
+		}
+		if(typeof(this.onChange)!='undefined'){this.onChange();}
+	};
 
 	// EMMITS
 	ps.socket.socket.on('remove_'+this.doctype,function(name){
@@ -1239,7 +1269,7 @@ ps.apiSetup.workOrders={
 	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
 };
 ps.apiSetup.vineyardTasks={
-	doctype:['Pruning','Spraying'],
+	doctype:['Spraying']
 };
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();

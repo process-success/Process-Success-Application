@@ -14,7 +14,7 @@ ps.apiSetup.workOrders={
 	update:'process_success.time_tracking.doctype.work_order.work_order.update_workorder'
 };
 ps.apiSetup.vineyardTasks={
-	doctype:['Pruning','Spraying'],
+	doctype:['Spraying']
 };
 ps.initCurrentUser=function(){
 	var userinfo=ps.obj.init();

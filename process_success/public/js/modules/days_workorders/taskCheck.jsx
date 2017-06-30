@@ -2,7 +2,6 @@
 export default class TaskCheck extends React.Component{
 	constructor(props){
 		super(props);
-		console.log(this.props.checked);
 		this.taskChecked = this.taskChecked.bind(this);
 	}
 	taskChecked(e){
@@ -16,7 +15,7 @@ export default class TaskCheck extends React.Component{
 				<label className={checked}>
 					<input 
 						className="big-checkbox" 
-						onChange={this.taskChecked} 
+						onChange={function(){this.props.taskChecked(this.props.item, checked);}.bind(this)} 
 						type="checkbox" 
 						checked={this.props.checked} />
 					{this.props.lable}

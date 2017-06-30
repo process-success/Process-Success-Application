@@ -199,7 +199,7 @@ export default class WorkorderTask extends React.Component{
 					<div className="check_boxes">
 
 						{tasks}
-						<VineyardTasks workorder={this.props.workorder} />
+						<VineyardTasks workorder={this.props.workorder} vineyard={this.props.location}/>
 					</div>
 					<div>
 						{route}
@@ -212,6 +212,8 @@ export default class WorkorderTask extends React.Component{
 }
 
 
+
+
 export class VineyardTasks extends React.Component{
 	constructor(props){
 		super(props);
@@ -220,16 +222,23 @@ export class VineyardTasks extends React.Component{
 		this.taskChecked=this.taskChecked.bind(this);
 		this.taskChanged=this.taskChanged.bind(this);
 		this.editTask=this.editTask.bind(this);
+		this.getForm=this.getForm.bind(this);
 		this.modalId="task-form"+this.props.workorder;
 
 		this.tasksTool = new ps.apiTool({"work_order":this.props.workorder},ps.apiSetup.vineyardTasks,this.taskChanged);
 		this.state={
 			tasks:this.tasksTool.items,
-			formState: "taskType"
+			formState: "taskType",
+			formMode:"create",
+			editItem:null
 		};
 	}
 	modalNewTask(){
-		this.setState({formState: "taskType"});
+		this.setState({
+			formState:"taskType",
+			editItem:null,
+			formMode:"create"
+		});
 		$('#'+this.modalId).modal();
 	}
 	isChecked(value){
@@ -238,49 +247,41 @@ export class VineyardTasks extends React.Component{
   	taskChanged(){
   		this.setState({tasks:this.tasksTool.items});
   	}
-  	taskChecked(index,checked){
-  		//var wo_index=this.props.index;
-  		//this.props.onTaskChecked(wo_index,index,checked);
+  	taskChecked(item){
+  		item.complete=item.complete?0:1;
+  		this.tasksTool.update(item);
   	}
-  	editTask(){
-
+  	editTask(item){
+  		this.setState(
+  			{
+  				formState:item.doctype,
+  				editItem:item,
+  				formMode:"edit"
+  			});
+  		$('#'+this.modalId).modal();
   	}
-
   	renderTasks(){
   		var tasks=[];
   		if(this.state.tasks!==undefined&&this.state.tasks!==null){
 			tasks=[];
-			console.log(this.state.tasks);
 			this.state.tasks.map(function(item, index){
-				var checked=item.status?true:false;
+				//var checked=item.status?true:false;
 				tasks.push(
 					<TaskCheck 
-						key={index} 
-						index={index} 
-						lable={item.doctype} 
-						checked={item.complete} 
+						key={index}
+						index={index}
+						item={item}
+						lable={item.doctype}
+						checked={item.complete}
 						taskChecked={this.taskChecked}
-						editTask={function(e){ editTask(item.name)}}
+						editTask={function(e){ this.editTask(item)}.bind(this)}
 					/>);
 			}.bind(this))
 		}
 		return tasks;
   	}
-	render(){
-		var fieldsSpray=[		
-			{
-				field:"button",
-				type:"submit",
-				value:"Create Spraying Entry",
-				className:"btn-primary pull-right",
-				onClick:this.submit
-			}
-		]
-		var tasks=this.renderTasks();
-
-
-		var form={};
-		var formsObj={
+  	getForm(){
+  		var formsObj={
 			taskType:function(){
 				return(	
 				<Select
@@ -294,13 +295,42 @@ export class VineyardTasks extends React.Component{
 			)}.bind(this),
 			Spraying:function(item){
 				if(item==undefined){
-					return (						
-						<SprayForm
-							id={this.props.workorder}
-							createSprayEntry={function(){}}
-						/>
-					);
+					item=null;
 				}
+				return (						
+					<SprayForm
+						id={this.props.workorder}
+						mode={this.state.formMode}
+						item={item}
+						date={false}
+						vineyard={false}
+						itemChange={
+							function(copy){
+								this.setState({editItem:copy})
+							}.bind(this)
+						}
+						create={
+							function(copy){
+								copy.doctype="Spraying";
+								copy.work_order=this.props.workorder;
+								copy.vineyard=this.props.vineyard;
+								this.tasksTool.create(copy);
+								$('#'+this.modalId).modal('toggle');
+							}.bind(this)
+						}
+						edit={
+							function(copy){
+								this.tasksTool.update(copy);
+								$('#'+this.modalId).modal('toggle');
+							}.bind(this)
+						}
+						delete={
+							function(copy){
+								this.tasksTool.delete(copy);
+								$('#'+this.modalId).modal('toggle');
+							}.bind(this)}
+					/>
+				);
 
 			}.bind(this),
 			Pruning:function(item){
@@ -317,9 +347,20 @@ export class VineyardTasks extends React.Component{
 			}.bind(this)
 		};
 
-		form=formsObj[this.state.formState]();
-		// console.log(formsObj[this.state.formState]);
-		// console.log(form);
+		return formsObj[this.state.formState](this.state.editItem);
+  	}
+	render(){
+		var fieldsSpray=[		
+			{
+				field:"button",
+				type:"submit",
+				value:"Create Spraying Entry",
+				className:"btn-primary pull-right",
+				onClick:this.submit
+			}
+		]
+		var tasks=this.renderTasks();
+		var form=this.getForm();
 		var lable="Create New Task";
 		return(
 			<div className=''>
@@ -347,8 +388,5 @@ export class VineyardTasks extends React.Component{
 		);
 	}
 }
-
-
-
 
 

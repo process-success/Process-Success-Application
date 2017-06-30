@@ -139,8 +139,11 @@ export default class Form extends React.Component{
 			}.bind(this)
 		}
 		this.props.fields.map(function(item, index){
+			if($.isEmptyObject(item)){
 
-			form.push(formTypes[item.field](item,index));
+			}else{
+				form.push(formTypes[item.field](item,index));
+			}
 		}.bind(this));
 		//for(var x=0; x < this.props.feilds.length x++; )
 		var className = (this.props.className === undefined) ? "react-form": "form-horizontal react-form "+this.props.className;

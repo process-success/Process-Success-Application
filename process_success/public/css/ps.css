@@ -44,6 +44,10 @@
 body {
   font-size: 16px;
 }
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
 .dropdown-menu {
   font-size: 16px;
 }
@@ -56,6 +60,9 @@ footer {
 /* forms.less */
 .react-form div.awesomplete {
   width: 100%;
+}
+.react-form button {
+  margin: 0px 5px 0px 5px;
 }
 .react-form.short {
   max-width: 200px;

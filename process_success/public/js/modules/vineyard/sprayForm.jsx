@@ -4,74 +4,99 @@ import Form from '../utils/forms'
 export class SprayForm extends React.Component{
 	constructor(props){
 		super(props);
-
+		this.componentWillUpdate=this.componentWillUpdate.bind(this);
 		this.submit=this.submit.bind(this);
-		this.state={
-			vineyard:"",
-			season:"",
-			date:moment().format("MM/DD/YYYY"),
-			sprayType:"",
-			quantity:0
-		}
+		this.save=this.save.bind(this);
+		this.delete=this.delete.bind(this);
 	}
+	componentWillUpdate(){
 
+	}
 	submit(e){
-		if(this.state.vineyard=="" ||this.state.spray_type=="" || (moment(this.state.date,"MM/DD/YYYY").isValid())!==true){
-			console.log("not valid");
-		}else{
-			var copy=ps.clone(this.state);
-			$('#'+ this.props.id).modal('hide')
-			this.state={
+		//if(this.props.item.vineyard=="" ||this.props.item.spray_type=="" || (moment(this.props.item.date,"MM/DD/YYYY").isValid())!==true){
+		//	console.log("not valid");
+		//}else{
+			e.preventDefault();
+			this.props.create(this.props.item);
+		//}
+	}
+	save(e){
+		// if(this.props.item.vineyard=="" ||this.props.item.spray_type=="" || (moment(this.props.item.date,"MM/DD/YYYY").isValid())!==true){
+		// 	console.log("not valid");
+		// }else{
+			e.preventDefault();
+			this.props.edit(this.props.item);
+		// }
+	}
+	delete(e){
+		e.preventDefault();
+		this.props.delete(this.props.item);
+	}
+	render(){
+		var createHidden=(this.props.mode!="create")?" hidden":" nope";
+		var editHidden=(this.props.mode!="edit")?" hidden":" nope";
+		if(this.props.item==null){
+			var copy={
 				vineyard:"",
 				season:"",
 				date:moment().format("MM/DD/YYYY"),
-				spray_type:"",
+				sprayType:"",
 				quantity:0
 			}
-			this.setState(this.state);
-			console.log("IN SUBMIT");
-			this.props.createSprayEntry(copy);
+		}else{
+			var copy=ps.clone(this.props.item);
 		}
-	}
-	render(){
-		var fields=[		
-			{
-				field:"autoComplete",
-				onChange: function(e){
-					this.setState({vineyard:e.target.value})
-				}.bind(this),
-				value:this.state.vineyard,
+		
+		var date={
+				field:"date",
 				required:true,
-				lable:"Vineyard",
-				doctype:"Vineyard",
-				docvalue:"name"
-			},
+				onChange: function(e){
+					copy.date=e.target.value;
+					this.props.itemChange(copy);
+				}.bind(this),
+				value:copy.date,
+				lable:"Date"
+		};
+		var vineyard={
+			field:"autoComplete",
+			onChange: function(e){
+				copy.vineyard=e.target.value;
+				this.props.itemChange(copy);
+			}.bind(this),
+			value:copy.vineyard,
+			required:true,
+			lable:"Vineyard",
+			doctype:"Vineyard",
+			docvalue:"name"
+		}
+		if(this.props.vineyard==false){
+			vineyard={};
+		}
+		if(this.props.date==false){
+			date={};
+		}
+		var fields=[
+			vineyard,
 			{
 				field:"autoComplete",
 				onChange: function(e){
-					this.setState({season:e.target.value})
+					copy.season=e.target.value;
+					this.props.itemChange(copy);
 				}.bind(this),
-				value:this.state.season,
+				value:copy.season,
 				required:true,
 				lable:"Season",
 				doctype:"Season",
 				docvalue:"name"
 			},
-			{
-				field:"date",
-				required:true,
-				onChange: function(e){
-					this.setState({date:e.target.value});
-				}.bind(this),
-				value:this.state.date,
-				lable:"Date"
-			},
+			date,
 			{
 				field:"autoComplete",
 				onChange: function(e){ 
-					this.setState({spray_type:e.target.value})
+					copy.spray_type=e.target.value;
+					this.props.itemChange(copy);
 				}.bind(this),
-				value:this.state.spray_type,
+				value:copy.spray_type,
 				required:true,
 				lable:"Spray Type",
 				doctype:"Spray Type",
@@ -82,24 +107,39 @@ export class SprayForm extends React.Component{
 				className:"vineyard-input",
 				type:"number",
 				onChange: function(e){
-					this.setState({quantity:e.target.value})
+
+					copy.quantity=e.target.value;
+					this.props.itemChange(copy);
 				}.bind(this),
-				value:this.state.quantity,
+				value:copy.quantity,
 				lable:"quantity"
 			},
 			{
 				field:"button",
 				type:"submit",
 				value:"Create Spraying Entry",
-				className:"btn-primary pull-right",
+				className:"btn-primary pull-right" + createHidden,
 				onClick:this.submit
+			},
+			{
+				field:"button",
+				type:"submit",
+				value:"Save",
+				className:"btn-success pull-right"+ editHidden,
+				onClick:this.save
+			},
+			{
+				field:"button",
+				type:"submit",
+				value:"Delete",
+				className:"btn-danger pull-right"+ editHidden,
+				onClick:this.delete
 			}
 
 
 		]
 		return (
 			<div>		
-				NEW SPRAY
 				<Form
 					id={this.props.id}
 					type="horizontal"
@@ -110,6 +150,7 @@ export class SprayForm extends React.Component{
 		);
 	}
 }
+
 
 
 export class PruningForm extends React.Component{
