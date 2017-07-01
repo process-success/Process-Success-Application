@@ -1,6 +1,9 @@
 /* forms */
 /*jshint ignore:start */
 
+
+
+
 export default class Form extends React.Component{
 	constructor(props){
 		super(props);
@@ -14,23 +17,54 @@ export default class Form extends React.Component{
 		var form=[];
 		var formTypes={
 			select	: function(item,index){
-				var value = (item.value === undefined) ? "": item.value;
-				var lable = (item.lable === undefined) ? "": item.lable;
-				var options = (item.options === undefined) ? "": item.options;
-				var className = (item.className === undefined) ? "": item.className;
-				var readonly = (item.readonly === undefined) ? "": item.readonly;
-				var disabled = (item.disabled === undefined) ? "": item.disabled;
-				var required = (item.required === undefined) ? "": item.required;
+				var optinal=["value","lable","options","className","readonly","disable","require"];
+				var props=ps.initProps(optinal,item);
 				return (
 					<Select
 						key={this.props.id+index}
-						value={value}
-						className={className}
-						lable={lable}
-						options={options}
-						readonly={readonly}
-						disabled={disabled}
-						required={required}
+						value={props.value}
+						className={props.className}
+						lable={props.lable}
+						options={props.options}
+						readOnly={props.readonly}
+						disabled={props.disabled}
+						required={props.required}
+						inputChanged={function(e){item.onChange(e);}}
+					/>
+				);
+			}.bind(this),
+			check : function(item,index){
+				console.log("check");
+				var props=["value","lable","className","readonly","disable","require","value"];
+				props=ps.initProps(props,item);
+
+				return (
+					<Check
+						key={this.props.id+index}
+						value={props.value}
+						className={props.className}
+						lable={props.lable}
+						readOnly={props.readonly}
+						disabled={props.disabled}
+						required={props.required}
+						inputChanged={function(e){item.onChange(e);}}
+					/>
+				);
+			}.bind(this),
+
+			textarea : function(item,index){
+				var props=["value","lable","className","readonly","disable","require","value"];
+				props=ps.initProps(props,item);
+
+				return (
+					<Textarea
+						key={this.props.id+index}
+						value={props.value}
+						className={props.className}
+						lable={props.lable}
+						readOnly={props.readonly}
+						disabled={props.disabled}
+						required={props.required}
 						inputChanged={function(e){item.onChange(e);}}
 					/>
 				);
@@ -67,9 +101,6 @@ export default class Form extends React.Component{
     			);
 			}.bind(this),
 			radio	: function(item,index){
-				return (<div></div>);
-			}.bind(this),
-			textarea: function(item,index){
 				return (<div></div>);
 			}.bind(this),
 			header: function(item,index){
@@ -142,6 +173,8 @@ export default class Form extends React.Component{
 			if($.isEmptyObject(item)){
 
 			}else{
+				console.log(item.field);
+				console.log(index);
 				form.push(formTypes[item.field](item,index));
 			}
 		}.bind(this));
@@ -292,6 +325,114 @@ export class Input extends React.Component{
 		);
 	}
 }
+
+export class Check extends React.Component{
+	constructor(props){
+		super(props);
+		this.inputChange=this.inputChange.bind(this);
+
+	}
+	inputChange(e){
+		this.props.inputChanged(e);
+	}
+	render(){
+		this.value = (this.props.value === undefined) ? 0 : this.props.value;
+		this.placeholder = (this.props.placeholder === undefined) ? "": this.props.placeholder;
+		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
+		this.className= (this.props.className === undefined) ? "form-check-input": "form-check-input " +this.props.className;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
+		
+		var output="";
+		var input=( 
+			<input 
+				type="checkbox" 
+				className={this.className} 
+				value={this.value}
+				onChange={this.props.inputChanged}
+				disabled={this.disabled}
+	          	readOnly={this.readonly}
+	          	required={this.required}
+			/>
+		);
+
+		if (this.props.lable !== undefined || this.props.lable ==""){
+			output = (
+				<div className="checkbox">
+		    		<label className="control-label">
+		      			{input}{this.props.lable}
+		      		</label>
+		  		</div>
+		  	);
+		}
+		else{
+			output = (
+				<div className="checkbox">
+		      		{input}
+		  		</div>
+		  	);
+		}
+		return(
+			<div>
+				{output}
+			</div>
+		);
+	}
+}
+export class Textarea extends React.Component{
+	constructor(props){
+		super(props);
+		this.inputChange=this.inputChange.bind(this);
+
+	}
+	inputChange(e){
+		this.props.inputChanged(e);
+	}
+	render(){
+		this.value = (this.props.value === undefined) ? 0 : this.props.value;
+		this.placeholder = (this.props.placeholder === undefined) ? "": this.props.placeholder;
+		this.lable = (this.props.lable === undefined) ? "": this.props.lable;
+		this.className= (this.props.className === undefined) ? "form-control": "form-control " +this.props.className;
+		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
+		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
+		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
+		this.rows = (this.props.rows === undefined||this.props.rows=="") ? 3: this.props.rows;
+		var output="";
+		var input=( 
+			<textarea 
+				className={this.className} 
+				value={this.value}
+				onChange={this.props.inputChanged}
+				rows={this.rows}
+				disabled={this.disabled}
+	          	readOnly={this.readonly}
+	          	required={this.required}
+			/>
+		);
+
+		if (this.props.lable !== undefined || this.props.lable ==""){
+			output = (
+				<div>
+		    		<label className="control-label">
+		      			{this.props.lable}</label>{input}
+		  		</div>
+		  	);
+		}
+		else{
+			output = (
+				<div className="">
+		      		{input}
+		  		</div>
+		  	);
+		}
+		return(
+			<div>
+				{output}
+			</div>
+		);
+	}
+}
 export class DateInput extends React.Component{
 	constructor(props){
 		super(props);
@@ -388,7 +529,13 @@ export class AwesompleteInput extends React.Component{
 		this._isMounted=false;
 		var args={};
 		var options={doctype:this.props.doctype};
-		this.listTool = new ps.apiTool({}, options ,this.docChanged);
+		var filter={};
+		if (this.props.filter==undefined || this.props.filter==null){
+		
+		}else{
+			filter= this.props.filter;
+		}
+		this.listTool = new ps.apiTool(filter, options ,this.docChanged);
 		if (this.listTool.items===undefined ||this.listTool.items=== 0 ||this.listTool.items===null ){
 		}else{
 			this.state.list=this.listTool.items;
@@ -464,7 +611,18 @@ export class AwesompleteInput extends React.Component{
 			'awesomplete-selectcomplete',
 				this.inputChange
 		);
-
+		$(input).click( function() {
+			if (this.aw.ul.childNodes.length === 0) {
+				this.aw.minChars = 0;
+				this.aw.evaluate();
+			}
+			else if (this.aw.ul.hasAttribute('hidden')) {
+				this.aw.open();
+			}
+			else {
+				this.aw.close();
+			}
+		}.bind(this));
 		this.aw.list=this.itemList;
 		$(document).bind('listLoad' + this.props.doctype.replace(" ",""),function(){
 			this.aw.list=this.itemlist;

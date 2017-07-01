@@ -157,6 +157,13 @@
 	    }
 	    return copy;
 	};
+	ps.initProps=function(props,item){
+		var returnProp={};
+		for(var x=0; x < props.length; x++){
+			returnProp[props[x]]=(typeof(item[props[x]])=="undefined")? "" :item[props[x]];
+		}
+		return returnProp;
+	}
 
 })();
 

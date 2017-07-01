@@ -27,8 +27,7 @@ class CreateWorkorder extends React.Component{
 			{
 				field:"input",
 				onChange: this.someFunction,
-				lable:"test",
-				key:"type"
+				lable:"test"
 			},
 			{
 				field:"lable",
@@ -37,20 +36,17 @@ class CreateWorkorder extends React.Component{
 			{
 				field:"input",
 				onChange: this.someFunction,
-				lable:"test2",
-				key:"other"
+				lable:"test2"
 			},
 			{
 				field:"date",
 				onChange: this.someFunction,
-				lable:"Date",
-				key:"other3"
+				lable:"Date"
 			},
 			{
 				field:"select",
 				onChange: this.someFunction,
 				lable:"test2",
-				key:"groupsSelect",
 				options:[
 					{ 
 						group: "thing",
@@ -74,7 +70,6 @@ class CreateWorkorder extends React.Component{
 				field:"select",
 				onChange: this.someFunction,
 				lable:"test2",
-				key:"normalSelect",
 				options:[
 					"one",
 					"two",
@@ -82,12 +77,23 @@ class CreateWorkorder extends React.Component{
 				]
 			},
 			{
+				field:"check",
+				className:"big-checkbox",
+				onChange: this.someFunction,
+				lable:"this is a test"
+			},
+			{
+				lable:"Test Text Area",
+				field:"textarea",
+				className:"",
+				onChange: this.someFunction
+			},
+			{
 				field:"autoComplete",
 				onChange: this.someFunction,
 				lable:"Vineyard",
 				doctype:"Vineyard",
-				docvalue:"name",
-				key:"autoComplete"
+				docvalue:"name"
 			},
 			{
 				field:"autoComplete",
@@ -95,8 +101,7 @@ class CreateWorkorder extends React.Component{
 				lable:"Customer",
 				doctype:"Customer",
 				doclable:"full_name",
-				docvalue:"name",
-				key:"customer"
+				docvalue:"name"
 			}
 		]
 		return(
@@ -104,6 +109,7 @@ class CreateWorkorder extends React.Component{
 			<Form
 				type="horizontal"
 				fields={fields}
+				id="thing"
 			>
 
 			</Form>
@@ -112,16 +118,23 @@ class CreateWorkorder extends React.Component{
 	}
 }
 
-
-
 const app2= $('#app2')[0];
 (function(){
 	var filter={};
 	frappe.ready(function(){
-		ReactDOM.render( <SprayTable filter={filter} /> , app2 );
+		ReactDOM.render( <CreateWorkorder /> , app2 );
 	})
 
 })();
+
+// const app2= $('#app2')[0];
+// (function(){
+// 	var filter={};
+// 	frappe.ready(function(){
+// 		ReactDOM.render( <SprayTable filter={filter} /> , app2 );
+// 	})
+
+// })();
 
 
 

@@ -35,6 +35,7 @@ export class SprayForm extends React.Component{
 	render(){
 		var createHidden=(this.props.mode!="create")?" hidden":" nope";
 		var editHidden=(this.props.mode!="edit")?" hidden":" nope";
+		
 		if(this.props.item==null){
 			var copy={
 				vineyard:"",
@@ -46,37 +47,62 @@ export class SprayForm extends React.Component{
 		}else{
 			var copy=ps.clone(this.props.item);
 		}
-		
-		var date={
-				field:"date",
-				required:true,
+
+		console.log(this.props.item);
+		console.log(copy);
+		var formElements={
+			date:[{},
+			{
+					field:"date",
+					required:true,
+					onChange: function(e){
+						copy.date=e.target.value;
+						this.props.itemChange(copy);
+					}.bind(this),
+					value:copy.date,
+					lable:"Date"
+			}],
+			vineyard:[{},{
+				field:"autoComplete",
 				onChange: function(e){
-					copy.date=e.target.value;
+					copy.vineyard=e.target.value;
 					this.props.itemChange(copy);
 				}.bind(this),
-				value:copy.date,
-				lable:"Date"
-		};
-		var vineyard={
-			field:"autoComplete",
-			onChange: function(e){
-				copy.vineyard=e.target.value;
-				this.props.itemChange(copy);
-			}.bind(this),
-			value:copy.vineyard,
-			required:true,
-			lable:"Vineyard",
-			doctype:"Vineyard",
-			docvalue:"name"
+				value:copy.vineyard,
+				required:true,
+				lable:"Vineyard",
+				doctype:"Vineyard",
+				docvalue:"name"
+			}],
+			field:[{},{
+				field:"autoComplete",
+				onChange: function(e){
+					copy.field=e.target.value;
+					this.props.itemChange(copy);
+				}.bind(this),
+				value:copy.field,
+				required:true,
+				lable:"Vineyard",
+				doctype:"Vineyard Field",
+				filter:{vineyard:copy.vineyard},
+				docvalue:"name"
+			}],
+			workorder:[{},{
+				field:"autoComplete",
+				onChange: function(e){
+					copy.work_order=e.target.value;
+					this.props.itemChange(copy);
+				}.bind(this),
+				value:copy.work_order,
+				required:true,
+				lable:"Vineyard",
+				doctype:"work_order",
+				docvalue:"name"
+			}]
 		}
-		if(this.props.vineyard==false){
-			vineyard={};
-		}
-		if(this.props.date==false){
-			date={};
-		}
+
 		var fields=[
-			vineyard,
+			formElements.vineyard[this.props.vineyard],
 			{
 				field:"autoComplete",
 				onChange: function(e){
@@ -89,7 +115,7 @@ export class SprayForm extends React.Component{
 				doctype:"Season",
 				docvalue:"name"
 			},
-			date,
+			formElements.date[this.props.vineyard],
 			{
 				field:"autoComplete",
 				onChange: function(e){ 
@@ -102,12 +128,12 @@ export class SprayForm extends React.Component{
 				doctype:"Spray Type",
 				docvalue:"name"
 			},
+
 			{
 				field:"input",
 				className:"vineyard-input",
 				type:"number",
 				onChange: function(e){
-
 					copy.quantity=e.target.value;
 					this.props.itemChange(copy);
 				}.bind(this),
@@ -150,82 +176,62 @@ export class SprayForm extends React.Component{
 		);
 	}
 }
+			// {
+			// 	field:"select",
+			// 	onChange: function(e){ 
+			// 		copy.type=e.target.value;
+			// 		this.props.itemChange(copy);
+			// 	}.bind(this),
+			// 	lable:"Style",
+			// 	options:[
+			// 		"Cane",
+			// 		"Hybrid",
+			// 		"Head Train",
+			// 		"Bilateral Train",
+			// 		"Two Bud",
+			// 		"Spur",
+			// 		"Trunk"
+			// 	]
+			// },
+			// {
+			// 	field:"check",
+			// 	className:"big-checkbox",
+			// 	onChange: function(e){ 
+			// 		copy.b_lock=e.target.value;
+			// 		this.props.itemChange(copy);
+			// 	}.bind(this),
+			// 	lable:"B-Lock"
+			// },
+			// {
+			// 	field:"check",
+			// 	className:"big-checkbox",
+			// 	onChange: function(e){ 
+			// 		copy.removed=e.target.value;
+			// 		this.props.itemChange(copy);
+			// 	}.bind(this),
+			// 	lable:"Pruning Removed"
+			// },
+			// {
+			// 	field:"check",
+			// 	className:"big-checkbox",
+			// 	onChange: function(e){ 
+			// 		copy.tap_removed=e.target.value;
+			// 		this.props.itemChange(copy);
+			// 	}.bind(this),
+			// 	lable:"Tap Removed"
+			// },
+			// {
+			// 	field:"check",
+			// 	className:"big-checkbox",
+			// 	onChange: function(e){ 
+			// 		copy.pre_prune=e.target.value;
+			// 		this.props.itemChange(copy);
+			// 	}.bind(this),
+			// 	lable:"Pre Prune"
+			// },
 
 
 
-export class PruningForm extends React.Component{
-	constructor(props){
-		super(props);
-
-		this.submit=this.submit.bind(this);
-		this.state={
-			vineyard:"",
-			season:"",
-			date:moment().format("MM/DD/YYYY"),
-			sprayType:"",
-			quantity:0
-		}
-	}
-
-	submit(e){
-		if(this.state.vineyard=="" ||this.state.spray_type=="" || (moment(this.state.date,"MM/DD/YYYY").isValid())!==true){
-			console.log("not valid");
-		}else{
-			var copy=ps.clone(this.state);
-			$('#'+ this.props.id).modal('hide')
-			this.state={
-				vineyard:"",
-				season:"",
-				date:moment().format("MM/DD/YYYY"),
-				spray_type:"",
-				quantity:0
-			}
-			this.setState(this.state);
-			console.log("IN SUBMIT");
-			this.props.createSprayEntry(copy);
-		}
-	}
-	render(){
-		var fields=[		
-			{
-				field:"date",
-				required:true,
-				onChange: function(e){
-					this.setState({date:e.target.value});
-				}.bind(this),
-				value:this.state.date,
-				lable:"Date"
-			},
-			{
-				field:"input",
-				className:"vineyard-input",
-				type:"number",
-				onChange: function(e){
-					this.setState({quantity:e.target.value})
-				}.bind(this),
-				value:this.state.quantity,
-				lable:"quantity"
-			},
-			{
-				field:"button",
-				type:"submit",
-				value:"Create Spraying Entry",
-				className:"btn-primary pull-right",
-				onClick:this.submit
-			}
 
 
-		]
-		return (
-			<div>		
-				NEW PRUNNING
-				<Form
-					id="CreateSprayingEntryForm"
-					type="horizontal"
-					fields={fields}
 
-				/>
-			</div>
-		);
-	}
-}

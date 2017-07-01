@@ -1,6 +1,7 @@
 .thing {
   border: solid red thin;
 }
+/* Awesomplete */
 .awesomplete > ul > li[aria-selected="true"] {
   background: #3d6d8f;
   color: white;
@@ -11,8 +12,8 @@
 .awesomplete > ul {
   top: 35px;
 }
-.awesomplete ul {
-  z-index: 10;
+.awesomplete > ul {
+  z-index: 6 !important;
 }
 .awesomplete .input {
   z-index: 5;
