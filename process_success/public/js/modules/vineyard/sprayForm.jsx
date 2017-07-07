@@ -161,8 +161,6 @@ export class SprayForm extends React.Component{
 				className:"btn-danger pull-right"+ editHidden,
 				onClick:this.delete
 			}
-
-
 		]
 		return (
 			<div>		
@@ -176,62 +174,6 @@ export class SprayForm extends React.Component{
 		);
 	}
 }
-			// {
-			// 	field:"select",
-			// 	onChange: function(e){ 
-			// 		copy.type=e.target.value;
-			// 		this.props.itemChange(copy);
-			// 	}.bind(this),
-			// 	lable:"Style",
-			// 	options:[
-			// 		"Cane",
-			// 		"Hybrid",
-			// 		"Head Train",
-			// 		"Bilateral Train",
-			// 		"Two Bud",
-			// 		"Spur",
-			// 		"Trunk"
-			// 	]
-			// },
-			// {
-			// 	field:"check",
-			// 	className:"big-checkbox",
-			// 	onChange: function(e){ 
-			// 		copy.b_lock=e.target.value;
-			// 		this.props.itemChange(copy);
-			// 	}.bind(this),
-			// 	lable:"B-Lock"
-			// },
-			// {
-			// 	field:"check",
-			// 	className:"big-checkbox",
-			// 	onChange: function(e){ 
-			// 		copy.removed=e.target.value;
-			// 		this.props.itemChange(copy);
-			// 	}.bind(this),
-			// 	lable:"Pruning Removed"
-			// },
-			// {
-			// 	field:"check",
-			// 	className:"big-checkbox",
-			// 	onChange: function(e){ 
-			// 		copy.tap_removed=e.target.value;
-			// 		this.props.itemChange(copy);
-			// 	}.bind(this),
-			// 	lable:"Tap Removed"
-			// },
-			// {
-			// 	field:"check",
-			// 	className:"big-checkbox",
-			// 	onChange: function(e){ 
-			// 		copy.pre_prune=e.target.value;
-			// 		this.props.itemChange(copy);
-			// 	}.bind(this),
-			// 	lable:"Pre Prune"
-			// },
-
-
-
 
 
 

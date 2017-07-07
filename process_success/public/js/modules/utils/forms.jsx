@@ -34,7 +34,6 @@ export default class Form extends React.Component{
 				);
 			}.bind(this),
 			check : function(item,index){
-				console.log("check");
 				var props=["value","lable","className","readonly","disable","require","value"];
 				props=ps.initProps(props,item);
 
@@ -173,8 +172,6 @@ export default class Form extends React.Component{
 			if($.isEmptyObject(item)){
 
 			}else{
-				console.log(item.field);
-				console.log(index);
 				form.push(formTypes[item.field](item,index));
 			}
 		}.bind(this));
@@ -198,6 +195,7 @@ export class Select extends React.Component{
 	constructor(props){
 		super(props);
 		this.inputChange=this.inputChange.bind(this);
+		this.value = (this.props.value === undefined) ? "": this.props.value;
 
 	}
 	inputChange(e){
@@ -219,13 +217,13 @@ export class Select extends React.Component{
 			var group=[];
 			if(item.group !== undefined){
 				item.options.map(function(innerItem,index){
-					group.push( <option key={item.group+index}> {innerItem} </option>)
+					group.push( <option key={item.group+index} value={innerItem}> {innerItem} </option>)
 				})
 				options.push(<optgroup key={item.group} label={item.group}> {group}</optgroup>);
 
 			}
 			else{
-				options.push( <option key={index}> {item} </option>)
+				options.push( <option key={index} value={item}> {item} </option>)
 			}
 
 			
@@ -331,8 +329,10 @@ export class Check extends React.Component{
 		super(props);
 		this.inputChange=this.inputChange.bind(this);
 
+
 	}
 	inputChange(e){
+
 		this.props.inputChanged(e);
 	}
 	render(){
@@ -349,7 +349,8 @@ export class Check extends React.Component{
 			<input 
 				type="checkbox" 
 				className={this.className} 
-				value={this.value}
+				checked={this.value}
+				
 				onChange={this.props.inputChanged}
 				disabled={this.disabled}
 	          	readOnly={this.readonly}

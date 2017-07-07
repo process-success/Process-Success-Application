@@ -2,6 +2,7 @@
 import Form from '../../public/js/modules/utils/forms'
 import Acordian from '../../public/js/modules/utils/acordian'
 import AcordianContent from '../../public/js/modules/utils/acordianContent'
+import DoctypeForm from '../../public/js/modules/utils/doctypeForm'
 import SprayTable from '../../public/js/modules/vineyard/sprayTable'
 
 
@@ -70,6 +71,7 @@ class CreateWorkorder extends React.Component{
 				field:"select",
 				onChange: this.someFunction,
 				lable:"test2",
+				value:"two",
 				options:[
 					"one",
 					"two",
@@ -79,7 +81,7 @@ class CreateWorkorder extends React.Component{
 			{
 				field:"check",
 				className:"big-checkbox",
-				onChange: this.someFunction,
+				onChange: function(e){console.log(e.target.checked)},
 				lable:"this is a test"
 			},
 			{
@@ -118,11 +120,45 @@ class CreateWorkorder extends React.Component{
 	}
 }
 
+class TestBro extends React.Component{
+	constructor(props){
+		super(props);
+		this.taskChanged=this.taskChanged.bind(this);
+		this.sprayingFeilds = new ps.apiTool({name:'Spraying'},{doctype:'DocType'},this.taskChanged);
+	}
+	taskChanged(){
+		console.log(this.sprayingFeilds.items);
+  	}
+	someFunction(){
+	}
+	render(){
+		return(
+			<div>
+				test
+			</div>
+		);
+	}
+}
+
 const app2= $('#app2')[0];
 (function(){
 	var filter={};
 	frappe.ready(function(){
-		ReactDOM.render( <CreateWorkorder /> , app2 );
+		ReactDOM.render( 
+			<div><DoctypeForm 
+				id="createPrunEntry" 
+				doctype="Pruning"
+				season={{active:1}}
+				note={{
+					active:1,
+					type:"textarea" 
+				}}
+				type={{active:1}}
+				b_lock={{active:1}}
+				removed={{active:1}}
+				pre_prune={{active:1}}
+				tap_removed={{active:1}}
+			/> <CreateWorkorder /></div>	, app2 );
 	})
 
 })();

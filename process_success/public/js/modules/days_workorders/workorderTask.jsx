@@ -5,6 +5,7 @@ import CreateIssue from './createIssue'
 import Modal from '../utils/modal'
 import {Form, Select} from '../utils/forms'
 import {SprayForm,PruningForm} from '../vineyard/sprayForm'
+import DoctypeForm from '../utils/doctypeForm'
 
 
 export default class WorkorderTask extends React.Component{
@@ -223,8 +224,16 @@ export class VineyardTasks extends React.Component{
 		this.taskChanged=this.taskChanged.bind(this);
 		this.editTask=this.editTask.bind(this);
 		this.getForm=this.getForm.bind(this);
-		this.modalId="task-form"+this.props.workorder;
 
+		this.delete=this.delete.bind(this);
+		this.close=this.close.bind(this);
+		this.update=this.update.bind(this);
+		this.create=this.create.bind(this);
+		this.onChange=this.onChange.bind(this);
+		
+
+		this.modalId="task-form"+this.props.workorder;
+		
 		this.tasksTool = new ps.apiTool({"work_order":this.props.workorder},ps.apiSetup.vineyardTasks,this.taskChanged);
 		this.state={
 			tasks:this.tasksTool.items,
@@ -252,9 +261,10 @@ export class VineyardTasks extends React.Component{
   		this.tasksTool.update(item);
   	}
   	editTask(item){
+  		console.log("edit task called");
   		this.setState(
   			{
-  				formState:item.doctype,
+  				formState:item.doctype.replace(/\s/g, ''),
   				editItem:item,
   				formMode:"edit"
   			});
@@ -280,6 +290,29 @@ export class VineyardTasks extends React.Component{
 		}
 		return tasks;
   	}
+  	delete(copy){
+  		this.tasksTool.delete(copy);
+		$('#'+this.modalId).modal('toggle');
+	}
+  	close(e){
+  		console.log("close");
+  		e.preventDefault();
+  		$('#'+this.modalId).modal('toggle');
+  	}
+  	update(copy){
+  		this.tasksTool.update(copy);
+		$('#'+this.modalId).modal('toggle');
+  	}
+  	create(item,doctype){
+		item.work_order=this.props.workorder;
+		item.vineyard=this.props.vineyard;
+		item.doctype=doctype;
+		this.tasksTool.create(item);
+		$('#'+this.modalId).modal('toggle');
+  	}
+  	onChange(copy){
+  		this.setState({editItem:copy})
+  	}
   	getForm(){
   		var formsObj={
 			taskType:function(){
@@ -289,64 +322,161 @@ export class VineyardTasks extends React.Component{
 					lable="Task Type"
 					options={[" "].concat(ps.apiSetup.vineyardTasks.doctype)}
 					inputChanged={
-						function(e){this.setState({formState:e.target.value})}.bind(this)
+						function(e){this.setState({formState:  e.target.value.replace(/\s/g, '')  })}.bind(this)
 					}
 				/>
 			)}.bind(this),
 			Spraying:function(item){
-				if(item==undefined){
-					item=null;
-				}
-				return (						
-					<SprayForm
-						id={this.props.workorder}
+				return (					
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
 						mode={this.state.formMode}
 						item={item}
-						date={false}
-						vineyard={false}
-						itemChange={
-							function(copy){
-								this.setState({editItem:copy})
-							}.bind(this)
-						}
-						create={
-							function(copy){
-								copy.doctype="Spraying";
-								copy.work_order=this.props.workorder;
-								copy.vineyard=this.props.vineyard;
-								this.tasksTool.create(copy);
-								$('#'+this.modalId).modal('toggle');
-							}.bind(this)
-						}
-						edit={
-							function(copy){
-								this.tasksTool.update(copy);
-								$('#'+this.modalId).modal('toggle');
-							}.bind(this)
-						}
-						delete={
-							function(copy){
-								this.tasksTool.delete(copy);
-								$('#'+this.modalId).modal('toggle');
-							}.bind(this)}
-					/>
+						id={this.props.workorder}
+
+						doctype="Spraying"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+						spray_type={{active:1}}
+
+					/> 		
+				);
+
+			}.bind(this),
+			Harvest:function(item){
+				return (					
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
+						mode={this.state.formMode}
+						item={item}
+						id={this.props.workorder}
+
+						doctype="Harvest"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+						pounds={{active:1}}
+						post_harvest_water={{active:1}}
+
+					/> 		
+				);
+
+			}.bind(this),
+			BirdNets:function(item){
+				return (					
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
+						mode={this.state.formMode}
+						item={item}
+						id={this.props.workorder}
+
+						doctype="Bird Nets"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+
+					/> 		
+				);
+
+			}.bind(this),
+			Watering:function(item){
+				return (					
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
+						mode={this.state.formMode}
+						item={item}
+						id={this.props.workorder}
+
+						doctype="Watering"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+						duration={{active:1}}
+
+					/> 		
+				);
+
+			}.bind(this),
+			Canopy:function(item){
+				return (					
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
+						mode={this.state.formMode}
+						item={item}
+						id={this.props.workorder}
+
+						doctype="Canopy"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+						type={{active:1}}
+
+					/> 		
 				);
 
 			}.bind(this),
 			Pruning:function(item){
+				console.log("MODE", this.state.formMode);
+				return (
+					<DoctypeForm 
+						close={this.close}
+						itemChange={this.onChange}
+						create={this.create}
+						edit={this.update}
+						delete={this.delete}
+						mode={this.state.formMode}
+						item={item}
+						id={this.props.workorder}
 
-				if(item===undefined){
-					return (						
-						<PruningForm
-							id="createSprayEntry"
-							createSprayEntry={function(){}}
-						/>
-					);
-				}
+						doctype="Pruning"
+						season={{active:1}}
+						note={{
+							active:1,
+							type:"textarea" 
+						}}
+						type={{active:1}}
+						b_lock={{active:1}}
+						removed={{active:1}}
+						pre_prune={{active:1}}
+						tap_removed={{active:1}}
+
+					/> 		
+				);
 
 			}.bind(this)
 		};
-
+		console.log("get form called");
 		return formsObj[this.state.formState](this.state.editItem);
   	}
 	render(){

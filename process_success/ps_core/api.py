@@ -9,7 +9,6 @@ import json
 import unicodedata
 
 
-
 @frappe.whitelist()
 def get_work_orders(start, end):
 	"""frappe.db.sql("query")"""
@@ -333,6 +332,15 @@ def clear_test_db():
 		doc=frappe.get_doc("Testing",name)
 		doc.delete()
 	return "success"
+
+# @frappe.whitelist()
+# def get_doctype_fields(doctype, name):
+# 	names=check=frappe.get_all("Testing",fields =["name"])
+
+# 	for name in names:
+# 		doc=frappe.get_doc("Testing",name)
+# 		doc.delete()
+# 	return "success"
 
 
 
