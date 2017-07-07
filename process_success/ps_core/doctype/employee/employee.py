@@ -28,37 +28,48 @@ class Employee(WebsiteGenerator):
         # if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
 
     def autoname(self):
-        self.name = self.user
+        self.name = self.first_name + " " + self.last_name
         self.set_path()
 
     def validate(self):
         formatted_full_name = self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
-        user = frappe.get_doc("User", self.user)
         save_flag = 0
         self.full_name = self.first_name + " " + self.last_name
-
+        #Setup Email
+        full_name = self.first_name + " " + self.last_name
+        if not self.user:
+            if self.email:
+                user = create_user(self.email, self.first_name, self.last_name, )
+                if user == 0:
+                    frappe.throw("User already exists")
+                self.user = user.name
+                self._update_module_access()
         # update user
-        if not user.first_name == self.first_name:
-            user.first_name = self.first_name
-            save_flag = 1
-        if not user.last_name == self.last_name:
-            user.last_name == self.last_name
-            save_flag = 1
-        if save_flag:
-            user.full_name = self.full_name
-            user.save()
-            self.set_path()
+        if self.user:
+            user = frappe.get_doc("User", self.user)
+            if not user.first_name == self.first_name:
+                user.first_name = self.first_name
+                save_flag = 1
+            if not user.last_name == self.last_name:
+                user.last_name == self.last_name
+                save_flag = 1
+            if save_flag:
+                user.full_name = self.full_name
+                user.save()
+        self.set_path()
+        ## default the pending if no user
+        if self.status=="Approved" or self.status=="Disabled":
+            if not self.user:
+                self.status="Pending"
+
+        if self.user:
+            self.handlePerms()
 
     def before_insert(self):
-        full_name = self.first_name + " " + self.last_name
+        self.set_path()
 
-        if not self.user:
-            user = create_user(self.email, self.first_name, self.last_name, )
-            if user == 0:
-                frappe.throw("User already exists")
-            self.user = user.name
-
-    def on_update(self):
+    def handlePerms(self):
+        print("-------------PERMS----------------")
         if self.status == "Approved":
             module_blocker = ModuleBlocker()
             if self.user_type == "Employee":
@@ -66,9 +77,9 @@ class Employee(WebsiteGenerator):
                 self._update_roles(["Employee"])
                 self._update_module_access()
             if self.user_type == "Crew Lead":
-               self._update_roles([])
-               self._update_roles(["Employee", "Crew Lead"])
-               self._update_module_access()
+                self._update_roles([])
+                self._update_roles(["Employee", "Crew Lead"])
+                self._update_module_access()
             if self.user_type == "Manager":
                 self._update_roles([])
                 self._update_roles(["Employee", "Manager"])
@@ -81,7 +92,7 @@ class Employee(WebsiteGenerator):
             user.enabled = False
             user.save(ignore_permissions=True)
 
-    def on_trash(self):
+    def after_delete(self):
         frappe.delete_doc("User", self.user)
 
     def _update_roles(self, list_of_roles=[]):

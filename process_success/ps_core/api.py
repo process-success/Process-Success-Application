@@ -114,10 +114,8 @@ def create_user(email, first_name, last_name, password=0):
 		else:
 			return 0
 	else:
-		print(password)
 		if not password:
 			password = random_string(10);
-		print(password)
 		user = frappe.get_doc({
 			"doctype":"User",
 			"email": email,
