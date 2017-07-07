@@ -288,6 +288,7 @@
 					if(called <= 1){
 						tool.update({
 							name:permName,
+							doctype:"Testing",
 							first_name:"newguy",
 							last_name: "gantz",
 							team: "yellow",
@@ -318,6 +319,7 @@
 
 						tool.update({
 							name:permName,
+							doctype:"Testing",
 							first_name:"newguy",
 							last_name: "gantz",
 							team: "yellow",
@@ -356,6 +358,7 @@
 						tool.update({
 							name:permName,
 							first_name:"newguy",
+							doctype:"Testing",
 							last_name: "gantz",
 							team: "yellow",
 							skill:"Expert"
@@ -399,6 +402,7 @@
 							name:permName,
 							first_name:"newguy",
 							last_name: "gantz",
+							doctype:"Testing",
 							team: "yellow",
 							skill:"Expert"
 						},function(){});

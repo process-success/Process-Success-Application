@@ -10,13 +10,15 @@ export default class DoctypeForm extends React.Component{
 		this.submit=this.submit.bind(this);
 		this.save=this.save.bind(this);
 		this.delete=this.delete.bind(this);
-
+		this.doctypeTool = new ps.apiTool({name:this.props.doctype},{doctype:'DocType'},this.doctypeToolUpdate,this.forceUpdate);
+		this.state={items:this.doctypeTool.items};
 		//this.doctypeTool = new ps.apiTool({name:this.props.doctype},{doctype:'DocType'},this.doctypeToolUpdate);
 	}
 	componentWillUpdate(){
 
 	}
 	doctypeToolUpdate(){
+		this.setState({items:this.doctypeTool.items})
 	}
 	submit(e){
 		//FORM VALIDATION 
@@ -39,11 +41,10 @@ export default class DoctypeForm extends React.Component{
 		e.preventDefault();
 		this.props.delete(this.props.item);
 	}
-	render(){
-		this.doctypeTool = new ps.apiTool({name:this.props.doctype},{doctype:'DocType'},this.doctypeToolUpdate);
+	createFormJson(){
 		var createHidden=(this.props.mode!="create")?" hidden":" nope";
 		var editHidden=(this.props.mode!="edit")?" hidden":" nope";
-		var fieldsJson=this.doctypeTool.items[0].fields;
+		var fieldsJson=this.state.items[0].fields;
 		var fields=[];
 		var fieldObject={
 			Link: function(item){
@@ -200,34 +201,25 @@ export default class DoctypeForm extends React.Component{
 				className:"btn-success pull-right "+ editHidden,
 				onClick:this.save
 			});
-
-
-		// fieldname
-		// fieldtype
-		// label
-
-		var createHidden=(this.props.mode!="create")?" hidden":" nope";
-		var editHidden=(this.props.mode!="edit")?" hidden":" nope";
-		
-		if(this.props.item==null){
-			var copy={
-				vineyard:"",
-				season:"",
-				date:moment().format("MM/DD/YYYY"),
-				sprayType:"",
-				quantity:0
-			}
-		}else{
-			var copy=ps.clone(this.props.item);
-		}
-
-		return (
-			<div>		
+		return fields;
+	}
+	render(){
+		var output={};
+		if(this.state.items!==null){
+			var fields=this.createFormJson();
+			var output = (				
 				<Form
 					id={this.props.id}
 					type="horizontal"
 					fields={fields}
-				/>
+				/>);
+		}else{ 
+			output = (<div> Loading... </div>);
+		}
+
+		return (
+			<div>		
+				{output}
 			</div>
 		);
 	}

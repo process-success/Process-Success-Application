@@ -956,9 +956,9 @@ ps.apiTool=function(filters, options, onChange){
 		var getArgs={};
 		getArgs.filters=this.filters;
 		getArgs.cmd=this.api.get;
-		if(this.api.get==this.default.get){
+		//if(this.api.get==this.default.get){
 			getArgs.doctype=this.doctype;
-		}
+		//}
 
 		if(this.multiDoc){
 			for (var i = 0; i < this.doctype.length; i++) {
@@ -969,7 +969,7 @@ ps.apiTool=function(filters, options, onChange){
 		}
 
 		//if online make a call to the server
-
+		console.log(getArgs);
 		if(ps.online){
 			//is frappe ready?
 			if(ps.frappe.isready){
@@ -1003,7 +1003,11 @@ ps.apiTool=function(filters, options, onChange){
 		args.cmd=this.api.update;
 		args.item=item;
 		console.log(args.doctype);
-		args.doctype=item.doctype;
+		if(!("doctype" in item)){
+			args.doctype=this.doctype;
+		}else{
+			args.doctype=item.doctype;
+		}
 		if (ps.online){
 			ps.call(args,function(data){
 				ps.socket.socket.emit('update_doc', {doctype:item.doctype, item:data.message});
