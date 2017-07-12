@@ -51,7 +51,10 @@ class Employee(WebsiteGenerator):
                 user.first_name = self.first_name
                 save_flag = 1
             if not user.last_name == self.last_name:
-                user.last_name == self.last_name
+                user.last_name = self.last_name
+                save_flag = 1
+            if not user.phone == self.phone:
+                user.phone = self.phone
                 save_flag = 1
             if save_flag:
                 user.full_name = self.full_name

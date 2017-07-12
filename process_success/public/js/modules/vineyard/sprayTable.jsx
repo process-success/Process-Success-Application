@@ -1,6 +1,12 @@
 import Table from '../utils/table'
 import Form from '../utils/forms'
 import Modal from '../utils/modal'
+import DoctypeForm from '../utils/doctypeForm'
+
+
+
+
+
 
 export default class SprayTable extends React.Component{
 	constructor(props){
@@ -54,6 +60,41 @@ export default class SprayTable extends React.Component{
 			ps.successAlert("Spreying Entry " +item.name+ " created.")
 		});
 	}
+	//* *//
+  	editTask(item){
+  		console.log("edit task called");
+  		this.setState(
+  			{
+  				formState:item.doctype.replace(/\s/g, ''),
+  				editItem:item,
+  				formMode:"edit"
+  			});
+  		$('#'+this.modalId).modal();
+  	}
+	delete(copy){
+  		this.tasksTool.delete(copy);
+		$('#'+this.modalId).modal('toggle');
+	}
+  	close(e){
+  		console.log("close");
+  		e.preventDefault();
+  		$('#'+this.modalId).modal('toggle');
+  	}
+  	update(copy){
+  		this.tasksTool.update(copy);
+		$('#'+this.modalId).modal('toggle');
+  	}
+  	create(item,doctype){
+		item.work_order=this.props.workorder;
+		item.vineyard=this.props.vineyard;
+		item.doctype=doctype;
+		this.tasksTool.create(item);
+		$('#'+this.modalId).modal('toggle');
+  	}
+  	onChange(copy){
+  		this.setState({editItem:copy})
+  	}
+
 	render(){
 		var columns=this.returnColumns();
 		var content=this.returnContent();
@@ -66,10 +107,24 @@ export default class SprayTable extends React.Component{
 				content={content}
 				columns={columns}
 			/>
-			<SprayFormModal
-				id="createSprayEntry"
-				createSprayEntry={this.createSprayEntry}
-			/>
+			<DoctypeForm 
+				close={this.close}
+				itemChange={this.onChange}
+				create={this.create}
+				edit={this.update}
+				delete={this.delete}
+				mode={this.state.formMode}
+				item={item}
+				id={this.props.workorder}
+
+				doctype="Spraying"
+				season={{active:1}}
+				note={{
+					active:1,
+					type:"textarea" 
+				}}
+				spray_type={{active:1}}
+			/> 	
 			</div>
 			
 		);

@@ -2,6 +2,7 @@ export default class AcordianContent extends React.Component{
 	constructor(props){
 		super(props);
 		this.renderHead = this.renderHead.bind(this);
+		console.log(this.props.toggleAll);
 	}
 	renderHead(id){
 
@@ -10,9 +11,16 @@ export default class AcordianContent extends React.Component{
 				role="tab" 
 				onClick={
 					function(){
+						console.log(this.props.toggleAll);
+						console.log(this.props.toggleAll==false);
+						if(this.props.toggleAll==false){
+							$('#'+id).collapse('toggle');
+						}
+						else{
 						console.log(id);
-						$('#'+this.props.parentId+' .acordian-content.in').not('#'+id).collapse('hide');
-						$('#'+id).collapse('toggle');
+							$('#'+this.props.parentId+' .acordian-content.in').not('#'+id).collapse('hide');
+							$('#'+id).collapse('toggle');
+						}
 					}.bind(this)
 				}
 				>
@@ -28,7 +36,7 @@ export default class AcordianContent extends React.Component{
 	render(){
 		var id =this.props.id;
 		return (
-			<div className="panel panel-default">
+			<div className="panel panel-default acordian-panel">
 				{this.renderHead(id)}
 				<div id={id} 
 					className={(this.props.active)? "acordian-content panel-collapse collapse in":"acordian-content panel-collapse collapse"} 
