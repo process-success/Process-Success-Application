@@ -24,7 +24,7 @@ class Issue(Document):
         employees_to_alert=frappe.get_all("Employee",filters={'issue_alerts': 1},fields =["phone","full_name"])
         print(employees_to_alert)
         for employee in employees_to_alert:
-            sendSMS(employee.phone,"New "+ self.priority + " issue subbmited for "+url + self.vineyard_route+"   "+self.vineyard )
+            sendSMS(employee.phone,"New "+ self.priority + " priority issue subbmited for vineyard " +self.vineyard+ "  "+url +"/"+ self.vineyard_route )
 
 
 # def _edit_issue_fields(issue, key, value):
