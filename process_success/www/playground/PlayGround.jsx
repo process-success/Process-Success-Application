@@ -2,7 +2,7 @@
 // import Form from '../../public/js/modules/utils/forms'
 // import Acordian from '../../public/js/modules/utils/acordian'
 // import AcordianContent from '../../public/js/modules/utils/acordianContent'
-import docTable from '../../public/js/modules/utils/docTable'
+import DocTable from '../../public/js/modules/utils/docTable'
 
 //import SprayTable from '../../public/js/modules/vineyard/sprayTable'
 

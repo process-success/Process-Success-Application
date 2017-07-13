@@ -54,6 +54,8 @@
         </div>
         <div class="clear-fix"></div>
         <div class="row-fluid">
+            <div id="app" class="col-md-12">
+            </div>
             <div class="col-md-12">
                 <div class="ps-layout-panel panel panel-default">
                     <h1>Open Workorders</h1>
@@ -74,4 +76,5 @@
 {% block script %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_k9KqK-kXGq5t7-35Hnem541bOK7HiLA"></script>
     <script> {% include "/templates/includes/mapping/map.js" %} </script>
+    <script> {% include "/templates/generators/vineyard/vineyard.js" %} </script>
 {% endblock %}

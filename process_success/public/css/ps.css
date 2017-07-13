@@ -577,10 +577,13 @@ tbody td:nth-child(last) {
   border-right: #666666 1px solid;
 }
 div table.dataTable.no-footer {
-  border-bottom: 0px solid #111;
+  border-bottom: 1px solid #ddd;
 }
-.dataTables_scrollBody table.ps-list-table {
+.dataTables_scroll .dataTables_scrollBody table.ps-list-table {
   padding-bottom: 10px;
+}
+div.dataTables_wrapper {
+  margin-bottom: 10px;
 }
 /* timesheet.less */
 .sticky_subnav {

@@ -189,7 +189,7 @@ gulp.task('scripts', function() {
 gulp.task('browserify', function () {
   console.log("________browserify 2______");
   //https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-multiple-destination.md
-  return gulp.src('process_success/www/**/*.jsx', {read: false}) // no need of reading file because browserify does.
+  return gulp.src(manifest.jsx, {read: false}) // no need of reading file because browserify does.
     // transform file objects using gulp-tap plugin
     .pipe(tap(function (file) {
       gutil.log('bundling ' + file.path);
@@ -209,7 +209,9 @@ gulp.task('browserify', function () {
       console.log(path);
       path.extname = ".js";
     }))
-    .pipe(gulp.dest('process_success/www/'));
+    .pipe(gulp.dest(function (file) {
+        return file.base;
+    }));
 });
 
 
@@ -334,7 +336,7 @@ gulp.task('watch', function() {
   gulp.watch(['bower.json'],['bowercss'],['bowerjs'] );
   gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
   gulp.watch([manifest.less.source], ['less']);
-  gulp.watch(['process_success/www/**/*.jsx',manifest.modules],['browserify']);
+  gulp.watch([manifest.jsx],['browserify']);
 });
 
 // Default Task
