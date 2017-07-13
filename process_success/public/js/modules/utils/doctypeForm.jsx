@@ -21,6 +21,8 @@ export default class DoctypeForm extends React.Component{
 		this.setState({items:this.doctypeTool.items})
 	}
 	submit(e){
+		console.log("FROM DOCTYPE FORM");
+		console.log(this.props.item);
 		//FORM VALIDATION 
 		//if(this.props.item.vineyard=="" ||this.props.item.spray_type=="" || (moment(this.props.item.date,"MM/DD/YYYY").isValid())!==true){
 		//	console.log("not valid");
@@ -136,7 +138,6 @@ export default class DoctypeForm extends React.Component{
 		//probably change this to willMount
 		for(var x = 0; x < fieldsJson.length; x++){
 			var currentField=fieldsJson[x];
-			console.log(currentField.fieldname);
 			// check if this field was enabled
 
 			if (this.props[currentField.fieldname]){
@@ -161,7 +162,6 @@ export default class DoctypeForm extends React.Component{
 								copy[currentField.fieldname]="";
 							}
 						}
-						console.log(currentField.fieldname);
 						fields.push(fieldObject[currentField.fieldtype](currentField,this.props[currentField.fieldname]));
 					}
 				}
@@ -183,7 +183,7 @@ export default class DoctypeForm extends React.Component{
 					field:"button",
 					value:"Close",
 					className:"pull-right "+ editHidden,
-					onClick:this.props.close
+					onClick:function(e){ e.preventDefault();this.props.close();}.bind(this)
 			});
 		}
 		fields.push({

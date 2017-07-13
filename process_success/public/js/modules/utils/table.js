@@ -12,7 +12,6 @@ export default class Table extends React.Component{
 		// if(this.table !== undefined){
 		// 	this.table.destroy();
 		// }
-		console.log(this.props.content);
 	    this.table=$("#"+this.props.id).DataTable({
 	    	"destroy": true,
 	    	"scrollY": '70vh',

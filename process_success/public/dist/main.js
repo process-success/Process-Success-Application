@@ -969,7 +969,7 @@ ps.apiTool=function(filters, options, onChange){
 		}
 
 		//if online make a call to the server
-		console.log(getArgs);
+		//console.log(getArgs);
 		if(ps.online){
 			//is frappe ready?
 			if(ps.frappe.isready){
@@ -1002,7 +1002,7 @@ ps.apiTool=function(filters, options, onChange){
 		var args={};
 		args.cmd=this.api.update;
 		args.item=item;
-		console.log(args.doctype);
+		//console.log(args.doctype);
 		if(!("doctype" in item)){
 			args.doctype=this.doctype;
 		}else{
