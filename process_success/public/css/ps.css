@@ -292,7 +292,11 @@ section {
     Panel in acordian
 */
 .panel.acordian-panel {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+}
+.panel.acordian-panel .collapse {
+  display: hidden;
+  visibility: none;
 }
 .tab-content .tab-pane {
   display: none;

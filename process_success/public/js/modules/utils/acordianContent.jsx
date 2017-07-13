@@ -7,7 +7,7 @@ export default class AcordianContent extends React.Component{
 	renderHead(id){
 
 		return(
-			<div className="panel-heading" 
+			<div className="panel-heading"
 				role="tab" 
 				onClick={
 					function(){
@@ -34,12 +34,16 @@ export default class AcordianContent extends React.Component{
 		);
 	}
 	render(){
+		var className=(this.props.active)? "acordian-content panel-collapse collapse in":"acordian-content panel-collapse collapse";
+		if(this.props.className){
+			className=className+" "+this.props.className;
+		}
 		var id =this.props.id;
 		return (
 			<div className="panel panel-default acordian-panel">
 				{this.renderHead(id)}
 				<div id={id} 
-					className={(this.props.active)? "acordian-content panel-collapse collapse in":"acordian-content panel-collapse collapse"} 
+					className={className} 
 					role="tabpanel">
 					<div className="panel-body">
 						{ this.props.children }

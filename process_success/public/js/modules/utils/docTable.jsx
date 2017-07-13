@@ -9,6 +9,7 @@ export default class DocTable extends React.Component{
 		this.tableChange=this.tableChange.bind(this);
 		this.returnContent=this.returnContent.bind(this);
 		this.editableContent=this.editableContent.bind(this);
+		console.log(this.props.filter);
 		this.tableTool = new ps.apiTool(this.props.filter,{doctype:this.props.doctype},this.tableChange);
 		this.state={
 			items:this.tableTool.items,
@@ -161,7 +162,7 @@ export default class DocTable extends React.Component{
 		return(
 			<div>
 				<Table 
-					id="sprayTable"
+					id={this.props.id}
 					title="Spray Table"
 					content={content}
 					columns={columns}

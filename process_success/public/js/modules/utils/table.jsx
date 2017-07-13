@@ -12,7 +12,7 @@ export default class Table extends React.Component{
 		// if(this.table !== undefined){
 		// 	this.table.destroy();
 		// }
-	    this.table=$("#"+this.props.id).DataTable({
+		var config={
 	    	"destroy": true,
 	    	"scrollY": '70vh',
         	"scrollCollapse": true,
@@ -21,7 +21,12 @@ export default class Table extends React.Component{
 	        "stateSave": true,
 	        "columns": this.props.columns,
 	        "info":     false
-	    });
+	    };
+	    if(this.props.search){
+	    	config.searching=true;
+	    }
+	    else{config.searching=false;}
+	    this.table=$("#"+this.props.id).DataTable(config);
 	}
 	componentWillUpdate(){
 
