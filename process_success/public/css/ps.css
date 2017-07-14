@@ -295,8 +295,16 @@ section {
   margin-bottom: 20px;
 }
 .panel.acordian-panel .collapse {
-  display: hidden;
-  visibility: none;
+  display: block;
+  visibility: visible;
+  overflow-x: hidden;
+  height: 0px;
+}
+.panel.acordian-panel .collapse.in {
+  display: block;
+  visibility: visible;
+  overflow-x: hidden;
+  height: auto;
 }
 .tab-content .tab-pane {
   display: none;

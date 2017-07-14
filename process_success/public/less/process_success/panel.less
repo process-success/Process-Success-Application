@@ -73,7 +73,15 @@
 .panel.acordian-panel{
   margin-bottom: 20px;
   .collapse{
-    display: hidden;
-    visibility: none;
+    display: block;
+    visibility: visible;
+    overflow-x: hidden;
+    height: 0px;
+  }
+  .collapse.in{
+    display: block;
+    visibility: visible;
+    overflow-x: hidden;
+    height: auto;
   }
 }

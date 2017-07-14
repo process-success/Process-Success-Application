@@ -26,7 +26,9 @@ export default class DocTable extends React.Component{
 		var columns =[];
 		for(var x=0; x < this.props.config.length; x++){
 			var item=this.props.config[x];
-			columns.push({title:item.lable});
+			if(item.inTable!==false){
+				columns.push({title:item.lable});
+			}
 		}
 		if(this.props.editable){
 			columns.push({title:"Edit"});
@@ -38,13 +40,22 @@ export default class DocTable extends React.Component{
 		var content=[];
 		if(this.state.items!==null){
 			this.state.items.map(function(item, index){
+				console.log(item);
 				var tdcontent=[];
 				for(var x=0; x < this.props.config.length; x++){
 					var config=this.props.config[x];
-					if(config.href){
-						tdcontent.push(<td key={this.props.id + index + "_" + x} ><a href={item[config.href]} >{item[config.value]}</a></td>)
-					}else{
-						tdcontent.push(<td>{item[config.value]}</td>)
+					if(config.inTable!==false){
+						if(config.href){
+							tdcontent.push(<td key={this.props.id + index + "_" + x} ><a href={item[config.href]} >{item[config.value]}</a></td>)
+						}else{
+							if(item[config.value]===true){
+								tdcontent.push(<td>1</td>)
+							}else if (item[config.value]===false){
+								tdcontent.push(<td>0</td>)
+							}else{
+								tdcontent.push(<td>{item[config.value]}</td>)
+							}
+						}
 					}
 				}
 				if(this.props.editable){
