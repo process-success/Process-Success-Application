@@ -49,7 +49,7 @@ var assign = require('lodash.assign');
 // };
 
 // var opts = assign({}, watchify.args, customOpts);
-// var b = watchify(browserify(opts)); 
+// var b = watchify(browserify(opts));
 
 // gulp.task('jsb', bundle); // so you can run `gulp js` to build the file
 // b.on('update', bundle); // on any dep update, runs the bundler
@@ -310,9 +310,9 @@ gulp.task('lib', ['copy-react', 'copy-react-dom'], function() {
 
 gulp.task('clearCache', () => {
   return gulp.src('', {read: false})
-  .pipe(shell([
-    './scripts/clear_cache.sh',
-    'pwd'],{cwd:''}))
+//   .pipe(shell([
+//     './scripts/clear_cache.sh',
+//     'pwd'],{cwd:''}))
   .pipe(livereload());
 
 });
@@ -331,7 +331,7 @@ gulp.task('watch', function() {
     'process_success/**/*.template',
     'process_success/template/**/*.css',
     'process_success/**/*.css',
-    'process_success/**/*.py' ], ['clearCache']
+    'process_success/**/*.py' ],['clearCache']
   );
   gulp.watch(['bower.json'],['bowercss'],['bowerjs'] );
   gulp.watch(['process_success/public/js/**/*.jsx','process_success/public/js/**/*.js'], ['scripts']);
@@ -341,7 +341,7 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['browserify','lib','lint','scripts','bowerjs','bowercss','less','clearCache','watch']);
+gulp.task('default', ['browserify','lib','lint','scripts','bowerjs','bowercss','less','watch']);
 
 
 //https://travismaynard.com/writing/getting-started-with-gulp
