@@ -22,30 +22,29 @@ export default class CreateIssue extends React.Component{
 		this.props.activateModalEdit(item);
 	}
 	render(){
-					// 		data-toggle="modal" 
-					// data-target={"#"+this.popUpId}
-				 // 	aria-label="Create Issue" 
-				 // 	data-toggle="tooltip" 
-				 // 	data-placement="top" 
-				 // 	title="Issue" 
-					// ref={this.toolTip}					// onClick={ this.popUp} >
 		var dropdownItems=[];
 		if(this.props.issues!==null){
 			this.props.issues.map(function(item, index){
-				if (item.status =='Submitted' || item.status=='Assigned'){
+				if (item.status =='Open'){
 					dropdownItems.push(
 						<li key={index}> 
 							<a className="dropdown-item" 
 								href="#" 
 								onClick={this.modalEditIssue.bind(this,item)} 
-							>{item.title}</a>
+							>{item.issue_title}</a>
 						</li>);
 				}
 			}.bind(this));
 		}
 		var issueCount=" ";
-		if(this.props.issues!==null){
-			issueCount=(this.props.issues.length===0)?"":this.props.issues.length+" ";
+		if(this.props.issues!==null && this.props.issues.length!==null){
+			var count = 0;
+			for(var x=0; x < this.props.issues.length;x++){
+				if(this.props.issues[x].status=="Open"){
+					count++;
+				}
+			}
+			issueCount=(count===0)?"":count+" ";
 		}
 		return(
 			<div className="dropdown dropdown-panel-right">
