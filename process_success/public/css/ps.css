@@ -65,6 +65,10 @@ footer {
 .react-form button {
   margin: 0px 5px 0px 5px;
 }
+.inline-form-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 .react-form.short {
   max-width: 200px;
 }

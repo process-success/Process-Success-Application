@@ -6,7 +6,7 @@
 
 	frappe.provide("ps");
 	frappe.provide("ps.frappe");
-	
+
 	var get_all_employees="process_success.ps_core.api.get_all_employees";
 
 	ps.init_ui=function(){
@@ -58,7 +58,7 @@
 				}
 
 				var message = default_message;
-				
+
 				if (data._server_messages) {
 					message = ($.map(JSON.parse(data._server_messages || '[]'), function(v) {
 						// temp fix for messages sent as dict
@@ -107,7 +107,7 @@
 	    return str.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" );
 
 	};
-	
+
 	// probably outdated depreciated.   might move away form the original plugin
 	//in favor of the standard type="time" feilds html5
 
@@ -173,4 +173,3 @@ frappe.ready(function() {
 	ps.init_ui();
 	ps.frappe.isready=1;
 });
-

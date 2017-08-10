@@ -44,7 +44,7 @@ export default class DaysTimeSheets extends React.Component{
 		//Grab the employee list
 		var tool=ps.initEmployeeList();
 		tool.get({},function(){
-			ps.employee_lables= tool.items.map(function(obj) { 
+			ps.employee_lables= tool.items.map(function(obj) {
 				var rObj = {};
 				rObj.label=obj.full_name;
 				rObj.value=obj.name;
@@ -54,7 +54,7 @@ export default class DaysTimeSheets extends React.Component{
 		});
 
 
-		
+
 
 	}
 
@@ -93,7 +93,7 @@ export default class DaysTimeSheets extends React.Component{
 
 	//------------------------------------------
 	//       Timesheet Wrapper Functions
-	//------------------------------------------	
+	//------------------------------------------
 
 	clockIn(time,crew){
 
@@ -124,7 +124,7 @@ export default class DaysTimeSheets extends React.Component{
 		var employeeIndex = this.getIndexEmployee(ts_index,employee_name);
 
 		var updateCallback=function(index){
-			return function(data){			
+			return function(data){
 				this.updateFromServerParam(data,index);
 			}.bind(this);
 		}.bind(this);
@@ -158,7 +158,7 @@ export default class DaysTimeSheets extends React.Component{
 	};
 	//------------------------------------------
 	//           Timesheet Wrapper
-	//------------------------------------------	
+	//------------------------------------------
 	timeSheetWrapper(item,index){
 		var employee_output=[];
 		if(item.employees===undefined){
@@ -173,7 +173,7 @@ export default class DaysTimeSheets extends React.Component{
 		return(
 
 			<TimeSheet
-				key={index} 
+				key={index}
 				name={item.name}
 				date={item.date}
 				crew={item.crew}
@@ -223,7 +223,7 @@ export default class DaysTimeSheets extends React.Component{
 		var employeeIndex = this.getIndexEmployee(ts_index,employee);
 		var save=0;
 		value=ps.time_add_digits(value)
-		if(position=='end' && ps.time_add_front_zero(this.objTool.items[ts_index].employees[employeeIndex].end) != ps.time_add_digits(value)){ 
+		if(position=='end' && ps.time_add_front_zero(this.objTool.items[ts_index].employees[employeeIndex].end) != ps.time_add_digits(value)){
 			this.objTool.items[ts_index].employees[employeeIndex].end=ps.time_add_digits(value);
 			save=1;
 		}
@@ -277,7 +277,7 @@ export default class DaysTimeSheets extends React.Component{
 		var status='';
 		if (ts_index==undefined){var status=false;}
 		else{status =this.state.items[ts_index].status}
-		
+
 
 		//MAIN RENDER
 		return(
@@ -297,7 +297,7 @@ export default class DaysTimeSheets extends React.Component{
 					{output}
 				</div>
 				<div className="tab-pane fade" id="workOrderTab">
-						<DaysWorkorders 
+						<DaysWorkorders
 							date={this.props.date}
 							crew={this.props.crew}
 						/>
@@ -306,10 +306,5 @@ export default class DaysTimeSheets extends React.Component{
 
 		);
 
-	};	
+	};
 }
-
-
-
-
-

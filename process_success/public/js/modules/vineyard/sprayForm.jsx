@@ -10,7 +10,6 @@ export class SprayForm extends React.Component{
 		this.delete=this.delete.bind(this);
 	}
 	componentWillUpdate(){
-
 	}
 	submit(e){
 		//if(this.props.item.vineyard=="" ||this.props.item.spray_type=="" || (moment(this.props.item.date,"MM/DD/YYYY").isValid())!==true){
@@ -35,7 +34,7 @@ export class SprayForm extends React.Component{
 	render(){
 		var createHidden=(this.props.mode!="create")?" hidden":" nope";
 		var editHidden=(this.props.mode!="edit")?" hidden":" nope";
-		
+
 		if(this.props.item==null){
 			var copy={
 				vineyard:"",
@@ -118,7 +117,7 @@ export class SprayForm extends React.Component{
 			formElements.date[this.props.vineyard],
 			{
 				field:"autoComplete",
-				onChange: function(e){ 
+				onChange: function(e){
 					copy.spray_type=e.target.value;
 					this.props.itemChange(copy);
 				}.bind(this),
@@ -163,7 +162,7 @@ export class SprayForm extends React.Component{
 			}
 		]
 		return (
-			<div>		
+			<div>
 				<Form
 					id={this.props.id}
 					type="horizontal"
@@ -174,6 +173,3 @@ export class SprayForm extends React.Component{
 		);
 	}
 }
-
-
-
