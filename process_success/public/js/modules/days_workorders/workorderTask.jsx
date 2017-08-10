@@ -24,11 +24,13 @@ export default class WorkorderTask extends React.Component{
 		this.statusChange=this.statusChange.bind(this);
 		this.activateModalNew=this.activateModalNew.bind(this);
 		this.activateModalEdit=this.activateModalEdit.bind(this);
-		
-		this.submitIssue=this.submitIssue.bind(this);
-		this.modalTitleChange=this.modalTitleChange.bind(this);
-		this.modalDescriptionChange=this.modalDescriptionChange.bind(this);
-		this.modalPriorityChange=this.modalPriorityChange.bind(this);
+
+		this.issueFormChange=this.issueFormChange.bind(this);
+		this.createIssue=this.createIssue.bind(this);
+		this.editIssue=this.editIssue.bind(this);
+		this.deleteIssue=this.deleteIssue.bind(this);
+		this.close=this.close.bind(this);
+
 		this.issueChanged=this.issueChanged.bind(this);
 
 
@@ -56,55 +58,43 @@ export default class WorkorderTask extends React.Component{
   	/*---------------------------------------
 				ISSUE FUNCTIONS
   	-----------------------------------------*/
-  	modalTitleChange(e){
-		this.setState({modalTitle:e.target.value});
-  	}
-	modalPriorityChange(e){
-		this.setState({modalPriority:e.target.value});
-	}
-	modalDescriptionChange(e){
-		this.setState({modalDescription:e.target.value});
-	}
+
   	activateModalNew(){
-  		this.setState({modal:"new"});
-		this.setState({modalPriority:''});
-		this.setState({modalDescription:''});
-		this.setState({modalTitle:''});
+  		this.setState({issueMode:"create"});
+  		this.setState({issue:{}});
   		$('#'+this.modalId).modal();
   	}
   	activateModalEdit(issue){
-		this.setState({modal:issue});
-		this.setState({modalPriority:issue.priority});
-		this.setState({modalDescription:issue.issue});
-		this.setState({modalTitle:issue.title});
-		this.setState({modalName:issue.name});
+  		this.setState({issueMode:"edit"});
+		this.setState({issue:issue});
   		$('#'+this.modalId).modal();
   	}
+  	issueFormChange(issue){
+  		this.setState({issue:issue});
+  	}
   	issueChanged(){
-
 		this.setState({issues:this.issueTool.items});
 	}
-  	submitIssue(e){
-  		e.preventDefault();
-
-		var newItem={
-			title:this.state.modalTitle,
-			issue:this.state.modalDescription,
-			priority:this.state.modalPriority,
-			vineyard:this.props.location,
-			work_order:this.props.workorder
-		}
-		if(this.state.modal=="new"){
-			this.issueTool.create(newItem,function(item){
-				ps.successAlert("Issue " +item.title+ " created.")
-			});
-		}else{
-			newItem.name=this.state.modalName;
-			this.issueTool.update(newItem,function(item){
-				ps.successAlert("Issue " +item.title+" updated.")
-			});
-		}
-		//close modal
+  	createIssue(item){
+  		//console.log(this.state.issue);
+		item.vineyard=this.props.location;
+		item.work_order=this.props.workorder;
+		this.issueTool.create(item,function(item){
+			ps.successAlert("Issue " +item.title+ " created.")
+		});
+		$('#'+this.modalId).modal('toggle');
+	}
+	deleteIssue(item){
+  		this.issueTool.delete(item);
+		$('#'+this.modalId).modal('toggle');
+	}
+	editIssue(item){
+		this.issueTool.update(item,function(item){
+			ps.successAlert("Issue " +item.title+" updated.")
+		});
+		$('#'+this.modalId).modal('toggle');
+	}
+	close(){
 		$('#'+this.modalId).modal('toggle');
 	}
 
@@ -127,45 +117,47 @@ export default class WorkorderTask extends React.Component{
 				tasks.push(<TaskCheck key={index} index={index} lable={item.task} checked={checked} taskChecked={this.taskChecked}/>);
 			}.bind(this))
 		}
+
+		var modalTitle = "";
+		if(this.state.issueMode){
+			modalTitle = "Create Issue";
+		}else{
+			modalTitle = "Edit Issue";
+		}
 		return(
 			<div className='col-md-4 col-sm-4'>
 				<Modal 
 					id={this.modalId} 
 					submitText="Submit" 
 					title="Create Issue For"
-					submit={this.submitIssue}>
+					submit={false}
+					>
 
-						<fieldset>
-							<div className="form-group">
-								<label>Issue Title</label>
-								<input 
-									type="text" 
-									className="form-control" 
-									placeholder="Issue Title" 
-									value={this.state.modalTitle} 
-									onChange={this.modalTitleChange}
-								/>
-							</div>
-							<div className="form-group">
-								<label>Priority</label>
-								<select className="form-control" value={this.state.modalPriority} onChange={this.modalPriorityChange.bind(this)}>
-									<option>Low</option>
-									<option>Medium</option>
-									<option>High</option>
-									<option>Critical</option>
-								</select>
-							</div>
-							<div className="form-group">
-							  	<label>Issue Details:</label>
-							  	<textarea 
-							  		className="form-control" 
-							  		rows="3" 
-							  		placeholder="Issue Details" 
-							  		value={this.state.modalDescription}
-							  		onChange={this.modalDescriptionChange}
-							  	></textarea>
-							</div>
-						</fieldset>
+						<DoctypeForm 
+							close={this.close}
+							itemChange={this.issueFormChange}
+							create={this.createIssue}
+							edit={this.editIssue}
+							delete={this.deleteIssue}
+							mode={this.state.issueMode}
+							item={this.state.issue}
+							id={this.props.workorder}
+
+							doctype="Issue"
+							issue_title={{active:1}}
+							issue={{
+								active:1,
+								type:"textarea" 
+							}}
+							priority={{
+								active:1,
+								default:"Low"
+							}}
+							status={{
+								active:1,
+								default:"Open"
+							}}
+						/> 	
 				</Modal>
 			<div id="" className={mainClass}>
 				<div className="panel-heading">
@@ -262,6 +254,7 @@ export class VineyardTasks extends React.Component{
   	}
   	editTask(item){
   		console.log("edit task called");
+  		console.log(item);
   		this.setState(
   			{
   				formState:item.doctype.replace(/\s/g, ''),
@@ -284,7 +277,7 @@ export class VineyardTasks extends React.Component{
 						lable={item.doctype}
 						checked={item.complete}
 						taskChecked={this.taskChecked}
-						editTask={function(e){ this.editTask(item)}.bind(this)}
+						editTask={function(e){this.editTask(item);}.bind(this)}
 					/>);
 			}.bind(this))
 		}
@@ -296,7 +289,6 @@ export class VineyardTasks extends React.Component{
 	}
   	close(e){
   		console.log("close");
-  		e.preventDefault();
   		$('#'+this.modalId).modal('toggle');
   	}
   	update(copy){
@@ -447,7 +439,7 @@ export class VineyardTasks extends React.Component{
 
 			}.bind(this),
 			Pruning:function(item){
-				console.log("MODE", this.state.formMode);
+				//console.log("MODE", this.state.formMode);
 				return (
 					<DoctypeForm 
 						close={this.close}
@@ -476,7 +468,7 @@ export class VineyardTasks extends React.Component{
 
 			}.bind(this)
 		};
-		console.log("get form called");
+		//console.log("get form called");
 		return formsObj[this.state.formState](this.state.editItem);
   	}
 	render(){
