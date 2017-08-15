@@ -65,7 +65,7 @@ def sign_up(email, first_name, last_name, user_type, redirect_to, password):
 
 def create_employee(email, first_name, last_name, user):
 	employee = frappe.db.get("Employee", {"email": email})
-	
+
 	if employee:
 		return 0
 
@@ -300,9 +300,10 @@ def create_doc(doctype,item):
 
 @frappe.whitelist()
 def update_doc(doctype,item):
-	print ("---------------- UPDATE DOC -------------------")
+	print ("---------------- UPDATE DOC 12 -------------------")
 	j=json.loads(item)
 	print (j["name"])
+	print (j)
 	check=frappe.get_all(doctype,filters={"name":j["name"]})
 	if check:
 		doc=frappe.get_doc(doctype,j["name"])
@@ -339,13 +340,3 @@ def clear_test_db():
 # 		doc=frappe.get_doc("Testing",name)
 # 		doc.delete()
 # 	return "success"
-
-
-
-
-
-
-
-
-
-

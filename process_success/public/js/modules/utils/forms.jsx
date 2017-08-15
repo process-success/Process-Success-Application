@@ -17,7 +17,7 @@ export default class Form extends React.Component{
 		var form=[];
 		var formTypes={
 			select	: function(item,index){
-				var optinal=["value","lable","options","className","readonly","disable","require"];
+				var optinal=["value","lable","options","className","readonly","disabled","require"];
 				var props=ps.initProps(optinal,item);
 				return (
 					<Select
@@ -26,7 +26,7 @@ export default class Form extends React.Component{
 						className={props.className}
 						lable={props.lable}
 						options={props.options}
-						readOnly={props.readonly}
+						readonly={props.readonly}
 						disabled={props.disabled}
 						required={props.required}
 						inputChanged={function(e){item.onChange(e);}}
@@ -34,7 +34,7 @@ export default class Form extends React.Component{
 				);
 			}.bind(this),
 			check : function(item,index){
-				var props=["value","lable","className","readonly","disable","require","value"];
+				var props=["value","lable","className","readonly","disabled","require","value"];
 				props=ps.initProps(props,item);
 
 				return (
@@ -52,7 +52,7 @@ export default class Form extends React.Component{
 			}.bind(this),
 
 			textarea : function(item,index){
-				var props=["value","lable","className","readonly","disable","require","value","rows"];
+				var props=["value","lable","className","readonly","disabled","require","value","rows"];
 				props=ps.initProps(props,item);
 
 				return (
@@ -153,7 +153,7 @@ export default class Form extends React.Component{
 				);
 			}.bind(this),
 			button: function(item,index){
-				var optinal=["value","className","disable","icon"];
+				var optinal=["value","className","disabled","icon"];
 				var props=ps.initProps(optinal,item);
 				return(
 					<Button
