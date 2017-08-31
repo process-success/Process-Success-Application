@@ -23,7 +23,7 @@ export default class DoctypeForm extends React.Component{
 		this.setState({items:this.doctypeTool.items})
 	}
 	submit(e){
-		//FORM VALIDATION 
+		//FORM VALIDATION
 		//if(this.props.item.vineyard=="" ||this.props.item.spray_type=="" || (moment(this.props.item.date,"MM/DD/YYYY").isValid())!==true){
 		//	console.log("not valid");
 		//}else{
@@ -187,14 +187,16 @@ export default class DoctypeForm extends React.Component{
 			copy.doctype=this.props.doctype;
 		}
 		//adding button feilds
-		fields.push({
+		if(this.props.close){
+			fields.push({
 				field:"button",
 				type:"submit",
 				value:"Create " + this.props.doctype + " Entry",
 				className:"btn-primary pull-right " + createHidden,
 				onClick:this.submit
 			});
-		if(this.props.close){
+		}
+		if(this.props.create){
 			fields.push({
 					field:"button",
 					value:"Close",
@@ -202,13 +204,15 @@ export default class DoctypeForm extends React.Component{
 					onClick:function(e){ e.preventDefault();this.props.close();}.bind(this)
 			});
 		}
-		fields.push({
-				field:"button",
-				type:"submit",
-				value:"Delete",
-				className:"btn-danger pull-right "+ editHidden,
-				onClick:this.delete
-		});
+		if(this.props.delete){
+			fields.push({
+					field:"button",
+					type:"submit",
+					value:"Delete",
+					className:"btn-danger pull-right "+ editHidden,
+					onClick:this.delete
+			});
+		}
 		fields.push(
 			{
 				field:"button",
@@ -220,21 +224,23 @@ export default class DoctypeForm extends React.Component{
 		return fields;
 	}
 	render(){
+		console.log("render area");
 		var output={};
 		if(this.state.items!==null){
 			var fields=this.createFormJson();
-			var output = (				
+			console.log(fields);
+			var output = (
 				<Form
 					id={this.props.id}
 					type="horizontal"
 					fields={fields}
 				/>);
-		}else{ 
+		}else{
 			output = (<div> Loading... </div>);
 		}
 
 		return (
-			<div>		
+			<div>{"HORE"}
 				{output}
 			</div>
 		);

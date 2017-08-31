@@ -2,6 +2,7 @@ import AcordianContent from '../utils/acordianContent'
 import DoctypeUpdater from '../tasks/taskUpdater'
 import Form from '../utils/forms'
 import {Check,Button} from '../utils/forms'
+import DoctypeForm from '../utils/doctypeForm'
 
 export default class TaskManager extends React.Component{
   constructor(props) {
@@ -15,11 +16,11 @@ export default class TaskManager extends React.Component{
   		{doctype:'DocType'},
   		this.taskUpdate
   	);
-  	// this.taskOptionTool = new ps.apiTool(
-  	// 	{},
-  	// 	{doctype:'task_option'},
-  	// 	this.taskUpdate
-  	// );
+  	this.taskOptionTool = new ps.apiTool(
+  		{},
+  		{doctype:'task_options'},
+  		this.taskUpdate
+  	);
   	this.state={
   		tasks:this.doctypeTool.items,
   		taskNameError:0,
@@ -31,6 +32,11 @@ export default class TaskManager extends React.Component{
   	this.setState({
   		tasks:this.doctypeTool.items
   	})
+  }
+  taskOptionsUpdate(){
+    this.setState({
+      tasks:this.taskOptionTool.items
+    })
   }
 
   updateNewTaskName(e){
@@ -47,6 +53,7 @@ export default class TaskManager extends React.Component{
   		this.setState({taskNameError:1});
   	}else{
   		//"complete","vineyard","hours","note","season","location","date"
+
   		this.doctypeTool.create(
   			{
   				name:this.state.newTaskName,
@@ -99,7 +106,10 @@ export default class TaskManager extends React.Component{
   					}
   				]
   			}
-  		)
+  		, this.taskOptionTool.create({
+          task_name:this.state.newTaskName,
+        })
+      )
   		this.setState({newTaskName:""});
   	}
   }
@@ -131,6 +141,15 @@ export default class TaskManager extends React.Component{
     // Map all Tasks
   	if (this.state.tasks!==null){
   		this.state.tasks.map(function(item) {
+        //get the options
+        var currentOptionsIndex="";
+        this.taskOptionTool.items.forEach(function(options,optionsIndex){
+          if(options.name == item.name){
+            currentOptionsIndex=optionsIndex;
+            console.log("options",this.taskOptionTool.items[currentOptionsIndex]);
+            console.log("item",item);
+          }
+        }.bind(this));
   			items.push(
   				<AcordianContent
   				title={item.name}
@@ -145,7 +164,6 @@ export default class TaskManager extends React.Component{
   							item.fields.push({
   								fieldname:"",
   								fieldtype:"Data",
-                  modified:"2017-08-10 13:40:37.378549",
                   idx:item.fields.length+1
   							});
   							this.setState({tasks:this.doctypeTool.items});
@@ -191,6 +209,16 @@ export default class TaskManager extends React.Component{
                 this.doctypeTool.update(item);
               }.bind(this)}
   						/>
+
+              <DoctypeForm
+              	edit={function(){
+              		// this.tableTool.update(item);
+              		// $('#'+this.modalID).modal('toggle');
+              	}.bind(this)}
+                doctype={"task_options"}
+                item={this.taskOptionTool.items[currentOptionsIndex]}
+              	id="thing"
+              />
   				</AcordianContent>
   			);
   		}.bind(this));
