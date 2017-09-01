@@ -17,7 +17,7 @@ export default class Form extends React.Component{
 		var form=[];
 		var formTypes={
 			select	: function(item,index){
-				var optinal=["value","lable","options","className","readonly","disable","require"];
+				var optinal=["value","lable","options","className","readonly","disabled","require"];
 				var props=ps.initProps(optinal,item);
 				return (
 					<Select
@@ -26,7 +26,7 @@ export default class Form extends React.Component{
 						className={props.className}
 						lable={props.lable}
 						options={props.options}
-						readOnly={props.readonly}
+						readonly={props.readonly}
 						disabled={props.disabled}
 						required={props.required}
 						inputChanged={function(e){item.onChange(e);}}
@@ -34,7 +34,7 @@ export default class Form extends React.Component{
 				);
 			}.bind(this),
 			check : function(item,index){
-				var props=["value","lable","className","readonly","disable","require","value"];
+				var props=["value","lable","className","readonly","disabled","require","value"];
 				props=ps.initProps(props,item);
 
 				return (
@@ -52,7 +52,7 @@ export default class Form extends React.Component{
 			}.bind(this),
 
 			textarea : function(item,index){
-				var props=["value","lable","className","readonly","disable","require","value"];
+				var props=["value","lable","className","readonly","disabled","require","value","rows"];
 				props=ps.initProps(props,item);
 
 				return (
@@ -64,37 +64,36 @@ export default class Form extends React.Component{
 						readOnly={props.readonly}
 						disabled={props.disabled}
 						required={props.required}
+						rows={props.rows}
 						inputChanged={function(e){item.onChange(e);}}
 					/>
 				);
 			}.bind(this),
 			input 	: function(item,index){
-				var type = (item.type === undefined) ? "text": item.type;
-				var value = (item.value === undefined) ? "": item.value;
-				var placeholder = (item.placeholder === undefined) ? "": item.placeholder;
-				var lable = (item.lable === undefined) ? "": item.lable;
-				var className = (item.className === undefined) ? "": item.className;
-				var readonly = (item.readonly === undefined) ? "": item.readonly;
-				var disabled = (item.disabled === undefined) ? "": item.disabled;
-				var required = (item.required === undefined) ? "": item.required;
-				
+				var props=["type","value","placeholder","lable","className","readonly","disabled","required","error"];
+				props=ps.initProps(props,item);
+				if(props.type==""){
+					props.type="text";
+				}
+
 				return (
 					<Input
-						key={this.props.id+index} 
-						type={type}
-						value={value}
-						placeholder={placeholder}
-						lable={lable}
-						className={className}
-						readonly={readonly}
-						disabled={disabled}
-						required={required}
+						key={this.props.id+index}
+						type={props.type}
+						value={props.value}
+						placeholder={props.placeholder}
+						lable={props.lable}
+						className={props.className}
+						readonly={props.readonly}
+						disabled={props.disabled}
+						required={props.required}
+						error={props.error}
 						inputChanged={function(e){item.onChange(e)}}
 					/>
 				);
 			}.bind(this),
 			lable 	: function(item,index){
-				return (  
+				return (
     				<label key={this.props.id+index} >{item.lable}</label>
 
     			);
@@ -115,7 +114,7 @@ export default class Form extends React.Component{
 				var required = (item.required === undefined) ? "": item.required;
 				return(
 					<DateInput
-						key={this.props.id+index} 
+						key={this.props.id+index}
 						value={value}
 						placeholder={placeholder}
 						lable={lable}
@@ -154,15 +153,15 @@ export default class Form extends React.Component{
 				);
 			}.bind(this),
 			button: function(item,index){
-				var value = (item.value === undefined) ? "": item.value;
-				var className = (item.className === undefined) ? "": item.className;
-				var disabled = (item.disabled === undefined) ? "": item.disabled;
+				var optinal=["value","className","disabled","icon"];
+				var props=ps.initProps(optinal,item);
 				return(
 					<Button
 						key={this.props.id+index}
-						value={value}
-						className={className}
-						disabled={disabled}
+						value={props.value}
+						className={props.className}
+						disabled={props.disabled}
+						icon={props.icon}
 						onClick={function(e){item.onClick(e)}}
 					/>
 				);
@@ -172,11 +171,16 @@ export default class Form extends React.Component{
 			if($.isEmptyObject(item)){
 
 			}else{
-				form.push(formTypes[item.field](item,index));
+				if(this.props.type=="inline"){
+					var rowClass=12/this.props.rows;
+					rowClass="col-xs-"+rowClass;
+					form.push(<div className={rowClass}>{formTypes[item.field](item,index)}</div>);
+				}
+				else{form.push(<div className={rowClass}>{formTypes[item.field](item,index)}</div>);}
 			}
 		}.bind(this));
 		//for(var x=0; x < this.props.feilds.length x++; )
-		var className = (this.props.className === undefined) ? "react-form": "form-horizontal react-form "+this.props.className;
+		var className = (this.props.className === undefined) ? "react-form": "react-form "+this.props.className;
 		return(
 			<form className={className}>
 				<fieldset>
@@ -226,13 +230,13 @@ export class Select extends React.Component{
 				options.push( <option key={index} value={item}> {item} </option>)
 			}
 
-			
+
 		}.bind(this));
 
 		var select=(
-			<select 
-				className={this.className} 
-				value={this.value} 
+			<select
+				className={this.className}
+				value={this.value}
 				onChange={this.props.inputChanged}
 				disabled={this.disabled}
 	          	readOnly={this.readonly}
@@ -242,23 +246,11 @@ export class Select extends React.Component{
 			</select>
 		);
 
-		if (this.props.lable !== undefined || this.props.lable ==""){
-			output = (
-				<div className="form-group ">
-		    		<label className="control-label">{this.props.lable}</label>
-		    		<div>
-		    		{select}
-		    		</div>
-		  		</div>
-		  	);
+		var lable="";
+		if (this.props.lable !== undefined && this.props.lable !== ""){
+			lable=(<label className="control-label">{this.props.lable}</label>);
 		}
-		else{
-			output = (
-				<div className="form-group">
-		      		{select}
-		  		</div>
-		  	);
-		}
+		output = (<div className="form-group">{lable}{select}</div>);
 		return(
 			<div>
 				{output}
@@ -286,11 +278,12 @@ export class Input extends React.Component{
 		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
 		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
 		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
-		var input=( 
-			<input 
-				type={this.type} 
-				className={this.className} 
-				placeholder={this.placeholder} 
+
+		var input=(
+			<input
+				type={this.type}
+				className={this.className}
+				placeholder={this.placeholder}
 				value={this.value}
 				onChange={this.props.inputChanged}
 				disabled={this.disabled}
@@ -298,24 +291,15 @@ export class Input extends React.Component{
 	          	required={this.required}
 			/>
 		);
-
-		if (this.props.lable !== undefined || this.props.lable ==""){
-			output = (
-				<div className="form-group ">
-		    		<label className="control-label">{this.props.lable}</label>
-		    		<div className="">
-		      			{input}
-		    		</div>
-		  		</div>
-		  	);
+		var wrapperClass="form-group";
+		if(this.props.error){
+				wrapperClass+= " "+"has-error";
 		}
-		else{
-			output = (
-				<div className="form-group">
-		      		{input}
-		  		</div>
-		  	);
+		var lable="";
+		if (this.props.lable !== undefined && this.props.lable !== ""){
+			lable=(<label className="control-label">{this.props.lable}</label>);
 		}
+		output = (<div className={wrapperClass}>{lable}{input}</div>);
 		return(
 			<div>
 				{output}
@@ -343,14 +327,14 @@ export class Check extends React.Component{
 		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
 		this.required = (this.props.required === undefined||this.props.required==false||this.props.required=="") ? false: true;
 		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
-		
+
 		var output="";
-		var input=( 
-			<input 
-				type="checkbox" 
-				className={this.className} 
+		var input=(
+			<input
+				type="checkbox"
+				className={this.className}
 				checked={this.value}
-				
+
 				onChange={this.props.inputChanged}
 				disabled={this.disabled}
 	          	readOnly={this.readonly}
@@ -400,9 +384,9 @@ export class Textarea extends React.Component{
 		this.readonly = (this.props.readonly === undefined||this.props.readonly==false||this.props.readonly=="") ? false: true;
 		this.rows = (this.props.rows === undefined||this.props.rows=="") ? 3: this.props.rows;
 		var output="";
-		var input=( 
-			<textarea 
-				className={this.className} 
+		var input=(
+			<textarea
+				className={this.className}
 				value={this.value}
 				onChange={this.props.inputChanged}
 				rows={this.rows}
@@ -411,26 +395,13 @@ export class Textarea extends React.Component{
 	          	required={this.required}
 			/>
 		);
-
-		if (this.props.lable !== undefined || this.props.lable ==""){
-			output = (
-				<div>
-		    		<label className="control-label">
-		      			{this.props.lable}</label>{input}
-		  		</div>
-		  	);
+		var lable="";
+		if (this.props.lable !== undefined && this.props.lable !== ""){
+			lable=(<label className="control-label">{this.props.lable}</label>);
 		}
-		else{
-			output = (
-				<div className="">
-		      		{input}
-		  		</div>
-		  	);
-		}
+		output = (<div className="form-group">{lable}{input}</div>);
 		return(
-			<div>
-				{output}
-			</div>
+			<div>{output}</div>
 		);
 	}
 }
@@ -461,13 +432,13 @@ export class DateInput extends React.Component{
 
 		var output="";
 		this.className= (this.props.className === undefined) ? "form-control datepick": "form-control datepick " +this.props.className;
-		var input=( 
+		var input=(
 			<input
-				ref={this.dateInit} 
+				ref={this.dateInit}
 				type="text"
 				className={this.className}
-				placeholder={this.placeholder}  
-				value={this.value} 
+				placeholder={this.placeholder}
+				value={this.value}
 				onChange={this.props.inputChanged}
 				disabled={this.disabled}
 	          	readOnly={this.readonly}
@@ -480,7 +451,7 @@ export class DateInput extends React.Component{
 			output = (
 		  		<div className="form-group">
 		  			<label className="control-label">{this.props.lable}</label>
-						
+
 					<div className="input-group date">
 						{input}
 				  		<span className="input-group-addon">
@@ -522,7 +493,7 @@ export class AwesompleteInput extends React.Component{
 		this.autocomplete=this.autocomplete.bind(this);
 		this.componentWillUnmount=this.componentWillUnmount.bind(this);
 		this.refCall=this.refCall.bind(this);
-		
+
 		//this.workorderObj=this.onStatusChanged.bind(this);
 		/*          end          */
 		this.itemlist=[];
@@ -532,7 +503,7 @@ export class AwesompleteInput extends React.Component{
 		var options={doctype:this.props.doctype};
 		var filter={};
 		if (this.props.filter==undefined || this.props.filter==null){
-		
+
 		}else{
 			filter= this.props.filter;
 		}
@@ -647,9 +618,9 @@ export class AwesompleteInput extends React.Component{
 		var input=( <input
 					value={this.value}
 
-					type={this.type} 
-					className={this.className} 
-					placeholder={this.placeholder} 
+					type={this.type}
+					className={this.className}
+					placeholder={this.placeholder}
 					ref={this.refCall}
 		          	onChange={this.inputChange}
 		          	disabled={this.disabled}
@@ -693,28 +664,24 @@ export class Button extends React.Component{
 		this.disabled = (this.props.disabled === undefined||this.props.disabled==false||this.props.disabled=="") ? false: true;
 		var output="";
 		this.className= (this.props.className === undefined) ? "btn": "btn " +this.props.className;
-		var input=( 
-			<button 
+		var icon="";
+		if(this.props.icon!== undefined && this.props.icon!==""){
+			var iconClass="glyphicon " +this.props.icon;
+			icon=(<span className={iconClass} aria-hidden="true"></span>);
+		}
+		var input=(
+			<button
 				type={this.type}
-				className={this.className} 
+				className={this.className}
 				value={this.value}
 				onClick={this.props.onClick}
 				disabled={this.disabled}
-			>{this.value}</button>
+			>{icon} {this.value}</button>
 		);
-
-
-		output = (
-			<div className="form-group">
-	      		{input}
-	  		</div>
-	  	);
-
 		return(
-			<div>
-				{output}
-			</div>
+			<div className="form-group">
+	  		{input}
+	  	</div>
 		);
 	}
 }
-

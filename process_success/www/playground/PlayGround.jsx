@@ -1,15 +1,41 @@
 /*jshint ignore:start */
-// import Form from '../../public/js/modules/utils/forms'
+//import Form from '../../public/js/modules/utils/forms'
+//import {Check,Button} from '../../public/js/modules/utils/forms'
 // import Acordian from '../../public/js/modules/utils/acordian'
 // import AcordianContent from '../../public/js/modules/utils/acordianContent'
 import DocTable from '../../public/js/modules/utils/docTable'
-
+//import AcordianContent from '../../public/js/modules/utils/acordianContent'
 //import SprayTable from '../../public/js/modules/vineyard/sprayTable'
 
+import TaskManager from '../../public/js/modules/tasks/taskManger'
+
+const app= document.getElementById('app');
+
+const app2= $('#app2')[0];
+(function(){
+	var filter={};
+	frappe.ready(function(){
+		ReactDOM.render(
+			<TaskManager></TaskManager>
+		, app2 );
+	})
+
+})();
 
 
-//const app= document.getElementById('app');
-const app= $('#app')[0];
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // class CreateWorkorder extends React.Component{
 // 	constructor(props){
@@ -50,7 +76,7 @@ const app= $('#app')[0];
 // 				onChange: this.someFunction,
 // 				lable:"test2",
 // 				options:[
-// 					{ 
+// 					{
 // 						group: "thing",
 // 						options: [
 // 							"one",
@@ -122,7 +148,7 @@ const app= $('#app')[0];
 // }
 
 
-/*			<DoctypeForm 
+/*			<DoctypeForm
 				close={this.close}
 				itemChange={this.onChange}
 				create={this.create}
@@ -136,65 +162,27 @@ const app= $('#app')[0];
 				season={ {active:1}}
 				note={ {
 					active:1,
-					type:"textarea" 
-				}} 
+					type:"textarea"
+				}}
 				spray_type={ {active:1}}
 			/> 	*/
 
-const app2= $('#app2')[0];
-(function(){
-	var filter={};
-	frappe.ready(function(){
-		ReactDOM.render( 
-			<DocTable 
-				doctype="Spraying"
-				id="doctable"
-				filter={ {} }
-				config={[
-					{
-						lable:"Vineyard",
-						value:"vineyard",
-						href:"vineyard_route",
-						active:0,
-						default:"CRV Vines"
-					},
-					{
-						lable:"Season",
-						value:"season",
-						active:1
-					},
-					{
-						lable:"Note",
-						value:"note",
-						active:1,
-						type:"textarea"
-					},
-					{
-						lable:"Spray Type",
-						value:"spray_type",
-						active:1
-					}
-				]}
-				editable={1}
-			/> 
-		, app2 );
-	})
 
-})();
+
 
 
 // const app2= $('#app2')[0];
 // (function(){
 // 	var filter={};
 // 	frappe.ready(function(){
-// 		ReactDOM.render( 
-// 			<div><DoctypeForm 
-// 				id="createPrunEntry" 
+// 		ReactDOM.render(
+// 			<div><DoctypeForm
+// 				id="createPrunEntry"
 // 				doctype="Pruning"
 // 				season={  {active:1}  }
 // 				note={ {
 // 					active:1,
-// 					type:"textarea" 
+// 					type:"textarea"
 // 				}}
 // 				type={ {active:1} }
 // 				b_lock={ {active:1}}
@@ -214,6 +202,3 @@ const app2= $('#app2')[0];
 // 	})
 
 // })();
-
-
-

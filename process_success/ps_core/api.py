@@ -65,7 +65,7 @@ def sign_up(email, first_name, last_name, user_type, redirect_to, password):
 
 def create_employee(email, first_name, last_name, user):
 	employee = frappe.db.get("Employee", {"email": email})
-	
+
 	if employee:
 		return 0
 
@@ -302,13 +302,37 @@ def create_doc(doctype,item):
 def update_doc(doctype,item):
 	print ("---------------- UPDATE DOC -------------------")
 	j=json.loads(item)
-	print (j["name"])
+	print ("name of the object " + j["name"])
 	check=frappe.get_all(doctype,filters={"name":j["name"]})
 	if check:
 		doc=frappe.get_doc(doctype,j["name"])
-		print (type(doc))
 		for key in j:
-			setattr(doc,key,j[key])
+			# handeling the doctype fields and or perms
+			if type ( getattr(doc,key) ) == list and (key == "fields" or key == "permissions"):
+				# We now have fields
+				# Loop the fields from json
+				for field in j[key]:
+					# the field needs to be created
+					if "creation" not in field:
+						print ("needs creating")
+
+						newField = frappe.get_doc({
+							"doctype":"DocField",
+							"fieldtype":field["fieldtype"],
+							"idx":field["idx"],
+							"fieldname":field["fieldname"],
+							"parent":j["name"],
+							"fieldlabel":field["fieldname"],
+							"parenttype":"DocType",
+							"parentfield":"fields"
+						})
+						#newField.save()
+						print ("Created")
+						getattr(doc,key).append(newField)
+						print(getattr(doc,key))
+			else:
+				setattr(doc,key,j[key])
+		print ("-------------- BEFORE SAVE ---------------")
 		doc.save()
 		return doc
 	return "Fail"
@@ -339,13 +363,3 @@ def clear_test_db():
 # 		doc=frappe.get_doc("Testing",name)
 # 		doc.delete()
 # 	return "success"
-
-
-
-
-
-
-
-
-
-

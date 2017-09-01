@@ -34,7 +34,9 @@ def install_basic_docs():
         {'doctype': "Top Bar Item", "parent":"Website Settings", "parentfield":"top_bar_items",
                     "parenttype": "Website Settings", "label": "Workpage","url": "/workpage"},
         {'doctype': "Top Bar Item", "parent":"Website Settings", "parentfield":"top_bar_items",
-                    "parenttype": "Website Settings", "label": "dash","url": "/dashboard"},
+                    "parenttype": "Website Settings", "label": "Dash","url": "/dashboard"},
+        {'doctype': "Top Bar Item", "parent":"Website Settings", "parentfield":"top_bar_items",
+                    "parenttype": "Website Settings", "label": "Dash","url": "/dashboard"},
         # Single Approval Manager
         {'doctype': "approval_manager"}
     ]

@@ -62,7 +62,7 @@ website_context = {
 # 	"ps_manager": "ps_manager_index"
 # }
 
-fixtures = ["Custom Field","Spray Type","Season"]
+fixtures = ["Custom Field","Spray Type","Season","Email Domain","Email Account"]
 
 # Website user home page (by function)
 # get_website_user_home_page = "process_success.utils.get_home_page"
@@ -141,4 +141,3 @@ after_install = "process_success.utils.install.after_install"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "process_success.event.get_events"
 # }
-
