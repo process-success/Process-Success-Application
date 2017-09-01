@@ -1,0 +1,34 @@
+[
+ {
+  "append_to": null, 
+  "attachment_limit": 1, 
+  "docstatus": 0, 
+  "doctype": "Email Domain", 
+  "domain_name": "gmail.com", 
+  "email_id": "derekbrenner@gmail.com", 
+  "email_server": "imap.gmail.com", 
+  "modified": "2017-08-31 15:40:04.205607", 
+  "name": "gmail.com", 
+  "smtp_port": "587", 
+  "smtp_server": "smtp.gmail.com", 
+  "use_imap": 1, 
+  "use_ssl": 1, 
+  "use_tls": 1
+ }, 
+ {
+  "append_to": null, 
+  "attachment_limit": 1, 
+  "docstatus": 0, 
+  "doctype": "Email Domain", 
+  "domain_name": "provine.io", 
+  "email_id": "support@provine.io", 
+  "email_server": "imap.gmail.com", 
+  "modified": "2017-09-01 11:57:24.124843", 
+  "name": "provine.io", 
+  "smtp_port": "587", 
+  "smtp_server": "email-smtp.us-east-1.amazonaws.com", 
+  "use_imap": 1, 
+  "use_ssl": 1, 
+  "use_tls": 1
+ }
+]
