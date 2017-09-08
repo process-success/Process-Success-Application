@@ -31,13 +31,18 @@ class Employee(WebsiteGenerator):
         self.name = self.first_name + " " + self.last_name
         self.set_path()
 
+    def aproved_action(self):
+        pass
+
     def validate(self):
+        if self.status == "Approved":
+            self.aproved_action()
+
         formatted_full_name = self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
         save_flag = 0
         self.full_name = self.first_name + " " + self.last_name
-        #Setup Email
-        full_name = self.first_name + " " + self.last_name
-        if not self.user:
+
+        if not self.user and self.status == "Approved":
             if self.email:
                 user = create_user(self.email, self.first_name, self.last_name, )
                 if user == 0:
@@ -56,9 +61,13 @@ class Employee(WebsiteGenerator):
             if not user.phone == self.phone:
                 user.phone = self.phone
                 save_flag = 1
+            if self.status == "Disabled":
+                user.enabled=0
+                save_flag = 1
             if save_flag:
                 user.full_name = self.full_name
                 user.save()
+
         self.set_path()
         ## default the pending if no user
         if self.status=="Approved" or self.status=="Disabled":
