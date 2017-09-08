@@ -98,7 +98,7 @@ class Customer(WebsiteGenerator):
             user.enabled = False
             user.save(ignore_permissions=True)
 
-    def on_trash(self):
+    def after_delete(self):
         frappe.delete_doc("User", self.user)
 
     def _update_roles(self, list_of_roles=[]):
