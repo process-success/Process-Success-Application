@@ -164,7 +164,12 @@
 		}
 		return returnProp;
 	}
-
+	ps.dateForUi=function(date){
+		return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY')
+	}
+	ps.dateForServer=function(date){
+		return moment(date, 'MM/DD/YYYY').format('YYYY-MM-DD')
+	}
 })();
 
 //Init bit
@@ -1395,3 +1400,11 @@ ps.user.avatar = function(user, css_class, title) {
 			});
 	}
 };
+// this.currentUser=ps.initCurrentUser();
+// this.currentUser.get({},function(items){
+// 	if(this.currentUser.items.username=="Guest"){
+// 		window.location = "/login";
+// 	}else{
+// 		$(document).trigger("userLoaded");
+// 	}
+// }.bind(this));

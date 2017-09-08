@@ -174,9 +174,9 @@ export default class Form extends React.Component{
 				if(this.props.type=="inline"){
 					var rowClass=12/this.props.rows;
 					rowClass="col-xs-"+rowClass;
-					form.push(<div className={rowClass}>{formTypes[item.field](item,index)}</div>);
+					form.push(<div key={this.props.id+index} className={rowClass}>{formTypes[item.field](item,index)}</div>);
 				}
-				else{form.push(<div className={rowClass}>{formTypes[item.field](item,index)}</div>);}
+				else{form.push(<div key={this.props.id+index} className={rowClass}>{formTypes[item.field](item,index)}</div>);}
 			}
 		}.bind(this));
 		//for(var x=0; x < this.props.feilds.length x++; )

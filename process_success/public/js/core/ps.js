@@ -164,7 +164,12 @@
 		}
 		return returnProp;
 	}
-
+	ps.dateForUi=function(date){
+		return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY')
+	}
+	ps.dateForServer=function(date){
+		return moment(date, 'MM/DD/YYYY').format('YYYY-MM-DD')
+	}
 })();
 
 //Init bit

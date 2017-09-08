@@ -21,37 +21,45 @@ class Customer(WebsiteGenerator):
 
     def get_context(self, context):
         context.parents = [{"name": "customers", "title": "Customers","route": "/customers"}]
-        context.user_object = frappe.get_doc("User", self.user)
 
     def set_path(self):
+        print("____________________SET PATH _____________________")
         formatted_full_name=self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
         self.page_name = make_autoname( formatted_full_name + "_" + '.####')
         self.route = self.parent_page + "/" + self.page_name
-        #if frappe.defaults.get_global_default('customer_naming_by') != 'Naming Series':
 
     def autoname(self):
-        self.name = self.user
+        self.name = self.first_name + " " + self.last_name
         self.set_path()
 
     def validate(self):
+        print("____________________validate 2113 _____________________")
         if self.status == "Approved":
             self.published = 1
 
         formatted_full_name = self.scrub(self.first_name) + "_" + self.scrub(self.last_name)
-        user = frappe.get_doc("User", self.user)
-        save_flag = 0
         self.full_name = self.first_name + " " + self.last_name
+        save_flag = 0
+
+        if not self.user:
+            if self.email:
+                user = create_user(self.email, self.first_name, self.last_name, )
+                if user == 0:
+                    frappe.throw("User already exists")
+                self.user = user.name
         # update user
-        if not user.first_name == self.first_name:
-            user.first_name = self.first_name
-            save_flag = 1
-        if not user.last_name == self.last_name:
-            user.last_name == self.last_name
-            save_flag = 1
-        if save_flag:
-            user.full_name = self.full_name
-            user.save()
-            self.set_path()
+        if self.user:
+            user = frappe.get_doc("User", self.user)
+            if not user.first_name == self.first_name:
+                user.first_name = self.first_name
+                save_flag = 1
+            if not user.last_name == self.last_name:
+                user.last_name == self.last_name
+                save_flag = 1
+            if save_flag:
+                user.full_name = self.full_name
+                user.save()
+                self.set_path()
 
         if (self._duplicate_vineyard_test()):
             self._add_customer_to_vineyards()
@@ -60,10 +68,11 @@ class Customer(WebsiteGenerator):
         self._delete_customer_from_vineyards()
 
     def before_insert(self):
+        print("____________________ insert  _____________________")
         #--- create a new user ----
         full_name = self.first_name + " " + self.last_name
 
-        if not self.user:
+        if not self.user and self.email:
             user =create_user(self.email, self.first_name, self.last_name)
             if user==0:
                 frappe.throw("User already exists")
@@ -156,9 +165,4 @@ class Customer(WebsiteGenerator):
         customer_container.customer = self.name
         customer_container.customer_full_name = self.full_name
         vineyard.append('customers', customer_container)
-        vineyard.save() 
-
-    
-
-
-
+        vineyard.save()

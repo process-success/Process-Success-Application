@@ -45,3 +45,11 @@ ps.user.avatar = function(user, css_class, title) {
 			});
 	}
 };
+// this.currentUser=ps.initCurrentUser();
+// this.currentUser.get({},function(items){
+// 	if(this.currentUser.items.username=="Guest"){
+// 		window.location = "/login";
+// 	}else{
+// 		$(document).trigger("userLoaded");
+// 	}
+// }.bind(this));
