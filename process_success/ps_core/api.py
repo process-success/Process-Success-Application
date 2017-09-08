@@ -128,7 +128,7 @@ def create_user(email, first_name, last_name, password=0):
 		})
 		if not password:
 			user.password=password
-		user.send_welcome_email = False
+		user.send_welcome_email = True
 		user.flags.ignore_permissions = True
 		user.set("send_welcome_email", 0)
 		user.insert()
