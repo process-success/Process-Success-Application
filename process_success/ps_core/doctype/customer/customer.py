@@ -79,14 +79,6 @@ class Customer(WebsiteGenerator):
 
     def before_insert(self):
         print("____________________ insert  _____________________")
-        #--- create a new user ----
-        full_name = self.first_name + " " + self.last_name
-
-        if not self.user and self.email:
-            user =create_user(self.email, self.first_name, self.last_name)
-            if user==0:
-                frappe.throw("User already exists")
-            self.user=user.name
 
     def on_update(self):
         if self.status == "Approved":
