@@ -19,6 +19,13 @@ def get_data():
 			"label": _("P S Core")
 		},
 		{
+			"module_name": "Open To Buy",
+			"color": "grey",
+			"icon": "octicon octicon-file-directory",
+			"type": "module",
+			"label": _("Open To Buy")
+		},
+		{
 			"module_name": "website_options",
 			"color": "grey",
 			"icon": "octicon octicon-file-directory",
