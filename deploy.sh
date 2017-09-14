@@ -1,4 +1,5 @@
-git add -Au
+git add -A
+git add -u
 git commit -am "changes"
 git push
 git checkout stage
