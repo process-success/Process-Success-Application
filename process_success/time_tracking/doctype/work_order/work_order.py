@@ -12,7 +12,7 @@ import json
 import copy
 
 class work_order(WebsiteGenerator):
-    
+
     website = frappe._dict(
         template="templates/generators/work_order/work_order_profile.html"
     )
@@ -23,7 +23,7 @@ class work_order(WebsiteGenerator):
 
     def on_trash(self):
         #get_vineyard_tasks_by_workorder(self.name)
-        frappe.delete_doc("User", self.user)
+        #frappe.delete_doc("User", self.user)
 
     def get_context(self, context):
         geojson = {}
@@ -95,8 +95,8 @@ def get_workorders(crew=0, date=0,status=0,location=0):
 
 @frappe.whitelist()
 def update_workorder(item):
-    """ takes the jason representation 
-    Can update 
+    """ takes the jason representation
+    Can update
     start
     end
     status
@@ -116,6 +116,3 @@ def update_workorder(item):
     workorderObj.save()
 
     return workorderObj
-
-
-
