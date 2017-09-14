@@ -24,6 +24,7 @@ class work_order(WebsiteGenerator):
     def on_trash(self):
         #get_vineyard_tasks_by_workorder(self.name)
         #frappe.delete_doc("User", self.user)
+        pass
 
     def get_context(self, context):
         geojson = {}
